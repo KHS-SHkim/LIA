@@ -19,6 +19,6 @@ public class BookDomain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //TODO
+
 
 }

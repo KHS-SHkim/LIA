@@ -1,9 +1,6 @@
 package com.project.LIA.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +14,12 @@ import lombok.NoArgsConstructor;
 public class BookImgDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id; //PK
 
-    // TODO
+    @Column(nullable = false)
+    private String img_src;   //파일명
+
+    @Column(name = "book_id")
+    private int book;   // 어느글의 첨부파일? (FK)
 
 }
