@@ -135,11 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2023-08-17 20:52:25</creation_date>
-<<<<<<<<< Temporary merge branch 1
-			<updated_date>2023-08-18 21:27:01</updated_date>
-=========
 			<updated_date>2023-08-18 21:00:22</updated_date>
->>>>>>>>> Temporary merge branch 2
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -932,11 +928,7 @@
 			<connections>
 				<relation>
 					<id>0</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>5</source>
-=========
 					<source>7</source>
->>>>>>>>> Temporary merge branch 2
 					<target>0</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -958,11 +950,7 @@
 				</relation>
 				<relation>
 					<id>1</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>7</source>
-=========
 					<source>5</source>
->>>>>>>>> Temporary merge branch 2
 					<target>0</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -991,11 +979,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>15</word_id>
-=========
 					<word_id>12</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>0</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1030,11 +1014,7 @@
 				<normal_column>
 					<id>1</id>
 					<referenced_column>29</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>0</relation>
-=========
 					<relation>1</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>user_id</logical_name>
@@ -1068,11 +1048,7 @@
 				<normal_column>
 					<id>2</id>
 					<referenced_column>39</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>1</relation>
-=========
 					<relation>0</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>book_id</logical_name>
@@ -1203,7 +1179,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>31</word_id>
+					<word_id>34</word_id>
 					<id>6</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1394,11 +1370,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>13</word_id>
-=========
 					<word_id>18</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>9</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1597,11 +1569,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>33</word_id>
-=========
 					<word_id>35</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>15</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1691,11 +1659,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>17</word_id>
-=========
 					<word_id>15</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>16</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1828,11 +1792,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>30</word_id>
-=========
 					<word_id>32</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>20</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1926,11 +1886,7 @@
 			<connections>
 				<relation>
 					<id>4</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>7</source>
-=========
 					<source>5</source>
->>>>>>>>> Temporary merge branch 2
 					<target>4</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1952,11 +1908,7 @@
 				</relation>
 				<relation>
 					<id>5</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>5</source>
-=========
 					<source>7</source>
->>>>>>>>> Temporary merge branch 2
 					<target>4</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2007,11 +1959,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>12</word_id>
-=========
 					<word_id>11</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>22</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2046,11 +1994,7 @@
 				<normal_column>
 					<id>23</id>
 					<referenced_column>29</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>5</relation>
-=========
 					<relation>4</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>user_id</logical_name>
@@ -2084,11 +2028,7 @@
 				<normal_column>
 					<id>24</id>
 					<referenced_column>39</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>4</relation>
-=========
 					<relation>5</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>book_id</logical_name>
@@ -2187,11 +2127,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>34</word_id>
-=========
 					<word_id>33</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>27</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2292,11 +2228,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>11</word_id>
-=========
 					<word_id>14</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>29</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2494,11 +2426,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>35</word_id>
-=========
 					<word_id>31</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>35</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2592,11 +2520,7 @@
 			<connections>
 				<relation>
 					<id>7</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>5</source>
-=========
 					<source>8</source>
->>>>>>>>> Temporary merge branch 2
 					<target>6</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2618,11 +2542,7 @@
 				</relation>
 				<relation>
 					<id>8</id>
-<<<<<<<<< Temporary merge branch 1
-					<source>8</source>
-=========
 					<source>5</source>
->>>>>>>>> Temporary merge branch 2
 					<target>6</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2653,11 +2573,7 @@
 				<normal_column>
 					<id>37</id>
 					<referenced_column>29</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>7</relation>
-=========
 					<relation>8</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>user_id</logical_name>
@@ -2691,11 +2607,7 @@
 				<normal_column>
 					<id>38</id>
 					<referenced_column>48</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>8</relation>
-=========
 					<relation>7</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>authority_id</logical_name>
@@ -2762,11 +2674,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>14</word_id>
-=========
 					<word_id>17</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>39</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3030,11 +2938,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>32</word_id>
-=========
 					<word_id>30</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>47</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3102,11 +3006,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>16</word_id>
-=========
 					<word_id>13</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>48</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3190,13 +3090,8 @@
 			<width>291</width>
 				<font_name>맑은 고딕</font_name>
 				<font_size>9</font_size>
-<<<<<<<<< Temporary merge branch 1
-			<x>24</x>
-			<y>300</y>
-=========
 			<x>0</x>
 			<y>276</y>
->>>>>>>>> Temporary merge branch 2
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -3278,11 +3173,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>17</word_id>
-=========
 					<word_id>15</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>50</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3317,11 +3208,7 @@
 				<normal_column>
 					<id>51</id>
 					<referenced_column>29</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>11</relation>
-=========
 					<relation>9</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>user_id</logical_name>
@@ -3389,11 +3276,7 @@
 				<normal_column>
 					<id>53</id>
 					<referenced_column>29</referenced_column>
-<<<<<<<<< Temporary merge branch 1
-					<relation>9</relation>
-=========
 					<relation>11</relation>
->>>>>>>>> Temporary merge branch 2
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>reporter_id</logical_name>
@@ -3524,11 +3407,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>34</word_id>
-=========
 					<word_id>33</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>57</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3651,11 +3530,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-<<<<<<<<< Temporary merge branch 1
-					<word_id>18</word_id>
-=========
 					<word_id>16</word_id>
->>>>>>>>> Temporary merge branch 2
 					<id>59</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
