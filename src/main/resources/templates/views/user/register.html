@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/mapAPI.js}"></script>
+    <script th:src="@{/js/register.js}"></script>
     <title>LIA</title>
 </head>
 
@@ -56,7 +57,7 @@
 <div class="row">
     <div class="col-3 side text-center">
         <div class="image">
-            <img th:src="@{/image/LIA_logo.jpg}">
+            <img th:src="@{/image/cars2.jpg}">
         </div>
         <div class="info text-center">
                 <span>
@@ -125,7 +126,8 @@
                 <div class="form-group mt-3">
                     <label for="email">이메일</label>
                     <input type="text" class="form-control" placeholder="이메일을 입력하세요." id="email" name="email" required>
-                    <button type="button" class="btn btn-info">이메일 인증</button>
+                    <button type="button" class="btn btn-dark" id="authBtn">이메일 인증</button>
+                    <input type="text" class="form-control mt-3" id="inputAuthNum" name="inputAuthNum" placeholder="인증번호를 입력하세요." style="display:none" required>
                 </div>
 
                 <br>
@@ -133,7 +135,7 @@
                 <div class="form-group mt-3">
                     <label for="sample6_postcode">우편번호</label>
                     <input type="text" class="sample6 form-control" id="sample6_postcode" placeholder="우편번호" name="postcode" required>
-                    <button type="button" class="sample6 btn btn-info" id="sample6_btn" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+                    <button type="button" class="sample6 btn btn-dark" id="sample6_btn" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
                 </div>
                 <div class="form-group mt-3">
                     <label for="sample6_address">주소</label>
