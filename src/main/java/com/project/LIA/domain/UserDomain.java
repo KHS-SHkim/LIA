@@ -3,16 +3,18 @@ package com.project.LIA.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "user")
-public class UserDomain {
+public class UserDomain extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,4 +46,11 @@ public class UserDomain {
     @JsonIgnore
     @ManyToMany
     private List<AuthorityDomain> authorities = new ArrayList<>();
+
+    public void addAuthority(AuthorityDomain... authorityDomains){
+        if(authorityDomains != null){
+            Collections.addAll(this.authorities, authorityDomains);
+        }
+    }
+
 }

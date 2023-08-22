@@ -1,24 +1,35 @@
 package com.project.LIA.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "address")
-public class AddressDomain {
+public class AddressDomain extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String address_detail;
+
+    @Column(nullable = false)
+    private String post_num;
+
+    private String stat;
+
+    @ManyToOne
+    @ToString.Exclude
+    private UserDomain userDomain;
+
+
+
 }
