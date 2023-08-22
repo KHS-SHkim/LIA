@@ -44,24 +44,36 @@ class NoteRepositoryTest {
 
     @Test
     void noteTest(){
+        insUser();
+        for (int i = 0 ; i < 10 ; i++ ){
+            UserDomain user1 = randomUser();
+            UserDomain user2 = randomUser();
+            while(user1.getId() == user2.getId()){
+                user2 = randomUser();
+            }
+            // Note test용;
+            NoteDomain note = new NoteDomain();
+            note.setUser(user1);
+            note.setContents("아무말이나 일단 막 짓걸이자.");
+            note.setReceiver(user2);
+            note.setBook(insBook());
+            note.setReceptionChk(1L);
 
+            noteRepository.save(note);
+        }
+        noteRepository.findAll().forEach(System.out::println);
 
-        // Note test용;
-        NoteDomain note = new NoteDomain();
-        note.setId(1L);
-//        note.setUser();
-        note.setContents("아무말이나 일단 막 짓걸이자.");
-//        note.setReceiver();
     }
 
 
     BookDomain insBook(){
-        BookDomain book = new BookDomain();
-
+        BookDomain book = BookDomain.builder()
+                .build();
+        bookRepository.save(book);
         return book;
     }
 
-    UserDomain insUser(){
+    void insUser(){
         UserDomain user1 = UserDomain.builder()
                 .email("user1@naver.com")
                 .phone("01022223333")
@@ -91,24 +103,19 @@ class NoteRepositoryTest {
                 .password(passwordEncoder.encode("1234"))
                 .username("user4")
                 .build();
-        userRepository.saveAll(List.of(user1, user2, user3, user4));
 
+        userRepository.saveAll(List.of(user1, user2, user3, user4));
+    }
+
+    UserDomain randomUser(){
+        List<UserDomain> users = userRepository.findAll();
         while(true){
             int i = (int)(Math.random()*10);
-            if (i > 4){
-                i = i-5;
-            }
-            if (i==0){
-                i=1;
-            }
-            switch (i){
-                case 1 : return user1;
-                case 2 : return user2;
-                case 3 : return user3;
-                case 4 : return user4;
+
+            if(i>= 0 && i <4){
+                return users.get(i);
             }
         }
-
     }
 
 

@@ -21,11 +21,11 @@ public class SecurityConfig {
 
     // PasswordEncoder 를 bean 으로 IoC 에 등록
     // IoC 에 등록된다, IoC 내에선 '어디서든' 가져다가 사용할수 있다.
-//    @Bean
-//    public PasswordEncoder encoder(){
-//        System.out.println("PasswordEncoder bean 생성");
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public PasswordEncoder encoder(){
+        System.out.println("PasswordEncoder bean 생성");
+        return new BCryptPasswordEncoder();
+    }
 //
 //    // ↓ SecurityFilterChain 을 Bean 으로 등록해서 사용
 //    // Security 설정
