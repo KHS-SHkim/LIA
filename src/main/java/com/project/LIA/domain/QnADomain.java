@@ -3,6 +3,7 @@ package com.project.LIA.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -28,12 +29,12 @@ public class QnADomain extends UserDomain {
     private String answer;      // 답변
 
     @Column(name = "reg_data" , nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date regDate;       // 질문시간
+//    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime regDate;       // 질문시간
 
     @Column(name = "anser_data" , nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date answerDate;       //  답변시간
+//    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime answerDate;       //  답변시간
 
 
 }
