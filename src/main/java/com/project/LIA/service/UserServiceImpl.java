@@ -39,13 +39,14 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDomain fondByUsername(String username) {
-        return null;
+    public UserDomain findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public boolean isExist(String username) {
-        return false;
+        UserDomain userDomain = findByUsername(username);
+        return (userDomain != null) ? true : false;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<AddressDomain> findAddressByUserId(UserDomain userDomain) {
+    public List<AddressDomain> findAddressByUser(UserDomain userDomain) {
         return null;
     }
 

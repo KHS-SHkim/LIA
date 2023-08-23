@@ -96,11 +96,17 @@
             </div>
         </div>
         <hr>
+        <div class="row mt-5">
+            <div class="col-12 text-danger" id="error_msg" th:text="${error}">
+                <!--/* 에러메세지 */-->
+            </div>
+        </div>
         <div class="form-box">
             <form method="POST" th:action="@{/user/register}">
                 <div class="form-group mt-3">
                     <label for="username">아이디</label>
                     <input type="text" class="form-control" placeholder="아이디를 입력하세요." id="username" name="username" required>
+                    <p id="username_error"></p>
                 </div>
 
                 <div class="form-group mt-3">
@@ -111,16 +117,19 @@
                 <div class="form-group mt-3">
                     <label for="re_password">비밀번호 확인</label>
                     <input type="password" class="form-control" placeholder="비밀번호를 입력하세요." id="re_password" name="re_password" required>
+                    <p id="password_error"></p>
                 </div>
 
                 <div class="form-group mt-3">
                     <label for="nickname">닉네임</label>
                     <input type="text" class="form-control" placeholder="닉네임을 입력하세요." id="nickname" name="nickname" required>
+                    <p id="nickname_error"></p>
                 </div>
 
                 <div class="form-group mt-3">
                     <label for="phone">전화번호</label>
                     <input type="text" class="form-control" placeholder="전화번호를 입력하세요." id="phone" name="phone" required>
+                    <p id="phone_error"></p>
                 </div>
 
                 <div class="form-group mt-3">
@@ -144,6 +153,7 @@
                 <div class="form-group mt-3">
                     <label for="sample6_detailAddress">상세주소</label>
                     <input type="text" class="sample6 form-control" id="sample6_detailAddress" placeholder="상세주소" name="address_detail" required>
+                    <p id="address_error"></p>
                 </div>
             </form>
             <button type="submit" class="w-25 mt-3 btn btn-primary lowb">가입하기</button>

@@ -34,20 +34,19 @@
         color:white;
     }
 
+    .navbar-nav{
+         margin-left:15%;
+         width:100%;
+         padding:0;
+     }
+
+     .d-flex{
+         margin-left:5%;
+     }
 
     .userinfo{
         text-decoration: none;
         color:black;
-    }
-
-    .navbar-nav{
-        margin-left:15%;
-        width:100%;
-        padding:0;
-    }
-
-     .d-flex{
-        margin-left:5%;
     }
 
     .info{
@@ -82,23 +81,4 @@
         height: 50px;
         object-fit:cover;
         margin-bottom: 10px;
-    }
-
-    .btn{
-        margin-top: 10px;
-    }
-
-    form {
-        width: 50%;
-        display: block;
-        margin-left: 25%;
-    }
-
-    .lowb {
-        margin-left: 25%;
-        display: inline;
-    }
-
-    label{
-        font-weight: 550;
     }

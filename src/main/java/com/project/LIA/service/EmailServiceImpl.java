@@ -37,17 +37,17 @@ public class EmailServiceImpl implements EmailService{
 
         String sendMsg="";
 
-        sendMsg += "<div style='margin:20px;'";
+        sendMsg += "<div style='margin:20px; text-align:center;'>";
         sendMsg += "<h1> 안녕하세요 LIA 입니다. </h1>";
         sendMsg += "<br>";
         sendMsg += "<p>아래 코드를 입력해주세요.</p>";
         sendMsg += "<br>";
-        sendMsg += "<div align='center' style='border:1px solid black;'>";
-        sendMsg += "<h3 style='color:blue;'>인증 코드 입니다.</h3>";
-        sendMsg += "<div style='font-size-130%'>";
-        sendMsg += "CODE : <strong>";
-        sendMsg += createCode + "</string></div><br>";
-        sendMsg += "</div>";
+        sendMsg += "<div style='border:1px solid black;'>";
+        sendMsg += "<h3 style='color:blue; font-size:30px;'>인증 코드 입니다.</h3>";
+        sendMsg += "<div>";
+        sendMsg += "CODE : <strong style='color:red; font-size:25px;'>";
+        sendMsg += createCode + "</strong><br></div>";
+        sendMsg += "</div></div>";
 
         mimeMessage.setFrom(setFrom);
 
@@ -55,30 +55,11 @@ public class EmailServiceImpl implements EmailService{
 
         return mimeMessage;
     }
-
-    @Override
-    public String sendEmail(String email) throws Exception {
-
-        MimeMessage mimeMessage = createMessage(email);
-
-        javaMailSender.send(mimeMessage);
-
-        return createCode;
-    }
-
-    @Override
-    public String findPasswordBySendEmail(String email) throws Exception {
-
-        return null;
-    }
-
-
-
     public static String createKey() {
         StringBuffer key = new StringBuffer();
         Random rndNum = new Random();
 
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
+        for (int i = 0; i < 6; i++) { // 인증코드 6자리
             int index = rndNum.nextInt(3); // 0~2 까지 랜덤
 
             switch (index) {
@@ -98,4 +79,25 @@ public class EmailServiceImpl implements EmailService{
         }
         return key.toString();
     }
+
+    @Override
+    public String sendEmail(String email) throws Exception {
+
+        // 메일전송 정보 설정
+        MimeMessage mimeMessage = createMessage(email);
+        // 메일 전송
+        javaMailSender.send(mimeMessage);
+
+        // 인증코드 반환
+        return createCode;
+    }
+
+    @Override
+    public String findPasswordBySendEmail(String email) throws Exception {
+
+        return null;
+    }
+
+
+
 }

@@ -10,16 +10,16 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity(name = "QnA")
-public class QnADomain extends UserDomain {
+public class QnADomain /*extends UserDomain*/ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    // PK
 
-    @ManyToOne
-    @ToString.Exclude
-    @Column(name = "user_id", nullable = false)
-    private Long userId;    // 유저 아이디
+//    @ManyToOne
+//    @ToString.Exclude
+//    @Column(name = "user_id", nullable = false)
+//    private Long userId;    // 유저 아이디
 
     @Column(name = "question" , columnDefinition = "longtext" , nullable = false)
     private String question;        // 질문글
