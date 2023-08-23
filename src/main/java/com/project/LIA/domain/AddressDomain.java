@@ -28,7 +28,7 @@ public class AddressDomain extends BaseEntity {
 
     @ManyToOne
     @ToString.Exclude
-    private UserDomain userDomain;
+    private UserDomain user;
 
 
 

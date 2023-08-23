@@ -39,15 +39,13 @@ public class EmailServiceImpl implements EmailService{
 
         sendMsg += "<div style='margin:20px; text-align:center;'>";
         sendMsg += "<h1> 안녕하세요 LIA 입니다. </h1>";
+        sendMsg += "<h3> 저희 사이트를 이용해주셔서 감사합니다.</h3>";
         sendMsg += "<br>";
-        sendMsg += "<p>아래 코드를 입력해주세요.</p>";
+        sendMsg += "<p>하단의 코드를 입력해주세요.</p>";
         sendMsg += "<br>";
         sendMsg += "<div style='border:1px solid black;'>";
-        sendMsg += "<h3 style='color:blue; font-size:30px;'>인증 코드 입니다.</h3>";
-        sendMsg += "<div>";
-        sendMsg += "CODE : <strong style='color:red; font-size:25px;'>";
-        sendMsg += createCode + "</strong><br></div>";
-        sendMsg += "</div></div>";
+        sendMsg += "<p style='color:blue; font-size:30px;'>";
+        sendMsg += createCode + "</p></div>";
 
         mimeMessage.setFrom(setFrom);
 

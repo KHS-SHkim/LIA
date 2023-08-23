@@ -23,11 +23,11 @@ $(function(){
             dataType: "json",
             success: function(response){
                 if(response == 1){
-                    $("#username_error").html("사용 가능한 아이디 입니다.");
-                    $("#username_error").css("color","blue");
-                } else{
                     $("#username_error").html("이미 존재하는 아이디 입니다.");
                     $("#username_error").css("color","red");
+                } else{
+                    $("#username_error").html("사용가능한 아이디 입니다.");
+                    $("#username_error").css("color","blue");
                 }
             },
             error: function(xhr, status, error) {
@@ -65,6 +65,20 @@ $(function(){
         }
     });
 
+    $("#phone").on("keyup",function(){
+        let phone = $("#phone").val();
+
+        if(phone != null){
+            if(phone.length>=12){
+                $("#phone_error").html("전화번호는 11자리 까지만 입력가능합니다.");
+                $("#phone_error").css("color","red");
+                return;
+            } else{
+                $("#phone_error").html("");
+            }
+        }
+    })
+
 
     $("#authBtn").click(function(){
 
@@ -81,7 +95,80 @@ $(function(){
             return;
         }
 
+        $.ajax({
+            url:"/user/register/emailChk",
+            type: "POST",
+            data: {email: email},
+            dataType: "json",
+            success: function(response){
+                if(response == 1){
+                    $("#email_error").html("이미 존재하는 이메일 입니다.");
+                    $("#email_error").css("color","red");
+                    $("#email").focus();
+                    return;
+                } else{
+
+                    alert("인증번호를 보냈습니다.");
+                    $("#email_error").html("");
+
+                    const data = {"email" : email};
+
+                    $.ajax({
+                        url: "/register/authEmail",
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "text",
+                        success: function(response){
+                            $("#inputAuthNum").val(response);
+
+                            $("#checkBtn").unbind("click").click(checkBtnHandler);
+                        },
+                        error: function(xhr, status, error){
+                            console.error(error);
+                        }
+                    });
+
+                    $("#authDiv").show();
+                }
+            },
+            error: function(xhr, status, error){
+                console.error(error);
+            }
+        });
     });
+
+    function checkBtnHandler(){
+        var inputAuthNum = $("#inputAuthNum").val();
+        var authNum = $("#authNum").val();
+
+        if(inputAuthNum === authNum) {
+            $("#authDiv").hide();
+            $("#email").prop("readonly", true);
+            $("#email_error").html("인증성공");
+            $("#email_error").css("color","blue");
+        } else{
+            $("#email_error").html("인증번호 불일치");
+            $("#email_error").css("color","red");
+        }
+    }
+
+    $("form").submit(function(event){
+        event.preventDefault();
+
+        var inputAuthNum = $("#inputAuthNum").val();
+        var authNum = $("#authNum").val();
+
+        if(!authNum || inputAuthNum !== authNum){
+            $("#email_error").html("이메일 인증을 진행해주세요");
+            $("#email_error").css("color","red");
+            return;
+        }
+
+        $(this).unbind("submit").submit();
+    });
+
+
 
 })
 

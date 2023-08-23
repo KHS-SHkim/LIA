@@ -26,8 +26,8 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(UserDomain user,
-                           @RequestParam("authCodeInput") String authCodeInput,
-                           @RequestParam("code") String code,
+                           @RequestParam("inputAuthNum") String inputAuthNum,
+                           @RequestParam("authNum") String authNum,
                            BindingResult result,
                            Model model,
                            RedirectAttributes redirectAttributes
@@ -41,6 +41,15 @@ public class UserController {
     @PostMapping("/register/usernameChk")
     public @ResponseBody int usernameChk(@RequestParam("username") String username){
         boolean b = userService.isExist(username);
+        if(b) return 1;
+        else{
+            return 0;
+        }
+    }
+
+    @PostMapping("/register/emailChk")
+    public @ResponseBody int emailChk(@RequestParam("email") String email){
+        boolean b = userService.isEmail(email);
         if(b) return 1;
         else{
             return 0;

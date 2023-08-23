@@ -15,6 +15,9 @@ public interface UserService {
     // 아이디 중복 확인
     boolean isExist(String username);
 
+    // 이메일 중복 확인
+    boolean isEmail(String email);
+
     // 회원 등록
     int register(UserDomain userDomain);
 

@@ -50,6 +50,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean isEmail(String email) {
+        UserDomain userDomain = userRepository.findByEmail(email);
+        return (userDomain != null)? true : false;
+    }
+
+    @Override
     public int register(UserDomain userDomain) {
         return 0;
     }

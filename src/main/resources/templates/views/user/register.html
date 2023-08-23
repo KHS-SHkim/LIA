@@ -136,7 +136,12 @@
                     <label for="email">이메일</label>
                     <input type="text" class="form-control" placeholder="이메일을 입력하세요." id="email" name="email" required>
                     <button type="button" class="btn btn-dark" id="authBtn">이메일 인증</button>
-                    <input type="text" class="form-control mt-3" id="inputAuthNum" name="inputAuthNum" placeholder="인증번호를 입력하세요." style="display:none" required>
+                    <input type="hidden" class="form-control mt-3" id="inputAuthNum" name="inputAuthNum" th:value="${inputAuthNum}">
+                    <div id="authDiv" style="display:none;">
+                        <input type="text" class="form-control" id="authNum" name="authNum" placeholder="인증번호를 입력하세요" th:value="${authNum}">
+                        <div class="btn btn-dark" id="checkBtn">확인</div>
+                    </div>
+                    <p id="email_error"></p>
                 </div>
 
                 <br>
