@@ -9,13 +9,12 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<NoteDomain, Long> {
 
     // 쪽지 찾기 ( 사용자 , 수신인 )
-    List<NoteDomain> findByUserIdAndReceiverId(UserDomain user, UserDomain receiver);
+    List<NoteDomain> findByUserIdAndReceiverId(Long user_id, Long receiver_id);
 
-    // 쪽지 찾기 ( 내가 쓴 쪽지 ) findById 는 만들필요없음
-
+    // 쪽지 찾기 ( 내가 쓴 쪽지 )
+    List<NoteDomain> findByUserId(Long user_id);
 
     // 쪽지 찾기 ( 내가 받은 쪽지 )
-    List<NoteDomain> findByReceiverId(UserDomain receiver);
+    List<NoteDomain> findByReceiverId(Long receiver_id);
 
-//    List<User> findByEmailAndName(String email, String name);
 }

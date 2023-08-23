@@ -45,29 +45,51 @@ class NoteRepositoryTest {
     @Test
     void noteTest(){
         insUser();
+        UserDomain user1 = new UserDomain();
+        UserDomain user2 = new UserDomain();
+        BookDomain book = new BookDomain();
         for (int i = 0 ; i < 10 ; i++ ){
-            UserDomain user1 = randomUser();
-            UserDomain user2 = randomUser();
+            user1 = randomUser();
+            user2 = randomUser();
             while(user1.getId() == user2.getId()){
                 user2 = randomUser();
             }
+            book = insBook();
             // Note test용;
             NoteDomain note = new NoteDomain();
             note.setUser(user1);
-            note.setContents("아무말이나 일단 막 짓걸이자.");
+            note.setContents("아무말이나 일단 막 짓걸이자. ["+i+"]");
             note.setReceiver(user2);
-            note.setBook(insBook());
+            note.setBook(book);
+//            note.setBook(book);
             note.setReceptionChk(1L);
 
             noteRepository.save(note);
         }
         noteRepository.findAll().forEach(System.out::println);
 
+        System.out.println("---- 쪽지 찾기 ( 사용자 , 수신인 ) ----");
+        noteRepository.findByUserIdAndReceiverId(user1.getId() ,user2.getId()).forEach(System.out::println);
+        System.out.println("---- 쪽지 찾기 ( 내가 쓴 쪽지 ) ----");
+        noteRepository.findByUserId(user1.getId()).forEach(System.out::println);
+//        noteRepository.findAllBy().forEach(System.out::println);
+        System.out.println("---- 쪽지 찾기 ( 내가 받은 쪽지 ) ----");
+        noteRepository.findByReceiverId(user1.getId()).forEach(System.out::println);
+
+
     }
 
 
     BookDomain insBook(){
         BookDomain book = BookDomain.builder()
+                .book_detail("book_detail")
+                .user(randomUser())
+                .cate("01")
+                .price(1000)
+                .rental_stat("01")
+                .rental_date(7)
+                .rental_spot("서울시 중랑구")
+                .name("아무책이나 등록해보자")
                 .build();
         bookRepository.save(book);
         return book;
