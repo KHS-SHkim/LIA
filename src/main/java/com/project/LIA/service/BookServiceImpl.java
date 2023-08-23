@@ -127,7 +127,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override   //검색 리스트
-    public List<BookDomain> searchList(String keyword){ return bookRepository.findByKeyWord(keyword);}
+    public List<BookDomain> searchList(String keyword){ return bookRepository.findByNameContaining(keyword);}
 
     @Override   //페이징
     public List<BookDomain> list(Integer page, Model model) {

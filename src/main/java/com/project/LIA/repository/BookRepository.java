@@ -10,11 +10,8 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<BookDomain,Long> {
 
     // 카테고리별 글 리스트
-    @Query("SELECT b FROM BookDomain b WHERE b.cate = :cate")
-    List<BookDomain> findByCate(@Param("cate") String cate);
+    List<BookDomain> findByCate(String cate);
 
     // 검색 리스트
-    @Query("SELECT b FROM BookDomain b " +
-            "WHERE b.title like '%' || #(keyword) || '%'")
-    List<BookDomain> findByKeyWord(@Param("keyword") String keyword);
+    List<BookDomain> findByNameContaining(String keyword);
 }
