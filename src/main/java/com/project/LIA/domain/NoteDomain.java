@@ -7,29 +7,34 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(callSuper = true)
+//@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity(name="note")
 public class NoteDomain extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     // Note : User = N:1
-    @ManyToOne
-    UserDomain user;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private UserDomain user;
 
-    @ManyToOne
-    UserDomain receiver;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
+    @JoinColumn(name="receiver_id", referencedColumnName = "id")
+    private UserDomain receiver;
 
-    @ManyToOne
-    BookDomain book;
+//    @ManyToOne
+//    @JoinColumn(name = "book_id", table = "book")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= BookDomain.class )
+    @JoinColumn(name="book_id", referencedColumnName = "id")
+    private BookDomain book;
 
     @Column(name = "contents", nullable = false, columnDefinition = "LONGTEXT")
-    String contents;
+    private String contents;
 
     @Column(name = "reception_chk")
-    Long receptionChk;
+    private Long receptionChk;
 
 
 }

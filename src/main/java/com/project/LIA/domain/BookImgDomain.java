@@ -22,4 +22,7 @@ public class BookImgDomain {
     @Column(name = "book_id")
     private int book;   // 어느글의 첨부파일? (FK)
 
+    @Transient
+    private boolean isImage;   // 이미지 여부
+
 }

@@ -10,10 +10,13 @@ import java.util.List;
 public interface UserService {
 
     // 로그인 아이디로 회원 정보 가져오기
-    UserDomain fondByUsername(String username);
+    UserDomain findByUsername(String username);
 
     // 아이디 중복 확인
     boolean isExist(String username);
+
+    // 이메일 중복 확인
+    boolean isEmail(String email);
 
     // 회원 등록
     int register(UserDomain userDomain);
@@ -22,7 +25,7 @@ public interface UserService {
     int addAddress(AddressDomain addressDomain);
 
     // 주소 읽어오기
-    List<AddressDomain> findAddressByUserId(UserDomain userDomain);
+    List<AddressDomain> findAddressByUser(UserDomain userDomain);
 
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);
