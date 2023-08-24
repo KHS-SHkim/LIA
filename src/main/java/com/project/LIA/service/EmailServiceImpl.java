@@ -12,7 +12,7 @@ import java.util.Random;
 @Service
 public class EmailServiceImpl implements EmailService{
 
-//    @Autowired
+    @Autowired
     JavaMailSender javaMailSender;
 
     private UserRepository userRepository;
