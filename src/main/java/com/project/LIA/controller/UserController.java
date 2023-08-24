@@ -1,14 +1,20 @@
 package com.project.LIA.controller;
 
+import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.UserDomain;
+import com.project.LIA.domain.UserVofR;
+import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
-import com.project.LIA.service.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -16,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AddressService addressService;
 
     public UserController(){
         System.out.println(getClass().getName() + "() 생성");
@@ -25,7 +34,7 @@ public class UserController {
     public void register(){}
 
     @PostMapping("/register")
-    public String register(UserDomain user,
+    public String register(@Valid UserVofR userVofR,
                            @RequestParam("inputAuthNum") String inputAuthNum,
                            @RequestParam("authNum") String authNum,
                            BindingResult result,
@@ -33,7 +42,47 @@ public class UserController {
                            RedirectAttributes redirectAttributes
     ){
 
+        if (!result.hasFieldErrors("username") && userService.isExist(userVofR.getUsername())) {
+            result.rejectValue("username", "이미존재하는 아이디 입니다.");
+        }
 
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("username", userVofR.getUsername());
+            redirectAttributes.addFlashAttribute("nickname", userVofR.getNickname());
+            redirectAttributes.addFlashAttribute("phone", userVofR.getPhone());
+            redirectAttributes.addFlashAttribute("email", userVofR.getEmail());
+            redirectAttributes.addFlashAttribute("post_num", userVofR.getPost_num());
+            redirectAttributes.addFlashAttribute("address", userVofR.getAddress());
+            redirectAttributes.addFlashAttribute("address_detail", userVofR.getAddress_detail());
+            redirectAttributes.addFlashAttribute("inputAuthNum",inputAuthNum);
+            redirectAttributes.addFlashAttribute("authNum", authNum);
+
+            List<FieldError> errorList = result.getFieldErrors();
+            for(FieldError err : errorList){
+                redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
+            }
+            return "redirect:/user/register";
+        }
+
+        UserDomain userDomain = new UserDomain();
+        userDomain.setUsername(userVofR.getUsername());
+        userDomain.setPassword(userVofR.getPassword());
+        userDomain.setNickname(userVofR.getNickname());
+        userDomain.setPhone(userVofR.getPhone());
+        userDomain.setEmail(userVofR.getEmail());
+
+        int cnt = userService.register(userDomain);
+
+        AddressDomain addressDomain = new AddressDomain();
+        addressDomain.setUser(userDomain);
+        addressDomain.setAddress_detail(userVofR.getAddress_detail());
+        addressDomain.setAddress(userVofR.getAddress());
+        addressDomain.setPost_num(userVofR.getPost_num());
+
+        int cnt1 = addressService.register(addressDomain);
+
+        model.addAttribute("result", cnt);
+        model.addAttribute("result1", cnt1);
 
         return "/registerOK";
     }
@@ -55,5 +104,7 @@ public class UserController {
             return 0;
         }
     }
+
+
 
 }

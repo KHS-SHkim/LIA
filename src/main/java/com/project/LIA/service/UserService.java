@@ -21,11 +21,7 @@ public interface UserService {
     // 회원 등록
     int register(UserDomain userDomain);
 
-    // 주소 등록
-    int addAddress(AddressDomain addressDomain);
 
-    // 주소 읽어오기
-    List<AddressDomain> findAddressByUser(UserDomain userDomain);
 
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);

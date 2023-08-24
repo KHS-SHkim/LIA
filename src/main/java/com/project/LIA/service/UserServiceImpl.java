@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService{
         this.authorityRepository = authorityRepository;
     }
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(){}
@@ -57,18 +57,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int register(UserDomain userDomain) {
-        return 0;
+
+        userDomain.setPassword(passwordEncoder.encode(userDomain.getPassword()));
+        userDomain.addAuthority(authorityRepository.findByName("ROLE_MEMbER"));
+        userRepository.saveAndFlush(userDomain);
+
+        return 1;
     }
 
-    @Override
-    public int addAddress(AddressDomain addressDomain) {
-        return 0;
-    }
-
-    @Override
-    public List<AddressDomain> findAddressByUser(UserDomain userDomain) {
-        return null;
-    }
 
     @Override
     public List<AuthorityDomain> selectAuthoritiesById(long id) {
