@@ -5,4 +5,5 @@ import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfig
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<AddressDomain,Long> {
+    AddressDomain findByUserId(Long user_id);
 }
