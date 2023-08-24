@@ -1,6 +1,8 @@
 package com.project.LIA.repository;
 
 import com.project.LIA.domain.*;
+import com.project.LIA.service.NoteService;
+import com.project.LIA.service.NoteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,10 @@ class NoteRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+
+    @Autowired
+    private NoteService noteService;
 
 
 
@@ -66,18 +72,21 @@ class NoteRepositoryTest {
 
             noteRepository.save(note);
         }
+        System.out.println("==== Note 테스트 데이터 ====");
         noteRepository.findAll().forEach(System.out::println);
-
         System.out.println("---- 쪽지 찾기 ( 사용자 , 수신인 ) ----");
         noteRepository.findByUserIdAndReceiverId(user1.getId() ,user2.getId()).forEach(System.out::println);
         System.out.println("---- 쪽지 찾기 ( 내가 쓴 쪽지 ) ----");
         noteRepository.findByUserId(user1.getId()).forEach(System.out::println);
-//        noteRepository.findAllBy().forEach(System.out::println);
         System.out.println("---- 쪽지 찾기 ( 내가 받은 쪽지 ) ----");
         noteRepository.findByReceiverId(user1.getId()).forEach(System.out::println);
-
+        UserDomain tmpUser = randomUser();
+        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmpUser + "---------------");
+        noteService.findMyNoteList(tmpUser);
+        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmpUser + "---------------");
 
     }
+
 
 
     BookDomain insBook(){
