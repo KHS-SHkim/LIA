@@ -1,5 +1,6 @@
 package com.project.LIA.config;
 
+import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 //시큐리티가 /user/login (POST) 주소요청이 오면 낚아채서 로그인을 진행시킨다.
 //로그인(인증) 진행이 완료되면 '시큐리티 session' 에 넣어주게 된다.
@@ -48,25 +50,24 @@ public class PrincipalDetails implements UserDetails {
 
         Collection<GrantedAuthority> collect = new ArrayList<>();
 
-//        List<AuthorityDomain> list =  userService.selectAuthoritiesById(user.getId());  // DB 에서 user 의 권한(들) 읽어오기
+        List<AuthorityDomain> list =  userService.selectAuthoritiesById(user.getId());  // DB 에서 user 의 권한(들) 읽어오기
 
-//        for(Authority auth : list){
-//            collect.add(new GrantedAuthority() {
-//                @Override
-//                public String getAuthority() {
-//                    return auth.getName();
-//                }
-//
-//                // thymeleaf 등에서 활용하려구. (학습목적)
-//                @Override
-//                public String toString() {
-//                    return auth.getName();
-//                }
-//            });
-//        }
-//
-//        return collect;
-        return null;
+        for(AuthorityDomain auth : list){
+            collect.add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return auth.getName();
+                }
+
+                // thymeleaf 등에서 활용하려구. (학습목적)
+                @Override
+                public String toString() {
+                    return auth.getName();
+                }
+            });
+        }
+
+        return collect;
     }
 
     @Override

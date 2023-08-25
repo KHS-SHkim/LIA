@@ -54,7 +54,7 @@
 <div class="row">
     <div class="col-3 side text-center">
         <div class="image">
-            <img th:src="@{/image/cars2.jpg}">
+            <img th:src="@{/image/default.jpg}">
         </div>
         <div class="info text-center">
                 <span>
@@ -87,7 +87,40 @@
     </div>
 
     <div class="col-9 c">
-        <!-- TODO -->
+        <div class="row">
+            <div class="col text-center ms-3 pt-3 pb-3" style="border: 1px solid black;">
+                <h2>일반로그인</h2>
+                <div class="row mt-1">
+                    <div class="col">
+                        <form method="POST" th:action="@{/user/login}">
+                            <div class="form-group mt-3">
+                                <label for="username" style="font-weight: 550;">아이디</label>
+                                <input type="text" class="form-control mt-3" id="username" name="username" placeholder="아이디" required>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="password" style="font-weight: 550;">비밀번호</label>
+                                <input type="password" class="form-control mt-3" id="password" name="password" placeholder="비밀번호" required>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success mt-3 btn-block w-100">로그인</button>
+                                <a href="/user/findPassword" class="btn btn-warning mt-3 d-block">회원가입</a>
+                                <a href="/register" class="btn btn-dark mt-3 d-block">비밀번호 찾기</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center ms-5 me-3 pt-3 pb-3" style="border: 1px solid black;">
+                <h2>간편로그인</h2>
+                <div class="row mt-5">
+                    <div class="col mt-5">
+                        <form method="POST" action="#">
+                            <a class="mt-5" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=0d1c222166732e07ce216a638ad66db8&redirect_uri=http://localhost:8094/user/callback"><img th:src="@{/image/kakao_login.png}"></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

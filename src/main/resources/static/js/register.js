@@ -63,7 +63,7 @@ $(function(){
         let phone = $("#phone").val();
 
         if(phone != null){
-            if(phone.length>11 && phone.length<11){
+            if(phone.length>11 || phone.length<11){
                 $("#phone_error").html("전화번호는 11자리만 입력가능합니다.");
                 $("#phone_error").css("color","red");
                 return;
@@ -160,6 +160,7 @@ $(function(){
         }
 
         $(this).unbind("submit").submit();
+
     });
 
 

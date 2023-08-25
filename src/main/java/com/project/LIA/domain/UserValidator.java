@@ -1,6 +1,5 @@
 package com.project.LIA.domain;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -12,13 +11,13 @@ public class UserValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         boolean result = UserVofR.class.isAssignableFrom(clazz);
-        return false;
+        return result;
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        UserVofR user = (UserVofR) target;
+        UserVofR userVofR = (UserVofR) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"username", "아이디는 필수입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "비밀번호는 필수입니다.");
@@ -29,11 +28,11 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "주소는 필수입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address_detail", "상세주소는 필수입니다.");
 
-        if(!user.getPassword().equals(user.getRe_password())){
+        if(!userVofR.getPassword().equals(userVofR.getRe_password())){
             errors.rejectValue("re_password","비밀번호가 일치하지 않습니다.");
         }
 
-        String username = user.getUsername();
+        String username = userVofR.getUsername();
         String usernameRegex = "^[a-zA-Z0-9]*$";
 
         Pattern pattern = Pattern.compile(usernameRegex);
@@ -44,7 +43,7 @@ public class UserValidator implements Validator {
         }
 
 
-        String phone = user.getPhone();
+        String phone = userVofR.getPhone();
         String phoneRegex = "^[0-9]{11}$";
         Pattern pattern1 = Pattern.compile(phoneRegex);
         Matcher matcher1 = pattern1.matcher(phone);
@@ -53,7 +52,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("phone","11자리 전화번호를 입력해주세요");
         }
 
-        String email = user.getEmail();
+        String email = userVofR.getEmail();
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern2 = Pattern.compile(emailRegex);
         Matcher matcher2 = pattern2.matcher(email);
