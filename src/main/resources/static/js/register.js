@@ -5,16 +5,6 @@ $(function(){
         let username = $("#username").val();
         const usernameRegex = /^[a-zA-Z0-9]*$/;
 
-        if(username){
-           $("#error_msg").html("");
-        }
-
-        if(!usernameRegex.test(username)){
-            alert("아이디는 영문,숫자만 사용가능합니다.");
-            $("#username").focus();
-            return;
-        }
-
         // 아이디 중복확인
         $.ajax({
             url: "/user/register/usernameChk",
@@ -22,7 +12,11 @@ $(function(){
             data: {username: username},
             dataType: "json",
             success: function(response){
-                if(response == 1){
+                if(!usernameRegex.test(username)){
+                    $("#username_error").html("아이디는 영문 숫자만 입력가능합니다.");
+                    $("#username_error").css("color","red");
+                }
+                else if(response == 1){
                     $("#username_error").html("이미 존재하는 아이디 입니다.");
                     $("#username_error").css("color","red");
                 } else{
@@ -69,8 +63,8 @@ $(function(){
         let phone = $("#phone").val();
 
         if(phone != null){
-            if(phone.length>=12){
-                $("#phone_error").html("전화번호는 11자리 까지만 입력가능합니다.");
+            if(phone.length>11 || phone.length<11){
+                $("#phone_error").html("전화번호는 11자리만 입력가능합니다.");
                 $("#phone_error").css("color","red");
                 return;
             } else{
@@ -166,6 +160,7 @@ $(function(){
         }
 
         $(this).unbind("submit").submit();
+
     });
 
 

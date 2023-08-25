@@ -34,6 +34,15 @@
         color:white;
     }
 
+    span a.active{
+        background-color: #555;
+        color:white;
+    }
+
+    span a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+    }
 
     .userinfo{
         text-decoration: none;
