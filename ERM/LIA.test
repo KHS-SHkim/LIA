@@ -1,0 +1,22 @@
+SELECT * FROM address;
+SELECT * FROM user_authority;
+SELECT * FROM authority;
+SELECT * FROM book_img;
+SELECT * FROM Declaration;
+SELECT * FROM note;
+SELECT * FROM book;
+SELECT * FROM commen_code ;
+SELECT * FROM questionandanswer ;
+SELECT * FROM user;
+
+INSERT INTO authority VALUES
+('ROLE_MEMBER'),('ROLE_ADMIN')
+;
+
+INSERT INTO questionandanswer (id, question, answer) VALUES
+(1, "이용 정지된이유?", "거래 상습적 미납 및 거래사기 적발시 해당계정은 정지됩니다." ),
+(2, "사기등 이유로 정지된 시용자 재가입뒤 랜탈서비스를 이용가능한가요?", "이용정지 탈퇴된 사용자는 다시 재가입불가." ),
+(3, "렌탈사기 거래 조심하세요?", "유저간의 거래시 정확한 정보와 인증받아서 거래를 요하기 바랍니다." )
+;
+
+INSERT 
