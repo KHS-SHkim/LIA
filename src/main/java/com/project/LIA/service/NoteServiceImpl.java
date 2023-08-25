@@ -49,30 +49,30 @@ public class NoteServiceImpl implements NoteService {
 
         List<NoteDomain> sumNoteList = new ArrayList<>();
         List<NoteDomain> tmpList = new ArrayList<>();
-        for(NoteDomain t : noteList){
-            NoteDomain tmp = null;
-            // 내가 보낸 쪽지
-            if ( t.getUser().getId().equals(user.getId())){
-                for(NoteDomain y : reciveList){
-
-                }
-                if ( tmp == null ){
-                    tmp = t;
-                } else if (tmp.getId() < t.getId()) {
-                    tmp = t;
-                }
-                tmpList.add(tmp);
-            }
-            // 내가 받은 쪽지
-            else if (t.getReceiver().getId().equals(user.getId())){
-                if ( tmp == null ){
-                    tmp = t;
-                } else if (tmp.getId() < t.getId()) {
-                    tmp = t;
-                }
-                tmpList.add(tmp);
-            }
-        }
+//        for(NoteDomain t : noteList){
+//            NoteDomain tmp = null;
+//            // 내가 보낸 쪽지
+//            if ( t.getUser().getId().equals(user.getId())){
+//                for(NoteDomain y : reciveList){
+//
+//                }
+//                if ( tmp == null ){
+//                    tmp = t;
+//                } else if (tmp.getId() < t.getId()) {
+//                    tmp = t;
+//                }
+//                tmpList.add(tmp);
+//            }
+//            // 내가 받은 쪽지
+//            else if (t.getReceiver().getId().equals(user.getId())){
+//                if ( tmp == null ){
+//                    tmp = t;
+//                } else if (tmp.getId() < t.getId()) {
+//                    tmp = t;
+//                }
+//                tmpList.add(tmp);
+//            }
+//        }
         System.out.println("chk   ::::::::::::");
         tmpList.forEach(System.out::println);
         return sumNoteList;
