@@ -80,10 +80,10 @@ class NoteRepositoryTest {
         noteRepository.findByUserId(user1.getId()).forEach(System.out::println);
         System.out.println("---- 쪽지 찾기 ( 내가 받은 쪽지 ) ----");
         noteRepository.findByReceiverId(user1.getId()).forEach(System.out::println);
-        UserDomain tmpUser = randomUser();
-        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmpUser + "---------------");
-        noteService.findMyNoteList(tmpUser);
-        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmpUser + "---------------");
+        UserDomain tmp = randomUser();
+        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmp + "---------------");
+        noteService.findMyNoteList(tmp).forEach(System.out::println);
+        System.out.println("--------------- 내가 보낸 쪽지 찾기 "+ tmp + "---------------");
 
     }
 

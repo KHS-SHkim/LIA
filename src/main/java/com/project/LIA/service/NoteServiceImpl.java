@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -39,27 +41,40 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.save(note);
     }
 
-    @Override   // 내가 쓰거나 받은쪽지
+    @Override   // 내가 쓰거나 받은쪽지 (쪽지함)
     public List<NoteDomain> findMyNoteList(UserDomain user) {
-        List<NoteDomain> noteList;
-        noteList = noteRepository.findAll();
-        List<NoteDomain> retNoteList = new ArrayList<NoteDomain>();
-//        for (NoteDomain note : noteList) {
-//            UserDomain sendUser = note.getUser();
-//            UserDomain receiveUser = note.getReceiver();
-//            if (sendUser.getId().equals(user.getId())) {
-//                int t = retNoteList.size();
-//                if (t == 0) {
-//                    retNoteList.set(1,note);
-//                }else{
-//                    retNoteList.set(retNoteList.size()+1,note);
-//                }
-//
-//            }
-////            receiveUser.getId().equals(user.getId())
-//        }
-//        retNoteList.forEach(System.out::println);
+        List<NoteDomain> noteList = noteRepository.findByUserIdOrReceiverId(user.getId(), user.getId());
+        List<NoteDomain> sendList = noteRepository.findByUserId(user.getId());
+        List<NoteDomain> reciveList = noteRepository.findByReceiverId(user.getId());
 
-        return null;
+        List<NoteDomain> sumNoteList = new ArrayList<>();
+        List<NoteDomain> tmpList = new ArrayList<>();
+        for(NoteDomain t : noteList){
+            NoteDomain tmp = null;
+            // 내가 보낸 쪽지
+            if ( t.getUser().getId().equals(user.getId())){
+                for(NoteDomain y : reciveList){
+
+                }
+                if ( tmp == null ){
+                    tmp = t;
+                } else if (tmp.getId() < t.getId()) {
+                    tmp = t;
+                }
+                tmpList.add(tmp);
+            }
+            // 내가 받은 쪽지
+            else if (t.getReceiver().getId().equals(user.getId())){
+                if ( tmp == null ){
+                    tmp = t;
+                } else if (tmp.getId() < t.getId()) {
+                    tmp = t;
+                }
+                tmpList.add(tmp);
+            }
+        }
+        System.out.println("chk   ::::::::::::");
+        tmpList.forEach(System.out::println);
+        return sumNoteList;
     }
 }
