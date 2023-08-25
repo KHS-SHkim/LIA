@@ -1,5 +1,7 @@
 package com.project.LIA.config;
 
+import com.project.LIA.domain.UserDomain;
+import com.project.LIA.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,31 +16,32 @@ import org.springframework.stereotype.Service;
 // 인증성공하면 결과를 UserDetails 로 리턴
 
 @Service    // UserDetailsService 빈 등록
-public class PrincipalDetailService{
-//public class PrincipalDetailService implements UserDetailsService {
-//    @Autowired
-//    private UserService userService;
-//
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        System.out.println("loadUserByUsername(" + username + ")");
-//
-//        //DB조회
-//        User user = userService.findByusername(username);
-//
-//        // 해당 username 의 user 가 DB 에 있다면
-//        // UserDetails 생성해서 리턴
-//        if( user != null){
-//            PrincipalDetails userDetails = new PrincipalDetails(user);
-//            userDetails.setUserService( userService );
-//            return userDetails;
-//        }
-//
-//        // 해당 username 의 user 가 없다면?
-//        // UsernameNotFoundException 을 throw 해주어야 한다.
-//        throw  new UsernameNotFoundException(username);
-//        // ※ 주의!  여기서 null 리턴하면 예외 발생
-//
-//    }
+
+public class PrincipalDetailService implements UserDetailsService {
+    @Autowired
+    private UserService userService;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("loadUserByUsername(" + username + ")");
+
+        //DB조회
+        UserDomain user = userService.findByUsername(username);
+
+        // 해당 username 의 user 가 DB 에 있다면
+        // UserDetails 생성해서 리턴
+        if (user != null) {
+            PrincipalDetails userDetails = new PrincipalDetails(user);
+            userDetails.setUserService(userService);
+            return userDetails;
+        }
+
+        // 해당 username 의 user 가 없다면?
+        // UsernameNotFoundException 을 throw 해주어야 한다.
+        throw new UsernameNotFoundException(username);
+        // ※ 주의!  여기서 null 리턴하면 예외 발생
+
+    }
 }
+

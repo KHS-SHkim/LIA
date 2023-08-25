@@ -24,8 +24,8 @@ public interface BookService {
 
     //3. 글 리스트
     List<BookDomain> list();    // -모든 글 리스트
-    List<BookDomain> cateList(String cate);    // -카테고리별 리스트
-    List<BookDomain> searchList(String keyword);    // -검색 리스트
+    List<BookDomain> cateList(String cate,Integer page, Model model);    // -카테고리별 리스트
+    List<BookDomain> searchList(String keyword,Integer page, Model model);    // -검색 리스트
     // 페이징 리스트
     List<BookDomain> list(Integer page, Model model);
 
