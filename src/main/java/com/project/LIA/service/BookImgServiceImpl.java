@@ -11,6 +11,7 @@ public class BookImgServiceImpl implements BookImgService{
 
     @Autowired
     public void setAttachmentRepository(BookImgRepository bookImgRepository) {
+
         this.bookImgRepository = bookImgRepository;
     }
 
