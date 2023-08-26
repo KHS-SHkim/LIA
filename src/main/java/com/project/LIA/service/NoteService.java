@@ -18,8 +18,9 @@ public interface NoteService {
     List<NoteDomain> findreceivNote(UserDomain receiver);
 
     // 쪽지 쓰기 ( user = 작성자 / receiver = 상대 )
-    void writeNote(NoteDomain note);
+    void writeNote(NoteDomain noteDomain);
 
-    // 내가 쓰거나 받은 쪽지 (가장 최신 쪽지를 위로)
-    List<NoteDomain> findMyNoteList(UserDomain user);
+    // 내가 쓰거나 받은쪽지 (쪽지함)
+    List<NoteDomain> findMyNoteList(UserDomain userDomain);
+
 }

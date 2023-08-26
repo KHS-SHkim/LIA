@@ -35,7 +35,6 @@ class NoteRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private NoteService noteService;
 

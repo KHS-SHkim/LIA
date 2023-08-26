@@ -1,18 +1,14 @@
 package com.project.LIA.service;
 
 import com.project.LIA.domain.NoteDomain;
-import com.project.LIA.domain.NoteSum;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -23,17 +19,23 @@ public class NoteServiceImpl implements NoteService {
 
     @Override   // 쪽지 찾기 ( 사용자 , 수신인 )
     public List<NoteDomain> findNote(UserDomain user, UserDomain receiver) {
-        return noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
+        List<NoteDomain> retunList= noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
+        retunList.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        return retunList;
     }
 
     @Override   // 쪽지 찾기 ( 내가 쓴 쪽지 )
     public List<NoteDomain> findMyNote(UserDomain user) {
-        return noteRepository.findByUserId(user.getId());
+        List<NoteDomain> retunList= noteRepository.findByUserId(user.getId());
+        retunList.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        return retunList;
     }
 
     @Override   // 쪽지 찾기 ( 내가 받은 쪽지 )
     public List<NoteDomain> findreceivNote(UserDomain receiver) {
-        return noteRepository.findByReceiverId(receiver.getId());
+        List<NoteDomain> retunList= noteRepository.findByReceiverId(receiver.getId());
+        retunList.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        return retunList;
     }
 
     @Override   // 쪽지 쓰기 ( user = 작성자 / receiver = 상대 )
@@ -44,37 +46,35 @@ public class NoteServiceImpl implements NoteService {
     @Override   // 내가 쓰거나 받은쪽지 (쪽지함)
     public List<NoteDomain> findMyNoteList(UserDomain user) {
         List<NoteDomain> noteList = noteRepository.findByUserIdOrReceiverId(user.getId(), user.getId());
-        List<NoteDomain> sendList = noteRepository.findByUserId(user.getId());
-        List<NoteDomain> reciveList = noteRepository.findByReceiverId(user.getId());
-
         List<NoteDomain> sumNoteList = new ArrayList<>();
-        List<NoteDomain> tmpList = new ArrayList<>();
-//        for(NoteDomain t : noteList){
-//            NoteDomain tmp = null;
-//            // 내가 보낸 쪽지
-//            if ( t.getUser().getId().equals(user.getId())){
-//                for(NoteDomain y : reciveList){
-//
-//                }
-//                if ( tmp == null ){
-//                    tmp = t;
-//                } else if (tmp.getId() < t.getId()) {
-//                    tmp = t;
-//                }
-//                tmpList.add(tmp);
-//            }
-//            // 내가 받은 쪽지
-//            else if (t.getReceiver().getId().equals(user.getId())){
-//                if ( tmp == null ){
-//                    tmp = t;
-//                } else if (tmp.getId() < t.getId()) {
-//                    tmp = t;
-//                }
-//                tmpList.add(tmp);
-//            }
-//        }
+        List<Long[]> tmpList = new ArrayList<>();
+        List<Long> tmpList2 = new ArrayList<>();
+        for (NoteDomain t : noteList){
+            if (t.getUser().getId() < t.getReceiver().getId()){
+                Long [] arr = {t.getId(), t.getUser().getId(), t.getReceiver().getId()};
+                tmpList.add(arr);
+            }
+            if (t.getUser().getId() > t.getReceiver().getId()){
+                Long [] arr = {t.getId(), t.getReceiver().getId(), t.getUser().getId()};
+                tmpList.add(arr);
+            }
+        }
+
+        for (Long [] t : tmpList){
+            Long [] o = t;
+            for (Long[] x : tmpList){
+                if (t[1] == x[1] && t[2] == x[2] && t[0] <= x[0]){
+                    o = x;
+                }
+            }
+            if (tmpList2.isEmpty() || tmpList2.get(tmpList2.size()-1) != o[0] ){
+                tmpList2.add(o[0]);
+            }
+        }
+
         System.out.println("chk   ::::::::::::");
-        tmpList.forEach(System.out::println);
+        sumNoteList = noteRepository.findAllById(tmpList2);
+        sumNoteList.sort(Comparator.comparing(NoteDomain::getId).reversed());
         return sumNoteList;
     }
 }

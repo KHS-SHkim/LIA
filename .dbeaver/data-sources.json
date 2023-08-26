@@ -1,10 +1,10 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql8-18a23dffee7-7c2b80e6fdea183b": {
+		"mysql8-18a30df2ff5-458a5acfbd3956b1": {
 			"provider": "mysql",
 			"driver": "mysql8",
-			"name": "mydb2304 1",
+			"name": "mydb2304",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",
@@ -18,7 +18,7 @@
 					"connectTimeout": "20000",
 					"rewriteBatchedStatements": "true",
 					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
-					"allowPublicKeyRetrieval": "YES"
+					"allowPublicKeyRetrieval": "TRUE"
 				},
 				"auth-model": "native"
 			}

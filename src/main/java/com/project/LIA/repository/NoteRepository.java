@@ -17,6 +17,9 @@ public interface NoteRepository extends JpaRepository<NoteDomain, Long> {
     // 쪽지 찾기 ( 내가 받은 쪽지 )
     List<NoteDomain> findByReceiverId(Long receiver_id);
 
+    // 쪽지함
     List<NoteDomain> findByUserIdOrReceiverId(Long user_id, Long receiver_id);
+
+
 
 }

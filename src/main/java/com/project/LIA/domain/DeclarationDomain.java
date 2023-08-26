@@ -1,23 +1,59 @@
 package com.project.LIA.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity(name = "declaration")
-public class DeclarationDomain {
+public class DeclarationDomain extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //TODO
+    // Note : User = N:1
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
+    @ToString.Exclude
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private UserDomain user;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
+    @ToString.Exclude
+    @JoinColumn(name="reporter_id", referencedColumnName = "id")
+    private UserDomain reporter;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity= BookDomain.class )
+    @ToString.Exclude
+    @JoinColumn(name="book_id", referencedColumnName = "id")
+    private BookDomain book;
+
+
+    private String reportType;
+
+
+    private String reportContent;
+
+
+    private String answerContent;
+
+    @CreatedDate   // Entity 생성시점의 시간 입력
+    // java.time.*  객체 변환을 위한 annotation
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonProperty("answerdate")
+    private LocalDateTime answerDate;
+
+
 }
