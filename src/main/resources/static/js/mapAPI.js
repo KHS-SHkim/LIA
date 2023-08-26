@@ -26,9 +26,9 @@ function sample6_execDaumPostcode() {
                 document.getElementById("sample6_extraAddress").value = '';
             }
 
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById("sample6_address").value = addr;
-            document.getElementById("sample6_detailAddress").focus();
+            document.getElementById('post_num').value = data.zonecode;
+            document.getElementById("address").value = addr;
+            document.getElementById("address_detail").focus();
         }
     }).open();
 }

@@ -1,9 +1,8 @@
 package com.project.LIA.service;
 
-import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.UserDomain;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,11 +20,8 @@ public interface UserService {
     // 회원 등록
     int register(UserDomain userDomain);
 
-    // 주소 등록
-    int addAddress(AddressDomain addressDomain);
-
-    // 주소 읽어오기
-    List<AddressDomain> findAddressByUser(UserDomain userDomain);
+    // 회원 수정
+    int update(Integer isDelete, String originalImage, UserDomain user, MultipartFile multipartFile);
 
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);
