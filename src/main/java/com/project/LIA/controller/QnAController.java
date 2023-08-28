@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Qna")
+@RequestMapping("/qna")
 public class QnAController {
     @Autowired
     private QnAService qnaService;
@@ -20,7 +20,7 @@ public class QnAController {
         System.out.println(getClass().getName() + "()생성");
     }
 
-    @GetMapping("/list") // 질문 리스트 // 페이지가 표시된 질문 및 답변 목록 검색
+    @GetMapping("/qna") // 질문 리스트 // 페이지가 표시된 질문 및 답변 목록 검색
     public List<QnADomain> getAllQnA(@PageableDefault(size = 10)Pageable pageable){
         return qnaService.getAllQnA(pageable);
     }
