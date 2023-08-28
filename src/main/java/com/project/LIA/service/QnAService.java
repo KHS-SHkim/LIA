@@ -13,7 +13,7 @@ public interface QnAService {
 
 //    QnADomain createQnA(QnADomain qnalist);
 
-    QnADomain getQnAById(Long user);
+    QnADomain getQnAById(Long userId);
 
     QnADomain updateQnA(Long userId, QnADomain question);
 

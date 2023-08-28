@@ -26,24 +26,24 @@ public class QnAServiceImpl implements QnAService {
 //    }
 
     @Override   // 해당 Id 질문검색
-    public QnADomain getQnAById(Long user) {
-        return (QnADomain) qnARepository.findById(user).orElse(null) ;
+    public QnADomain getQnAById(Long user_id) {
+        return (QnADomain) qnARepository.findById(user_id).orElse(null) ;
     }
 //
     @Override   // 해당 Id QnA 항목 수정
-    public QnADomain updateQnA(Long user, QnADomain question) {
-        QnADomain existingQnA = (QnADomain) qnARepository.findById(user).orElse(null);
+    public QnADomain updateQnA(Long user_id, QnADomain question) {
+        QnADomain existingQnA = (QnADomain) qnARepository.findById(user_id).orElse(null);
         if (existingQnA != null){
             existingQnA.setQuestion(question.getQuestion());
             existingQnA.setAnswer(question.getAnswer());
             return qnARepository.save(existingQnA);
-        } else
+        }
         return null;
     }
 
     @Override   // 해당 Id QnA 항목수정
-    public void deleteQnA(Long user) {
-        qnARepository.deleteById(user);
+    public void deleteQnA(Long user_id) {
+        qnARepository.deleteById(user_id);
     }
 
     @Override // 페이지가 표시된 질문 및 답변 목록 검색
