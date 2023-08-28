@@ -20,7 +20,7 @@ public class QnADomain extends BaseEntity {
 
     @ManyToOne
     @JoinColumn
-    private UserDomain user;
+    private UserDomain user_id;
 
     @Column(name = "question" , columnDefinition = "longtext" , nullable = false)
     private String question;        // 질문글

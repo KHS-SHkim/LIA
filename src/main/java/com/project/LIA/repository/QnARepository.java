@@ -21,8 +21,8 @@ public interface QnARepository extends JpaRepository<QnADomain, Long> {
 
     QnADomain save(QnADomain question);
 
-    Optional<QnADomain> findById(Long user);
+    Optional<QnADomain> findById(Long user_id);
 
-    void deleteById(Long user);
+    void deleteById(Long user_id);
 }
 
