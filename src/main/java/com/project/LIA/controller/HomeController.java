@@ -39,17 +39,17 @@ public class HomeController {
     }
 
     @RequestMapping("/home")
-    public String home(Model model ){
+    public String home(Model model){
 
         UserDomain user = U.getLoggedUser();
+        System.out.println("유저의 존재 여부 확인:" + user);
         System.out.println("log12345");
         if (user != null){
 
             user = userRepository.findById(user.getId()).orElse(null);
             model.addAttribute("profile_img", user.getProfile_img());
             System.out.println("log12" + user.getProfile_img());
-        } else
-            System.out.println("로그인 22222 log1]2`");{
+        } else {
             model.addAttribute("profile_img", null);
         }
         return "/home";

@@ -35,6 +35,8 @@ $(function(){
     $("#chgPwBtn").click(function(){
         $("#chPwDiv").css("display","block");
         $("#chgPwBtn").css("display","none");
+        $("#password").val("");
+        $("#re_password").val("");
         $("#saveBtn").attr("disabled",true);
     })
 
@@ -76,9 +78,11 @@ $(function(){
                 if(phone.length>11 || phone.length<11){
                     $("#phone_error").html("전화번호는 11자리만 입력가능합니다.");
                     $("#phone_error").css("color","red");
+                    $("#saveBtn").attr("disabled", true);
                     return;
                 } else{
                     $("#phone_error").html("");
+                    $("#saveBtn").attr("disabled",false);
                 }
             }
         });
@@ -131,11 +135,6 @@ $(function(){
         }
     });
 
-
-
-
-
-
     $("#post_num").on("keyup",function(){
         let post_num = $("#post_num").val();
 
@@ -187,7 +186,6 @@ $(function(){
         let address_detail = $("#address_detail").val();
 
         if(nickname == null || nickname.length == 0 || phone == null || phone.length == 0 ||
-        password == null || password.length==0 || re_password == null || re_password.length == 0 ||
         post_num == null || post_num.length==0 || address == null || address.length == 0 ||
         address_detail == null || address_detail.length == 0){
             alert("빈칸없이 채워주세요");

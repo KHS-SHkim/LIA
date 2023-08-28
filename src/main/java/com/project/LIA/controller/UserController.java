@@ -173,6 +173,8 @@ public class UserController {
         AddressDomain addressDomain = addressService.findByUserId(U.getLoggedUser().getId());
 
         System.out.println("dddddddddddddddddddddd" + userDomain.getProfile_img());
+        System.out.println("비밀번호 확인:" + userDomain.getPassword());
+
 
         model.addAttribute("profile_img", userDomain.getProfile_img());
         model.addAttribute("nickname", userDomain.getNickname());
@@ -195,26 +197,47 @@ public class UserController {
         System.out.println("userVofR: =====" + userVofR.toString());
 
         UserDomain userDomain = U.getLoggedUser();
+
+        System.out.println("유저의 변경될 비밀번호 : " + userVofR.getPassword());
+
         userDomain.setProfile_img(userVofR.getProfile_img());
         userDomain.setNickname(userVofR.getNickname());
         userDomain.setPhone(userVofR.getPhone());
-        userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
 
-        System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ" + userDomain.toString());
+        if(userVofR.getPassword() != null){
+            userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
+            int isDelete = 0;
+            if(multipartFile == null) isDelete = 1;
+            model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
 
-        int isDelete = 0;
-        if(multipartFile == null) isDelete = 1;
-        model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
+            AddressDomain addressDomain = new AddressDomain();
+            addressDomain = addressService.findByUserId(userDomain.getId());
+            addressDomain.setPost_num(userVofR.getPost_num());
+            addressDomain.setAddress(userVofR.getAddress());
+            addressDomain.setAddress_detail(userVofR.getAddress_detail());
 
-        AddressDomain addressDomain = new AddressDomain();
-        addressDomain = addressService.findByUserId(userDomain.getId());
-        addressDomain.setPost_num(userVofR.getPost_num());
-        addressDomain.setAddress(userVofR.getAddress());
-        addressDomain.setAddress_detail(userVofR.getAddress_detail());
+            addressService.update(addressDomain);
 
-        addressService.update(addressDomain);
+            return "/user/updateOk";
 
-        return "/user/updateOk";
+        } else{
+            int isDelete = 0;
+            if(multipartFile == null) isDelete = 1;
+            model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
+
+            AddressDomain addressDomain = new AddressDomain();
+            addressDomain = addressService.findByUserId(userDomain.getId());
+            addressDomain.setPost_num(userVofR.getPost_num());
+            addressDomain.setAddress(userVofR.getAddress());
+            addressDomain.setAddress_detail(userVofR.getAddress_detail());
+
+            addressService.update(addressDomain);
+
+            return "/user/updateOk";
+        }
+
+
+
     }
 
 

@@ -6,10 +6,11 @@
     border: 1px solid black;
 }
 
-form {
+#myForm {
     width: 50%;
     display: block;
     margin-left: 25%;
+    padding-left: 10%;
 }
 
 .lowb {
