@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class BookImgDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //PK
+    private long id; //PK
 
     @Column(nullable = false)
     private String img_src;   //파일명
 
     @Column(name = "book_id")
-    private int book;   // 어느글의 첨부파일? (FK)
+    private long book;   // 어느글의 첨부파일? (FK)
 
     @Transient
     private boolean isImage;   // 이미지 여부

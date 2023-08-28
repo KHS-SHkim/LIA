@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${book}">
+  alert("해당 정보가 삭제되거나 없습니다");
+  history.back();
+</script>
+<!--<th:block th:if="${book}" th:with="logged_user=${#authentication.principal.user}">-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/update.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <title>LIA</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragment/header}"></div>
+
+<div class="row">
+    <div th:replace="~{fragment/sidebar}"></div>
+    <div class="col-9 c">
+        <h2>수정</h2>
+        <hr>
+        <form th:action="@{/book/update}" method="post" enctype="multipart/form-data">
+
+            <div class="my-3">
+                <label for="name">제목:</label>
+                <input type="text" class="form-control" id="name" placeholder="제목" name="name" th:value="${name}?${name}:${book.name}">
+                <span class="text-danger" th:if="${error_name}" th:utext="${error_name}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="cate">카테고리:</label>
+                <select class="form-select" name="cate" th:value="${cate} ? ${cate} : ${book.cate}">
+                    <option value="동화책" th:selected="${cate == '동화책'}">동화책</option>
+                    <option value="만화책" th:selected="${cate == '만화책'}">만화책</option>
+                    <option value="소설책" th:selected="${cate == '소설책'}">소설책</option>
+                    <option value="교육책" th:selected="${cate == '교육책'}">교육책</option>
+                    <option value="문제집" th:selected="${cate == '문제집'}">문제집</option>
+                </select>
+                <span class="text-danger" th:if="${error_cate}" th:utext="${error_cate}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="book_detail">내용:</label>
+                <textarea class="form-control" rows="5" id="book_detail" placeholder="내용" name="book_detail" th:utext="${book_detail} ? ${book_detail} : ${book.book_detail}"></textarea>
+                <span class="text-danger" th:if="${error_book_detail}" th:utext="${error_book_detail}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="price">가격:</label>
+                <input type="text" class="form-control" id="price" placeholder="가격" name="price" th:value="${price} ? ${price} : ${book.price}">
+                <span class="text-danger" th:if="${error_price}" th:utext="${error_price}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="rental_date">대여 기간:</label>
+                <input type="text" class="form-control" id="rental_date" placeholder="대여기간" name="rental_date" th:value="${rental_date} ? ${rental_date} : ${book.rental_date}">
+                <span class="text-danger" th:if="${error_rental_date}" th:utext="${error_rental_date}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="rental_spot">대여 지역:</label>
+                <input type="text" class="form-control" id="rental_spot" placeholder="대여지역" name="rental_spot" th:value="${rental_spot} ? ${rental_spot} : ${book.rental_spot}">
+                <span class="text-danger" th:if="${error_rental_spot}" th:utext="${error_rental_spot}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="rental_stat">대여 상태:</label>
+                <input type="text" class="form-control" id="rental_stat" placeholder="대여상태" name="rental_stat" th:value="${rental_stat} ? ${rental_stat} : ${book.rental_stat}">
+                <span class="text-danger" th:if="${error_rental_stat}" th:utext="${error_rental_stat}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <!-- 기존 첨부파일 목록 (삭제 가능) -->
+            <div class="container mt-3 mb-3 border rounded" th:if="${book.fileList != null} and ${#lists.size(book.fileList) > 0}">
+                <div id="delFiles"></div> <!-- 삭제할 file 의 id 값(들)을 담기위한 div -->
+                <div class="mb-3 mt-3">
+                    <label>첨부파일:</label>
+                    <div class="input-group mb-2" th:each="attachment : ${book.fileList}">
+                        <input class="form-control col-xs-3" type="text" readonly th:value="${attachment.sourcename }">
+                        <button type="button" class="btn btn-outline-danger" th:data-fileid-del="${attachment.id}">삭제</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 기존 첨부파일 목록 (삭제 가능) -->
+
+
+            <!-- 새로운 첨부파일 추가 write.html 의 내용과 거의 똑같다.-->
+            <div class="container mt-3 mb-3 border rounded">
+                <div class="mb-3 mt-3">
+                    <label>첨부파일추가:</label>
+                    <div id="files">
+
+
+                    </div>
+                    <button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+                </div>
+            </div>
+            <!-- 새로운 첨부파일 추가 -->
+
+
+
+            <!-- 하단 링크 -->
+            <div class="d-flex">
+                <button type="submit" class="btn btn-outline-dark"><!--th:if="${logged_user.id == post.user.id}"-->수정완료</button>
+                <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
+                <a class="btn btn-outline-dark ms-1" th:href="@{/book/list(page=${session.page})}">목록</a>
+            </div>
+            <!-- 하단 링크 -->
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+<!--</th:block>-->
+</html>

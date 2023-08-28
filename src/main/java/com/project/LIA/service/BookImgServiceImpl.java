@@ -11,6 +11,7 @@ public class BookImgServiceImpl implements BookImgService{
 
     @Autowired
     public void setAttachmentRepository(BookImgRepository bookImgRepository) {
+
         this.bookImgRepository = bookImgRepository;
     }
 
@@ -19,7 +20,7 @@ public class BookImgServiceImpl implements BookImgService{
     }
 
     @Override
-    public BookImgDomain findById(Long id) {
+    public BookImgDomain findById(long id) {
         return bookImgRepository.findById(id).orElse(null);
     }
 }

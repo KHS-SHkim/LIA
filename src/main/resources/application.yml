@@ -3,7 +3,7 @@
 
 # 서버 포트 번호
 server:
-  port: 8094
+  port: 8095
 
 
 spring:
@@ -11,6 +11,9 @@ spring:
   output:
     ansi:
       enabled: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 # Thymeleaf 설정
   thymeleaf:
@@ -58,6 +61,6 @@ app:
     # 기본 page_rows 값.  한 '페이지'에 몇개의 글을 리스트 할것인가?
     page_rows: 10
 
-    # 파일업로드경로
+  # 파일업로드경로
   upload:
     path: upload
