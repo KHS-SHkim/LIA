@@ -49,7 +49,7 @@ class NoteRepositoryTest {
 
     @Test
     void noteTest(){
-        insUser();
+//        insUser();
         UserDomain user1 = new UserDomain();
         UserDomain user2 = new UserDomain();
         BookDomain book = new BookDomain();
