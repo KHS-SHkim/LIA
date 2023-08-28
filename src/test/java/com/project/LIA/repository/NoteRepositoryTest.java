@@ -1,6 +1,7 @@
 package com.project.LIA.repository;
 
 import com.project.LIA.domain.*;
+import com.project.LIA.service.NoteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
