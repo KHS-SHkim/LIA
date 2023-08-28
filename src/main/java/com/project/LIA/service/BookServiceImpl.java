@@ -62,13 +62,14 @@ public class BookServiceImpl implements BookService {
     }
     @Autowired
     public BookServiceImpl(){
-        System.out.println("BoardService() 생성");
+        System.out.println("BookService() 생성");
     }
 
 
     // 1. 글 작성
     @Override
     public int write(BookDomain book){
+        /*
         // 로그인한 시점의 유저 정보이다.
         UserDomain user = U.getLoggedUser();
 
@@ -76,6 +77,8 @@ public class BookServiceImpl implements BookService {
         // 로그인 후 정보가 변경됐을 가능성 때문에 !
         user = userRepository.findById(user.getId()).orElse(null);
         book.setUser(user);  // 글 작성자 세팅!
+
+         */
 
         // DB 에 저장 -> repository
         bookRepository.saveAndFlush(book);
@@ -84,6 +87,7 @@ public class BookServiceImpl implements BookService {
     } // -첨부파일 X
 
     public int write(BookDomain book, Map<String, MultipartFile> files){
+        /*
         // 로그인한 시점의 유저 정보이다.
         UserDomain user = U.getLoggedUser();
 
@@ -91,6 +95,8 @@ public class BookServiceImpl implements BookService {
         // 로그인 후 정보가 변경됐을 가능성 때문에 !
         user = userRepository.findById(user.getId()).orElse(null);
         book.setUser(user);  // 글 작성자 세팅!
+
+         */
 
         // DB 에 저장 -> repository
         bookRepository.save(book);
@@ -102,8 +108,8 @@ public class BookServiceImpl implements BookService {
 
     //2. 단일 글 보기
     @Override
-    public BookDomain selectById(int id){
-        BookDomain book= bookRepository.findById((long) id).orElse(null);
+    public BookDomain selectById(long id){
+        BookDomain book= bookRepository.findById(id).orElse(null);
         if(book != null){
             // 첨부파일 정보 가져오기
             List<BookImgDomain> fileList = bookImgRepository.findByBook(book.getId());
@@ -290,7 +296,7 @@ public class BookServiceImpl implements BookService {
         int result = 0;
 
         // update 하고자 하는 것을 일단 읽어와야 한다
-        BookDomain b = bookRepository.findById((long) book.getId()).orElse(null);
+        BookDomain b = bookRepository.findById(book.getId()).orElse(null);
         if(b != null){
             b.setName(book.getName());
             b.setCate(book.getCate());
@@ -317,12 +323,13 @@ public class BookServiceImpl implements BookService {
             result = 1;
         }
         return result;
+
     }
 
     //5. 글 삭제
     @Override
-    public int deleteById(int id){
-        BookDomain book = bookRepository.findById((long) id).orElse(null);
+    public int deleteById(long id){
+        BookDomain book = bookRepository.findById(id).orElse(null);
         if(book!=null) {
             bookRepository.delete(book);
             return 1;
@@ -364,7 +371,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private void addFiles(Map<String, MultipartFile> files, int id) {
+    private void addFiles(Map<String, MultipartFile> files, long id) {
         if(files != null){
             for(var e : files.entrySet()){
 

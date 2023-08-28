@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 
 public interface BookImgService {
-    BookImgDomain findById(Long id);
+    BookImgDomain findById(long id);
 }

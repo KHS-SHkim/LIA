@@ -20,7 +20,7 @@ public interface BookService {
     int write(BookDomain book, Map<String, MultipartFile> files);    // -첨부파일 O
 
     //2. 단일 글 보기
-    BookDomain selectById(int id);
+    BookDomain selectById(long id);
 
     //3. 글 리스트
     List<BookDomain> list();    // -모든 글 리스트
@@ -36,7 +36,7 @@ public interface BookService {
             , Long[] delfile);
 
     //5. 글 삭제
-    int deleteById(int id);
+    int deleteById(long id);
 
 
 

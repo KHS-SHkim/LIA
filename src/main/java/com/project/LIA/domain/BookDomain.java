@@ -14,10 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity(name = "book")
-public class BookDomain {
+public class BookDomain extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(nullable = false)
     private String name;

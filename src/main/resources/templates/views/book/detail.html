@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${book}">
+  alert("해당 정보가 삭제되거나 없습니다");
+  history.back();
+</script>
+<!--<th:block th:if="${book}" th:with="logged_user=${#authentication.principal.user}">-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/write.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <title>LIA</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragment/header}"></div>
+
+<div class="row">
+    <div th:replace="~{fragment/sidebar}"></div>
+    <div class="col-9 c">
+    <section>
+
+        <div class="mb-3 mt-3">
+            <label for="name">제목:</label>
+            <div class="border bg-light rounded p-2" th:text="${book.name}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="cate">카테고리:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.cate}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="book_detail">내용:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.book_detail}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="price">가격:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.price}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="rental_date">대여기간:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.rental_date}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="rental_spot">대여지역:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.rental_spot}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="rental_stat">대여상태:</label>
+            <div class="border bg-light rounded p-2" th:utext="${book.rental_stat}"></div>
+        </div>
+
+        <!-- 첨부파일목록 -->
+        <div class="container mt-3 mb-3 border rounded">
+            <div class="mb-3 mt-3">
+                <label>첨부파일:</label>
+                <!-- 첨부파일 이름, 다운로드 링크 -->
+                <ul class="list-group mb-1">
+                    <li class="list-group-item" th:each="attachment : ${book.fileList}">
+                        <a th:href="@{/book/download(id=${attachment.id})}">[[${attachment.img_src}]]</a>
+                    </li>
+                </ul>
+                <!--/* 이미지인 경우 보여주기 */-->
+                <div th:each="attachment : ${book.fileList}" th:if="${attachment.image}">
+                    <img th:src="@{'/upload/' + ${attachment.img_src}}" class="img-thumbnail" alt="Cinque Terre">
+                </div>
+            </div>
+        </div>
+        <!-- 첨부파일목록 -->
+
+
+        <!-- 하단 링크 -->
+        <!--수정과 삭제 버튼은 로그인한 유저 아이디와 게시글 작성자 아이디가 동일할 때만 보인다 -->
+        <div class="d-flex">
+            <a class="btn btn-outline-dark" th:href="@{'/book/update/'+${book.id}}"><!--th:if="${logged_user.id == post.user.id}"-->수정</a>
+            <a class="btn btn-outline-dark ms-2" th:href="@{/book/list}">목록</a>
+            <button type="button" class="btn btn-outline-danger ms-2" id="btnDel"><!--th:if="${logged_user.id == post.user.id}"-->삭제</button>
+            <a class="btn btn-outline-dark ms-2" th:href="@{/book/write}">작성</a>
+        </div>
+        <!-- 하단 링크 -->
+
+
+    </section>
+    </div>
+</div>
+
+</body>
+<!--</th:block>-->
+</html>

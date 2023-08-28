@@ -62,7 +62,7 @@ public class BookImgController {
             // response header  세팅
             HttpHeaders headers = new HttpHeaders();
             // ↓ 원본 파일 이름(sourceName) 으로 다운로드 하게 하기위한 세팅
-            headers.setContentDisposition(ContentDisposition.builder("attachemnt").filename(URLEncoder.encode(sourceName, "utf-8")).build());
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(URLEncoder.encode(sourceName, "utf-8")).build());
             headers.setCacheControl("no-cache");
             headers.setContentType(MediaType.parseMediaType(mimeType));
 

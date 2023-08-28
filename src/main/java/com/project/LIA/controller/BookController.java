@@ -47,7 +47,7 @@ public class BookController {
         // validation 과정에서 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             // redirect 시 기좀에 입력했던 값들은 보이게 하기
-            redirectAttrs.addFlashAttribute("user", book.getUser());
+            //redirectAttrs.addFlashAttribute("user", book.getUser());
             redirectAttrs.addFlashAttribute("name", book.getName());
             redirectAttrs.addFlashAttribute("cate", book.getCate());
             redirectAttrs.addFlashAttribute("price", book.getPrice());
@@ -63,7 +63,7 @@ public class BookController {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/board/write";   // GET
+            return "redirect:/book/write";   // GET
         }
 
 
@@ -75,41 +75,35 @@ public class BookController {
 
     // 상세 글
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable int id, Model model){
-        model.addAttribute("post", bookService.selectById(id));
-        return "board/detail";
+    public String detail(@PathVariable long id, Model model){
+        model.addAttribute("book", bookService.selectById(id));
+        return "book/detail";
     }
 
-    // 전체 글 리스트
+    //리스트
     @GetMapping("/list")
-    //public void list(Model model){
-    public void list(Integer page, Model model){
-        model.addAttribute("list", bookService.list(page, model));
+    public void list(@RequestParam(required = false) String cate, @RequestParam(required = false) String keyword, Integer page, Model model) {
+        if (cate != null && keyword==null) {
+            model.addAttribute("list", bookService.cateList(cate, page, model));
+        } else if(cate == null && keyword!=null) {
+            model.addAttribute("list", bookService.searchList(keyword,page, model));
+        }
+        else{model.addAttribute("list", bookService.list(page, model));}
     }
 
-    //카테고리별 리스트
-    @GetMapping("/list/{cate}")
-    public void cateList(String cate,Integer page, Model model){
-        model.addAttribute("list", bookService.cateList(cate,page, model));
-    }
 
-    //검색 리스트
-    @GetMapping("/list/{keyword}")
-    public void searchList(String keyword,Integer page, Model model){
-        model.addAttribute("list", bookService.searchList(keyword,page, model));
-    }
 
     // 페이징
     // pageRows 변경시 동작
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
-        return "redirect:/board/list?page=" + page;
+        return "redirect:/book/list?page=" + page;
     }
 
     //수정창 이동
     @GetMapping("/update/{id}")
-    public String update(@PathVariable int id, Model model){
+    public String update(@PathVariable long id, Model model){
         model.addAttribute("book", bookService.selectById(id));
         return "book/update";
     }
@@ -127,7 +121,7 @@ public class BookController {
         // validation 과정에서 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             // redirect 시 기좀에 입력했던 값들은 보이게 하기
-            redirectAttrs.addFlashAttribute("user", book.getUser());
+            //redirectAttrs.addFlashAttribute("user", book.getUser());
             redirectAttrs.addFlashAttribute("name", book.getName());
             redirectAttrs.addFlashAttribute("cate", book.getCate());
             redirectAttrs.addFlashAttribute("price", book.getPrice());
@@ -151,7 +145,7 @@ public class BookController {
 
     //삭제
     @PostMapping("/delete")
-    public String deleteOk(int id, Model model){
+    public String deleteOk(long id, Model model){
         model.addAttribute("result", bookService.deleteById(id)); //삭제 성공시 1 리턴
         return "book/deleteOk";
     }

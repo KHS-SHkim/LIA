@@ -1,4 +1,54 @@
 {
 	"folders": {},
-	"connections": {}
+	"connections": {
+		"mysql8-18a23dffee7-7c2b80e6fdea183b": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "mydb2304 1",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "mydb2304",
+				"url": "jdbc:mysql://localhost:3306/mydb2304",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"rewriteBatchedStatements": "true",
+					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
+					"allowPublicKeyRetrieval": "YES"
+				},
+				"auth-model": "native"
+			}
+		},
+		"mysql8-18a3b9e7d9c-75035af0ce30e18c": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "LIAdb",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "LIAdb",
+				"url": "jdbc:mysql://localhost:3306/LIAdb",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Router 8.0",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
 }
