@@ -10,6 +10,7 @@ import com.project.LIA.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -33,6 +34,9 @@ public class UserController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserController(){
         System.out.println(getClass().getName() + "() 생성");
@@ -156,48 +160,59 @@ public class UserController {
     @GetMapping("/registerOk")
     public void registerOk(){}
 
+    @GetMapping("/findPassword")
+    public void findPassWordOk(){}
+
     @GetMapping("/myPage")
     public void myPage(Model model){
         UserDomain userDomain = U.getLoggedUser();
-        String name = userDomain.getNickname();
-        userDomain = userService.findByUsername(name);
+        String username = userDomain.getUsername();
 
-        model.addAttribute("user", userDomain);
+        userDomain = userService.findByUsername(username);
+
+        AddressDomain addressDomain = addressService.findByUserId(U.getLoggedUser().getId());
+
+        System.out.println("dddddddddddddddddddddd" + userDomain.getProfile_img());
+
+        model.addAttribute("profile_img", userDomain.getProfile_img());
+        model.addAttribute("nickname", userDomain.getNickname());
+        model.addAttribute("phone", userDomain.getPhone());
+        model.addAttribute("post_num",addressDomain.getPost_num());
+        model.addAttribute("address",addressDomain.getAddress());
+        model.addAttribute("address_detail",addressDomain.getAddress_detail());
+        model.addAttribute("username",userDomain.getUsername());
+        model.addAttribute("email",userDomain.getEmail());
     }
 
     @PostMapping("/myPage")
     public String myPage(@RequestParam("upfile") MultipartFile multipartFile,
                          @RequestParam("originalImage") String originalImage,
-                         @Valid UserVofR userVofR,
+                         UserVofR userVofR,
                          BindingResult result,
                          Model model,
                          RedirectAttributes redirectAttributes
     ){
-        if(result.hasErrors()){
-            redirectAttributes.addFlashAttribute("username", userVofR.getUsername());
-            redirectAttributes.addFlashAttribute("nickname", userVofR.getNickname());
-            redirectAttributes.addFlashAttribute("phone", userVofR.getPhone());
-            redirectAttributes.addFlashAttribute("email", userVofR.getEmail());
-            redirectAttributes.addFlashAttribute("post_num", userVofR.getPost_num());
-            redirectAttributes.addFlashAttribute("address", userVofR.getAddress());
-            redirectAttributes.addFlashAttribute("address_detail", userVofR.getAddress_detail());
+        System.out.println("userVofR: =====" + userVofR.toString());
 
-            List<FieldError> errorList = result.getFieldErrors();
-            for(FieldError err : errorList){
-                redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
-            }
-            return "redirect:/user/myPage";
-        }
-
-        UserDomain userDomain = new UserDomain();
+        UserDomain userDomain = U.getLoggedUser();
         userDomain.setProfile_img(userVofR.getProfile_img());
         userDomain.setNickname(userVofR.getNickname());
         userDomain.setPhone(userVofR.getPhone());
-        userDomain.setPassword(userVofR.getPassword());
+        userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
+
+        System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ" + userDomain.toString());
 
         int isDelete = 0;
         if(multipartFile == null) isDelete = 1;
         model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
+
+        AddressDomain addressDomain = new AddressDomain();
+        addressDomain = addressService.findByUserId(userDomain.getId());
+        addressDomain.setPost_num(userVofR.getPost_num());
+        addressDomain.setAddress(userVofR.getAddress());
+        addressDomain.setAddress_detail(userVofR.getAddress_detail());
+
+        addressService.update(addressDomain);
 
         return "/user/updateOk";
     }

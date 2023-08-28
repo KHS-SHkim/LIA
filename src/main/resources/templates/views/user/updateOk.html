@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${result > 0}">
+    alert("프로필 수정 실패");
+    history.back();
+</script>
 
-</body>
+<script th:if="${result > 0}">
+    alert("프로필 수정 성공");
+    location.href = "/user/myPage";
+</script>
+
 </html>

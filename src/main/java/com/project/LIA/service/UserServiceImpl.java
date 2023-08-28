@@ -3,6 +3,7 @@ package com.project.LIA.service;
 import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.UserDomain;
+import com.project.LIA.repository.AddressRepository;
 import com.project.LIA.repository.AuthorityRepository;
 import com.project.LIA.repository.UserRepository;
 import com.project.LIA.util.U;
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     private AuthorityRepository authorityRepository;
+
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -83,8 +85,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public int update(Integer isDelete, String originalImage, UserDomain user, MultipartFile multipartFile) {
 
-        user = U.getLoggedUser();
-        user = userRepository.findById(user.getId()).orElse(null);
 
 
         if(isDelete == 1){

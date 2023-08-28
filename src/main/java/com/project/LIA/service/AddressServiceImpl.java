@@ -43,6 +43,7 @@ public class AddressServiceImpl implements AddressService{
 
     @Override
     public int update(AddressDomain addressDomain) {
-        return 0;
+        addressRepository.saveAndFlush(addressDomain);
+        return 1;
     }
 }

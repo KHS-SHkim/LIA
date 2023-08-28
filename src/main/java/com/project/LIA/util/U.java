@@ -4,6 +4,7 @@ import com.project.LIA.config.PrincipalDetails;
 import com.project.LIA.domain.UserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -28,10 +29,13 @@ public class U {
 
     // 현재 로그인 한 사용자 UserDetail 구하기
     public static UserDomain getLoggedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 현재 로그인 한 사용자
-        PrincipalDetails userDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDomain user = userDetails.getUser();
-        return user;
+        if (authentication != null && authentication.getPrincipal() instanceof PrincipalDetails) {
+            PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+            return userDetails.getUser();
+        }
+        return null;
     }
 
     // 첨부파일 정보(MultipartFile) 출력하기

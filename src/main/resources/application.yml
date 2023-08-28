@@ -34,7 +34,7 @@ spring:
     # update: DB테이블와 엔티티 매핑정보를 비교해서 변경사항이 있는 경우만 수정 (ALTER). 테이블 없으면 CREATE
     # create-drop: 기본적으로 create와 동일한 동작을 하나, 종료시점에서 drop
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   mail:
     host: smtp.gmail.com
     port: 587

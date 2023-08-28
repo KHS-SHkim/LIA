@@ -1,0 +1,35 @@
+#imgbox img{
+    width:200px;
+    height:auto;
+    object-fit:cover;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+form {
+    width: 50%;
+    display: block;
+    margin-left: 25%;
+}
+
+.lowb {
+    margin-left: 25%;
+    display: inline;
+}
+
+b {
+    font-weight: 550;
+    font-size: 40px;
+}
+
+.r{
+    border: 1px solid black;
+    width:400px;
+    font-size:30px;
+    font-weight:500px;
+}
+
+.btn-dark{
+    width:150px;
+    height: auto;
+}
