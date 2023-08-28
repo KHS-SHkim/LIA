@@ -54,6 +54,7 @@ public class UserValidator implements Validator {
 
         String email = userVofR.getEmail();
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
         Pattern pattern2 = Pattern.compile(emailRegex);
         Matcher matcher2 = pattern2.matcher(email);
         boolean bool2 = matcher2.matches();

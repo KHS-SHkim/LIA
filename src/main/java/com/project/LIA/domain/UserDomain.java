@@ -44,7 +44,7 @@ public class UserDomain extends BaseEntity{
     @ToString.Exclude
     @Builder.Default
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<AuthorityDomain> authorities = new ArrayList<>();
 
     public void addAuthority(AuthorityDomain... authorityDomains){

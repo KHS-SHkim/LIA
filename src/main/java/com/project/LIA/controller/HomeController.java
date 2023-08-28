@@ -1,8 +1,10 @@
 package com.project.LIA.controller;
 
-import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.repository.AuthorityRepository;
+import com.project.LIA.repository.UserRepository;
+import com.project.LIA.util.U;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,13 @@ public class HomeController {
 
     AuthorityRepository authorityRepository;
 
+    UserRepository userRepository;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Autowired
     public void setAuthorityRepository(AuthorityRepository authorityRepository) {
         this.authorityRepository = authorityRepository;
@@ -30,7 +39,21 @@ public class HomeController {
     }
 
     @RequestMapping("/home")
-    public void home(Model model){}
+    public String home(Model model){
+
+        UserDomain user = U.getLoggedUser();
+        System.out.println("유저의 존재 여부 확인:" + user);
+        System.out.println("log12345");
+        if (user != null){
+
+            user = userRepository.findById(user.getId()).orElse(null);
+            model.addAttribute("profile_img", user.getProfile_img());
+            System.out.println("log12" + user.getProfile_img());
+        } else {
+            model.addAttribute("profile_img", null);
+        }
+        return "/home";
+    }
 
     // 로그인한 정보
     @RequestMapping("/auth")

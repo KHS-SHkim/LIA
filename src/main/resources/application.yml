@@ -3,7 +3,7 @@
 
 # 서버 포트 번호
 server:
-  port: 8095
+  port: 8094
 
 
 spring:

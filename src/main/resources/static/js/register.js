@@ -5,6 +5,8 @@ $(function(){
         let username = $("#username").val();
         const usernameRegex = /^[a-zA-Z0-9]*$/;
 
+        $("#error_username").html("");
+
         // 아이디 중복확인
         $.ajax({
             url: "/user/register/usernameChk",
@@ -30,10 +32,17 @@ $(function(){
         });
     });
 
+    $("#password").on("keyup",function(){
+        $("#error_password").html("");
+        $("#error_re_password").html("");
+    })
+
+
 
     $("#re_password").on("keyup", function(){
         let password = $("#password").val();
         let re_password = $("#re_password").val();
+
 
         if(password !== re_password){
             $("#password_error").html("비밀번호 불일치");
@@ -48,6 +57,8 @@ $(function(){
         let password = $("#password").val();
         let re_password = $("#re_password").val();
 
+        $("#error_password").html("");
+
         if(re_password){
             if(re_password !== password){
                 $("#password_error").html("비밀번호 불일치");
@@ -61,6 +72,8 @@ $(function(){
 
     $("#phone").on("keyup",function(){
         let phone = $("#phone").val();
+
+        $("#error_phone").html("");
 
         if(phone != null){
             if(phone.length>11 || phone.length<11){
@@ -130,6 +143,12 @@ $(function(){
                 console.error(error);
             }
         });
+    });
+
+    $("#sample6_btn").click(function(){
+        $("#error_post_num").html("");
+        $("#error_address").html("");
+        $("#error_address_detail").html("");
     });
 
     function checkBtnHandler(){
