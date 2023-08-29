@@ -9,97 +9,24 @@
     <title>쪽지함</title>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}"><img id="logo" th:src="@{/image/LIA_logo.jpg}"><span style="font-size:40px;"> LIA</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">전체보기</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">동화책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">만화책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">소설책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">교육책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">문제집</a>
-                    </li>
-                </ul>
-
-                <form class="d-flex" role="search" action="#">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-            </div>
-        </div>
-    </nav>
-</header>
-
-
+<div th:replace="~{fragment/header}"></div>
 <div class="row">
-    <div class="col-3 side text-center">
-        <div class="image">
-            <img th:src="@{/image/default.jpg}">
-        </div>
-        <div class="info text-center">
-                <span>
-                    <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
-                    <a class="userinfo" th:href="@{/user/login}">로그인</a>
-                </span>
-        </div>
-        <br>
-        <br>
-        <div class="text-center">
-            <ul class="menu">
-                <li>
-                    <a href="#">쪽지함</a>
-                </li>
-                <li>
-                    <a href="#">내 글 보기</a>
-                </li>
-                <li>
-                    <a href="#">신고 현황</a>
-                </li>
-                <li>
-                    <a href="#">대여글 등록</a>
-                </li>
-                <li>
-                    <a href="#">Q&A</a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-
+    <div th:replace="~{fragment/sidebar}"></div>
     <div class="col-9 c">
-        <div>
+        <div class="container mt-3">
             <div class="text-center">
                 <h1>쪽 지 함</h1>
             </div>
             <hr>
             <div class="row mt-5" th:each="note : ${myNoteList}">
-                <a>
+                <a th:href="@{'/note/detail/' + ${note.user.id} + '/' + ${note.receiver.id}}">
                     <div th:text="${note.receiver.username}"></div>
                     <div th:text="${note.contents}"></div>
+                    <div align="left" th:text="${note.regDate}"></div>
                 </a>
             </div>
         </div>
-
     </div>
 </div>
-
 </body>
 </html>

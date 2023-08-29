@@ -153,4 +153,9 @@ public class UserServiceImpl implements UserService{
 
         return new ArrayList<>();
     }
+
+    @Override
+    public UserDomain findById(Long user_id) {
+        return userRepository.findById(user_id).orElse(null);
+    }
 }

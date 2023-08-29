@@ -19,8 +19,14 @@ public class NoteServiceImpl implements NoteService {
 
     @Override   // 쪽지 찾기 ( 사용자 , 수신인 )
     public List<NoteDomain> findNote(UserDomain user, UserDomain receiver) {
-        List<NoteDomain> retunList= noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
-        retunList.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        List<NoteDomain> retunList = new ArrayList<>();
+        List<NoteDomain> t = noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
+        List<NoteDomain> y = noteRepository.findByUserIdAndReceiverId(receiver.getId(),user.getId());
+
+        retunList.addAll(t);
+        retunList.addAll(y);
+
+        retunList.sort(Comparator.comparing(NoteDomain::getId));
         return retunList;
     }
 
