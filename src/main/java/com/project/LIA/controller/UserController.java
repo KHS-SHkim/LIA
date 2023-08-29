@@ -8,7 +8,6 @@ import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,7 +64,7 @@ public class UserController {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("grant_type","authorization_code");
         params.add("client_id","0d1c222166732e07ce216a638ad66db8");
-        params.add("redirect_uri","http://localhost:8094/user/callback");
+        params.add("redirect_uri","http://localhost:8095/user/callback");
         params.add("code",code);
 
         // HttpHeader 와 HttpBody 를 하나의 오브젝트에 담기
@@ -79,7 +78,7 @@ public class UserController {
                 String.class
         );
 
-        return "카카오 인증 완료 코드 값:"+ code + "\n카카오 토큰요청에 대한 응답:" + response;
+        return response.getBody();
     }
 
     @GetMapping("/register")

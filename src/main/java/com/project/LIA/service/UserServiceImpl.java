@@ -1,12 +1,9 @@
 package com.project.LIA.service;
 
-import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.UserDomain;
-import com.project.LIA.repository.AddressRepository;
 import com.project.LIA.repository.AuthorityRepository;
 import com.project.LIA.repository.UserRepository;
-import com.project.LIA.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
