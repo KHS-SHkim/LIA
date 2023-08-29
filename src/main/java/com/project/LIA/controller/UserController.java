@@ -8,6 +8,7 @@ import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -161,7 +162,43 @@ public class UserController {
     public void registerOk(){}
 
     @GetMapping("/findPassword")
-    public void findPassWordOk(){}
+    public void findPassWord(){}
+
+    @PostMapping("/findPassword")
+    public String findPasswordOk(UserVofR userVofR,
+                                 Model model){
+        System.out.println("비번변경시 받오는 값 확인: " + userVofR);
+
+        UserDomain userDomain = userService.findByUsername(userVofR.getUsername());
+
+        userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
+
+        int cnt = userService.updatePw(userDomain);
+
+        model.addAttribute("result", cnt);
+
+        return "/user/findPasswordOk";
+    }
+
+    @PostMapping("/findPassword/check")
+    public @ResponseBody int checkInfo(@RequestParam("username") String username,
+                                       @RequestParam("phone") String phone,
+                                       @RequestParam("email") String email
+    ){
+        System.out.println(username + "  :   " + phone + "    :   " + email );
+        UserDomain userDomain = userService.findByUsername(username);
+        String originUsername = userDomain.getUsername();
+        String originPhone = userDomain.getPhone();
+        String originEmail = userDomain.getEmail();
+        System.out.println(originUsername + ",,,," + originPhone + ":::" + originEmail);
+
+        if(originUsername.equals(username) && originPhone.equals(phone) && originEmail.equals(email)){
+            return 0;
+        } else{
+            return 1;
+        }
+
+    }
 
     @GetMapping("/myPage")
     public void myPage(Model model){
@@ -196,45 +233,39 @@ public class UserController {
     ){
         System.out.println("userVofR: =====" + userVofR.toString());
 
-        UserDomain userDomain = U.getLoggedUser();
+        UserDomain userDomain = userService.findByUsername(userVofR.getUsername());
 
         System.out.println("유저의 변경될 비밀번호 : " + userVofR.getPassword());
 
-        userDomain.setProfile_img(userVofR.getProfile_img());
+
+        if(userVofR.getProfile_img() != null){
+            userDomain.setProfile_img(userVofR.getProfile_img());
+        } else{
+            userDomain.setProfile_img(null);
+        }
         userDomain.setNickname(userVofR.getNickname());
         userDomain.setPhone(userVofR.getPhone());
 
         if(userVofR.getPassword() != null){
+            System.out.println("패스워드 가 들어가있으면 동작해야하는 것!!!!");
             userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
-            int isDelete = 0;
-            if(multipartFile == null) isDelete = 1;
-            model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
-
-            AddressDomain addressDomain = new AddressDomain();
-            addressDomain = addressService.findByUserId(userDomain.getId());
-            addressDomain.setPost_num(userVofR.getPost_num());
-            addressDomain.setAddress(userVofR.getAddress());
-            addressDomain.setAddress_detail(userVofR.getAddress_detail());
-
-            addressService.update(addressDomain);
-
-            return "/user/updateOk";
-
-        } else{
-            int isDelete = 0;
-            if(multipartFile == null) isDelete = 1;
-            model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
-
-            AddressDomain addressDomain = new AddressDomain();
-            addressDomain = addressService.findByUserId(userDomain.getId());
-            addressDomain.setPost_num(userVofR.getPost_num());
-            addressDomain.setAddress(userVofR.getAddress());
-            addressDomain.setAddress_detail(userVofR.getAddress_detail());
-
-            addressService.update(addressDomain);
-
-            return "/user/updateOk";
         }
+
+        int isDelete = 0;
+        if(multipartFile == null) isDelete = 1;
+
+        System.out.println("업데이트 직전의 UserDomain 정보 : " + userDomain);
+        model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
+
+        AddressDomain addressDomain = addressService.findByUserId(userDomain.getId());
+        addressDomain.setPost_num(userVofR.getPost_num());
+        addressDomain.setAddress(userVofR.getAddress());
+        addressDomain.setAddress_detail(userVofR.getAddress_detail());
+
+        addressService.update(addressDomain);
+
+        return "/user/updateOk";
+
 
 
 

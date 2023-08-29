@@ -23,6 +23,9 @@ public interface UserService {
     // 회원 수정
     int update(Integer isDelete, String originalImage, UserDomain user, MultipartFile multipartFile);
 
+    // 비번변경
+    int updatePw(UserDomain userDomain);
+
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);
 }

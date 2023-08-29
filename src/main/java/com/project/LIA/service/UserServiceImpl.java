@@ -85,8 +85,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public int update(Integer isDelete, String originalImage, UserDomain user, MultipartFile multipartFile) {
 
-
-
         if(isDelete == 1){
             delFile(originalImage);
             user.setProfile_img(null);
@@ -134,6 +132,12 @@ public class UserServiceImpl implements UserService{
             return 1;
         }
         userRepository.save(user);
+        return 1;
+    }
+
+    @Override
+    public int updatePw(UserDomain userDomain) {
+        userRepository.save(userDomain);
         return 1;
     }
 

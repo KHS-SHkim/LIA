@@ -1,13 +1,26 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="col-3 side text-center">
-  <div class="image">
-    <img th:src="@{/image/default.jpg}">
+  <div class="col image" id="profile_img">
+    <!--등록된 이미지 있을시-->
+    <div th:if="${profile_img}" class="image">
+      <img th:src="@{'./upload/' + ${profile_img}}">
+    </div>
+    <!--등록된 이미지 없을시-->
+    <div th:unless="${profile_img}" class="image">
+      <img th:src="@{/image/default.jpg}">
+    </div>
   </div>
   <div class="info text-center">
-                <span>
-                    <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
-                    <a class="userinfo" th:href="@{/user/login}">로그인</a>
-                </span>
+    <span sec:authorize="isAnonymous()">
+        <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
+        <a class="userinfo" th:href="@{/user/login}">로그인</a>
+    </span>
+    <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST">
+      <span>
+          <a class="userinfo" th:href="@{/user/myPage}">마이페이지</a>/
+          <a class="userinfo" th:href="@{/user/logout}" onclick="return confirmLogout();">로그아웃</a>
+      </span>
+    </form>
   </div>
   <br>
   <br>

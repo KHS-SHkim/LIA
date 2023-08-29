@@ -1,5 +1,9 @@
 $(function(){
 
+    $("#password").attr("disabled", true);
+    $("#re_password").attr("disabled", true);
+
+
     $("#imgBtn").click(function(){
         $("#upfile").css("display","block");
         $("#imgbox").css("display", "none");
@@ -35,8 +39,8 @@ $(function(){
     $("#chgPwBtn").click(function(){
         $("#chPwDiv").css("display","block");
         $("#chgPwBtn").css("display","none");
-        $("#password").val("");
-        $("#re_password").val("");
+        $("#password").attr("disabled", false);
+        $("#re_password").attr("disabled", false);
         $("#saveBtn").attr("disabled",true);
     })
 
@@ -179,8 +183,6 @@ $(function(){
 
         let nickname = $("#nickname").val();
         let phone = $("#phone").val();
-        let password = $("#password").val();
-        let re_password = $("#re_password").val();
         let post_num = $("#post_num").val();
         let address = $("#address").val();
         let address_detail = $("#address_detail").val();

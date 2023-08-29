@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns="http://www.w3.org/1999/html">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,7 +64,7 @@
             </div>
             <!--등록된 이미지 있을시-->
             <div th:if="${profile_img}">
-                <img th:src="@{'./upload/' + ${profile_img}}">
+                <img th:src="@{'/upload/' + ${profile_img}}">
             </div>
         </div>
         <div class="col info text-center">
@@ -120,7 +119,7 @@
                 <div class="form-group mt-3">
                     <b for="upfile">프로필이미지</b>
                     <div class="mt-3" id="imgbox">
-                        <div th:if="${profile_img}"><img th:src="@{'./upload/' + ${profile_img}}"></div>
+                        <div th:if="${profile_img}"><img th:src="@{'/upload/' + ${profile_img}}"></div>
                         <div th:unless="${profile_img}"><img th:src="@{/image/default.jpg}"></div>
                     </div>
                     <button type="button" class="btn btn-dark mt-3" style="display:inline" id="imgBtn">이미지 수정</button>

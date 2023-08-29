@@ -1,5 +1,5 @@
 SELECT * FROM  address;
-SELECT * FROM  user_authority;
+SELECT * FROM  user_authorities;
 SELECT * FROM  authority;
 SELECT * FROM  book_img;
 SELECT * FROM  Declaration;
@@ -7,7 +7,7 @@ SELECT * FROM  note;
 SELECT * FROM rental_info;
 SELECT * FROM book;
 SELECT * FROM commen_code;
-SELECT * FROM questionAndAnswer;
+SELECT * FROM qna;
 SELECT * FROM user;
 
 
