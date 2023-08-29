@@ -16,92 +16,10 @@
 
 <body>
 
-<header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}"><img id="logo" th:src="@{/image/LIA_logo.jpg}"><span style="font-size:40px;"> LIA</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">전체보기</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">동화책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">만화책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">소설책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">교육책</a>
-                    </li>
-                    <li class="nav-item i">
-                        <a class="nav-link" href="#">문제집</a>
-                    </li>
-                </ul>
-
-                <form class="d-flex" role="search" action="#">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-            </div>
-        </div>
-    </nav>
-</header>
+<div th:replace="~{fragment/header}"></div>
 
 <div class="row">
-    <div class="col-3 side text-center">
-        <div class="row image" id="profile_img">
-            <!--등록된 이미지 없을시-->
-            <div th:unless="${profile_img}">
-                <img th:src="@{/image/default.jpg}">
-            </div>
-            <!--등록된 이미지 있을시-->
-            <div th:if="${profile_img}">
-                <img th:src="@{'/upload/' + ${profile_img}}">
-            </div>
-        </div>
-        <div class="col info text-center">
-            <span sec:authorize="isAnonymous()">
-                <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
-                <a class="userinfo" th:href="@{/user/login}">로그인</a>
-            </span>
-            <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST">
-                <span>
-                    <a class="userinfo" th:href="@{/user/myPage}">마이페이지</a>/
-                    <a class="userinfo" th:href="@{/user/logout}" onclick="return confirmLogout();">로그아웃</a>
-                </span>
-            </form>
-        </div>
-        <br>
-        <br>
-        <div class="text-center">
-            <ul class="menu">
-                <li>
-                    <a href="#">쪽지함</a>
-                </li>
-                <li>
-                    <a href="#">내 글 보기</a>
-                </li>
-                <li>
-                    <a href="#">신고 현황</a>
-                </li>
-                <li>
-                    <a href="#">대여글 등록</a>
-                </li>
-                <li>
-                    <a href="#">Q&A</a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
+    <div th:replace="~{fragment/sidebar}"></div>
 
     <div class="col-9 c">
         <div>
