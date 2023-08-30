@@ -41,7 +41,10 @@
                         <div th:unless="${profile_img}"><img th:src="@{/image/default.jpg}"></div>
                     </div>
                     <button type="button" class="btn btn-dark mt-3" style="display:inline" id="imgBtn">이미지 수정</button>
-                    <input type="file" class="form-control"  id="upfile" name="upfile" style="display:none;">
+                    <div class="mt-3" id="preview-ImgDiv" style="display:none;">
+                        <img id="preview-img" src="">
+                    </div>
+                    <input type="file" class="form-control mt-3"  id="upfile" name="upfile" style="display:none;">
                 </div>
 
                 <div class="form-group mt-3">

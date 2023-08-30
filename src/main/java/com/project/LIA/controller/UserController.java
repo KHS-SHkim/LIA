@@ -1,9 +1,8 @@
 package com.project.LIA.controller;
 
-import com.project.LIA.domain.AddressDomain;
-import com.project.LIA.domain.UserDomain;
-import com.project.LIA.domain.UserValidator;
-import com.project.LIA.domain.UserVofR;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.LIA.domain.*;
 import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
@@ -50,36 +49,8 @@ public class UserController {
         return "user/loginError";
     }
 
-    @GetMapping("/callback")
-    public @ResponseBody String kakaoCallBack(String code){
 
-        // POST 방식으로 key=value 데터를 요청(카카오쪽으로)
-        RestTemplate rt = new RestTemplate();
 
-        // HttpHeader 오브젝트 생성
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        // HttpBody 오브젝트 생성
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type","authorization_code");
-        params.add("client_id","0d1c222166732e07ce216a638ad66db8");
-        params.add("redirect_uri","http://localhost:8095/user/callback");
-        params.add("code",code);
-
-        // HttpHeader 와 HttpBody 를 하나의 오브젝트에 담기
-        HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
-
-        // Http 요청하기 -Post방식으로 - 그리고 response 변수의 응답 받음.
-        ResponseEntity<String> response = rt.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                kakaoTokenRequest,
-                String.class
-        );
-
-        return response.getBody();
-    }
 
     @GetMapping("/register")
     public void register(Model model){
@@ -155,6 +126,15 @@ public class UserController {
         else{
             return 0;
         }
+    }
+    @GetMapping("/naverLogin")
+    private String naverLogin(Model model, @RequestParam("code")String code , @RequestParam("state") String state){
+
+        model.addAttribute("code",code);
+        model.addAttribute("state",state);
+
+
+        return "/user/naverLoginOk";
     }
 
     @GetMapping("/registerOk")

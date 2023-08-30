@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="code" th:text="${code}"></div>
+    <div id="state" th:text="${state}"></div>
+</body>
+<script>
+    $(function(){
+        var code = $("#code").text();
+        var state = $("#state").text();
+        alert("ㄴㄴㄴ");
+
+        $.ajax({
+            url: 'https://nid.naver.com/oauth2.0/token',
+            type: "GET",
+            dataType: 'json',
+            data: {grant_type: 'authorization_code',
+                   client_id: '0M5Hhr3GeByMD2Fuojgc',
+                   client_secret: '6PPtc2l5M4',
+                   code: code,
+                   state: state
+                  },
+            success: function(data){
+                alert("통신성공?")
+            }
+        })
+
+        function successlogic(){
+<!--            alert("AA");-->
+            alert(this.html);
+        }
+    })
+</script>
+</html>

@@ -3,7 +3,7 @@
   <div class="col image" id="profile_img">
     <!--등록된 이미지 있을시-->
     <div th:if="${profile_img}" class="image">
-      <img th:src="@{'./upload/' + ${profile_img}}">
+      <img th:src="@{'/upload/' + ${profile_img}}">
     </div>
     <!--등록된 이미지 없을시-->
     <div th:unless="${profile_img}" class="image">
