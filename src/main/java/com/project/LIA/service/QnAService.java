@@ -21,4 +21,5 @@ public interface QnAService {
 
     List<QnADomain> getAllQnA(Pageable pageable);   // 페이징해더
 
+    List<QnADomain> searchQnA(String query); // 검색기능
 }

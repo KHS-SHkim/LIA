@@ -5,6 +5,8 @@ import com.project.LIA.service.QnAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
@@ -20,15 +22,17 @@ public class QnAController {
         System.out.println(getClass().getName() + "()생성");
     }
 
-    @GetMapping("/qna") // 질문 리스트 // 페이지가 표시된 질문 및 답변 목록 검색
-    public List<QnADomain> getAllQnA(@PageableDefault(size = 10)Pageable pageable){
-        return qnaService.getAllQnA(pageable);
+    @GetMapping("/list") // 질문 리스트 // 페이지가 표시된 질문 및 답변 목록 검색
+    public String getAllQnA(Model model, @PageableDefault(size = 10)Pageable pageable){
+        List<QnADomain> qnADomainList = qnaService.getAllQnA(pageable);
+        model.addAttribute("qnADomainList",qnADomainList);
+        return "list";
     }
     @GetMapping("/list/{userId}")    // 해당 id로 특정 QnA 항목 검색
     public QnADomain getQnAById(@PathVariable long user_id){
         return qnaService.getQnAById(user_id);
-
     }
+
 ////    @PostMapping("/update")    // 해당 id로 특정 QnA 항목 질문하기
 ////    public QnADomain createQnA(@RequestBody QnADomain question){
 ////        return qnaService.createQnA(qna);
@@ -44,6 +48,12 @@ public class QnAController {
     }
 
 
+    @GetMapping("/search")  // QnA 검색기능
+    public String searchQnA(@RequestParam String query, Model model) {
+        List<QnADomain> searchResults =  qnaService.searchQnA(query);
+        model.addAttribute("qnADomainList",searchResults);
+        return "list";
+    }
 
 
 }

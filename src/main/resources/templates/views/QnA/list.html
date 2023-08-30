@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,32 +7,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
-    <title>QnA Interface</title>
+    <title>List QnA</title>
 </head>
-
-<body style="margin-bottom: 200px">
-
-    <h2>QnA List</h2>
-
-
-        <div class="container mt-3">
-            <section>
-                <h3>모든 QnA 나열</h3>
-                    <button onclick="fetchQnAList()">모든 질문을 가져오기</button>
-<!--                    <input type="text" id="searchInput" placeholder="Enter your question or keywords">-->
-<!--                    <button onclick="searchQnA">Search</button>-->
-<!--                    <div id="searchResults"></div>-->
-            </section>
-
-            <section>
-                <h3>ID 별 QnA 보기</h3>
-                <input type="text" id="userIdInput" placeholder="Enter User ID">
-                <button onclick="fetchQnAById()">ID 별 QnA 가져오기</button>
-            </section>
-
-        </div>
-
-        </div>
-
+<body>
+<div class="side">
+    <div class="image">
+        <img src="" alt="Profile Image">
+    </div>
+    <ul class="menu">
+        <li><a href="/qna/list" class="active">List</a></li>
+        <li><a href="/qna/update">Update</a></li>
+        <li><a href="/qna/delete">Delete</a></li>
+    </ul>
+</div>
+    <div class="c">
+    <h1>QnA List</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <form action="/qna/search" method="get">
+            <input type="text" name="query" placeholder="Search question..">
+            <button type="submit">검색</button>
+        </form>
+        <!-- 컨트롤러에서 'qnaList'라는 이름의 모델 특성을 전달한다고 가정합니다. -->
+        <tr th:each="qna : ${qnaList}">
+            <td th:text="${qna.id}"></td>
+            <td th:text="${qna.user_id}"></td>
+            <td th:text="${qna.question}"></td>
+            <td th:text="${qna.answer}"></td>
+            <td>
+                <a th:href="@{/qna/update/{id}(id=${qna.id})}">Update</a>
+                <a th:href="@{/qna/delete/{id}(id=${qna.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    </div>
 </body>
 </html>

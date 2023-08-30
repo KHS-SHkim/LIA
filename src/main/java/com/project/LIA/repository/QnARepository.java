@@ -16,7 +16,7 @@ public interface QnARepository extends JpaRepository<QnADomain, Long> {
     // Update a specific QnA entry by user ID
 //    QnADomain updateQnA(Long user, QnADomain question);
 
-    // 모든 QnA 항목 검색
+    // 모든 QnA 항목 list
     List<QnADomain> findAll();
 
     QnADomain save(QnADomain question);
@@ -24,5 +24,7 @@ public interface QnARepository extends JpaRepository<QnADomain, Long> {
     Optional<QnADomain> findById(Long user_id);
 
     void deleteById(Long user_id);
+
+    List<QnADomain> findByQuestionContaining(String query);
 }
 
