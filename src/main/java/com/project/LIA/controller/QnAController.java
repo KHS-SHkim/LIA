@@ -48,12 +48,12 @@ public class QnAController {
     }
 
 
-    @GetMapping("/search")  // QnA 검색기능
-    public String searchQnA(@RequestParam String query, Model model) {
-        List<QnADomain> searchResults =  qnaService.searchQnA(query);
-        model.addAttribute("qnADomainList",searchResults);
-        return "list";
-    }
+//    @GetMapping("/search")  // QnA 검색기능
+//    public String searchQnA(@RequestParam String query, Model model) {
+//        List<QnADomain> searchResults =  qnaService.searchQnA(query);
+//        model.addAttribute("qnADomainList",searchResults);
+//        return "list";
+//    }
 
 
 }
