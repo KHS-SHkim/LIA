@@ -29,13 +29,13 @@
     <ul class="menu">
         <form sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
       <li>
-        <a href="/note/list">쪽지함</a>
+        <a th:href="@{/note/list}">쪽지함</a>
       </li>
       <li>
             <a th:href="@{'/book/list?username=' + ${user.username}}">내 글 보기</a>
       </li>
       <li>
-        <a href="/declaration/list">신고 현황</a>
+        <a th:href="@{/declaration/list}">신고 현황</a>
       </li>
       <li>
         <a th:href="@{/book/write}">대여글 등록</a>

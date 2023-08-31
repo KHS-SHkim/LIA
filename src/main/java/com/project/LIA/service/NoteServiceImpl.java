@@ -83,4 +83,13 @@ public class NoteServiceImpl implements NoteService {
         sumNoteList.sort(Comparator.comparing(NoteDomain::getId).reversed());
         return sumNoteList;
     }
+
+    @Override
+    public NoteDomain findLastNote(UserDomain user, UserDomain receiver) {
+        List<NoteDomain> i = noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
+        List<NoteDomain> y = noteRepository.findByUserIdAndReceiverId(receiver.getId(),user.getId());
+        i.addAll(y);
+        i.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        return i.get(0);
+    }
 }

@@ -1,17 +1,14 @@
 package com.project.LIA.controller;
 
-import com.project.LIA.domain.NoteDomain;
+import com.project.LIA.domain.BookDomain;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.service.NoteService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/note")
@@ -25,8 +22,8 @@ public class NoteController {
 
     @GetMapping("/list")
     public String noteList(Model model){
-//        UserDomain user = U.getLoggedUser();
-        UserDomain user = userService.findByUsername("user2");
+        UserDomain user = U.getLoggedUser();
+//        UserDomain user = userService.findByUsername("user2");
         System.out.println("user = " + user);
         model.addAttribute("myNoteList", noteService.findMyNoteList(user));
         return "/note/list";
@@ -37,8 +34,8 @@ public class NoteController {
 
         UserDomain user = userService.findById(user_id);
         UserDomain receiver;
-//        if (user == U.getLoggedUser()){
-        if(user == userService.findByUsername("user2")) {
+        if (user == U.getLoggedUser()){
+//        if(user == userService.findByUsername("user2")) {
             receiver = userService.findById(receiver_id);
         } else {
             user = userService.findById(receiver_id);
@@ -49,6 +46,7 @@ public class NoteController {
             model.addAttribute("noteList",noteService.findNote(user, receiver));
             model.addAttribute("user", user);
             model.addAttribute("receiver", receiver);
+            model.addAttribute("lastNote", noteService.findLastNote(user, receiver));
         } else {
             model.addAttribute("noteList", null);
 
@@ -56,8 +54,11 @@ public class NoteController {
         return "/note/detail";
     }
 
-    @PostMapping("/write/{user_id}/{receiver_id}")
-    public String noteWrite(@RequestParam("contents") String contents, @PathVariable Long user_id, @PathVariable Long receiver_id){
+    @GetMapping("/write")
+    public String noteWrite(@RequestParam("user") UserDomain user,
+                            @RequestParam("receiver") UserDomain receiver,
+                            @RequestParam("book") BookDomain book,
+                            String contents){
         return "";
     }
 

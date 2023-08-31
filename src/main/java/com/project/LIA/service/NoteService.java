@@ -23,4 +23,6 @@ public interface NoteService {
     // 내가 쓰거나 받은쪽지 (쪽지함)
     List<NoteDomain> findMyNoteList(UserDomain userDomain);
 
+    NoteDomain findLastNote(UserDomain user, UserDomain receiver);
+
 }
