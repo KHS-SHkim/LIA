@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,15 @@
             <div class="mb-3 mt-3 clearfix">
                 <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
                 <span class="float-end">
+
+            <!--대여가능 체크박스-->
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="availableOnly" onclick="filterList()">
+                <label class="form-check-label" for="availableOnly">
+                    대여 가능만 보기
+                </label>
+
+
         <form name="frmPageRows">
             <input type="hidden" name="page" th:value="${page}">
             <select class="form-select" name="pageRows">
@@ -35,6 +44,7 @@
                 <option value="50" th:selected="${pageRows==50}">50</option>
             </select>
         </form>
+            </div>
     </span>
             </div>
             <!-- 페이징 헤더 -->
@@ -46,15 +56,17 @@
                     <th>#</th>
                     <th>사진</th>
                     <th>제목</th>
+                    <th>대여상태</th>
                     <th>게시일</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${list}">
+                <tr th:each="book : ${list}" class="book-row">
                     <td th:text="${book.id}">1</td>
-                    <td><a class="navbar-brand" th:href="@{'/book/detail/' + ${book.id}}"><img id="logo" th:src="@{/image/LIA_logo.jpg}"></a> </td>
+                    <td><a class="navbar-brand" th:href="@{'/book/detail/' + ${book.id}}"><img id="logo" th:src="@{/image/LIA_logo.jpg}"></a></td>
                     <td th:text="${book.name}">John</td>
-                    <td th:text="${#temporals.format(book.regDate, 'yyyy-MM-dd HH:mm:ss')}">2021-03-21</td>
+                    <td class="rental-stat" th:text="${book.rental_stat}">John</td>
+                    <td th:text="${#temporals.format(book.regDate, 'yyyy-MM-dd HH:mm')}">2021-03-21</td>
                 </tr>
                 </tbody>
             </table>

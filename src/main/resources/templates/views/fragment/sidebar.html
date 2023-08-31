@@ -1,23 +1,31 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="col-3 side text-center">
   <div class="image">
     <img th:src="@{/image/default.jpg}">
   </div>
   <div class="info text-center">
+            <span sec:authorize="isAnonymous()">
+                <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
+                <a class="userinfo" th:href="@{/user/login}">로그인</a>
+            </span>
+    <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST">
                 <span>
-                    <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
-                    <a class="userinfo" th:href="@{/user/login}">로그인</a>
+                    <a class="userinfo" th:href="@{/user/myPage}">마이페이지</a>/
+                    <a class="userinfo" th:href="@{/user/logout}" onclick="return confirmLogout();">로그아웃</a>
                 </span>
+    </form>
   </div>
   <br>
   <br>
   <div class="text-center">
     <ul class="menu">
+        <form sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
       <li>
         <a href="#">쪽지함</a>
       </li>
       <li>
-        <a href="#">내 글 보기</a>
+            <a th:href="@{'/book/list?username=' + ${user.username}}">내 글 보기</a>
       </li>
       <li>
         <a href="#">신고 현황</a>
@@ -25,6 +33,7 @@
       <li>
         <a th:href="@{/book/write}">대여글 등록</a>
       </li>
+        </form>
       <li>
         <a href="#">Q&A</a>
       </li>

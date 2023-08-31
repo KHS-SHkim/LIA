@@ -7,6 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script th:src="@{/js/write.js}"></script>
+    <script th:src="@{/js/mapAPI.js}"></script>
+
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <title>LIA</title>
 </head>
@@ -18,7 +20,7 @@
 <div class="row">
     <div th:replace="~{fragment/sidebar}"></div>
     <!--글쓴이 유저 등록-->
-    <div class="col-9 c"> <!--th:with="user=${#authentication.getPrincipal().getUser()}"-->
+    <div class="col-9 c" th:with="user=${#authentication.getPrincipal().getUser()}">
         <h2>작성</h2>
         <hr>
 
@@ -40,7 +42,7 @@
 
             <div class="my-3">
                 <label for="cate">카테고리:</label>
-                <select class="form-select" name="cate" th:value="${cate}">
+                <select class="form-select" name="cate" id="cate" th:value="${cate}">
                     <option value="동화책" th:selected="${cate == '동화책'}">동화책</option>
                     <option value="만화책" th:selected="${cate == '만화책'}">만화책</option>
                     <option value="소설책" th:selected="${cate == '소설책'}">소설책</option>
@@ -66,22 +68,30 @@
             <div><span class="text-danger"></span></div>
 
             <div class="my-3">
-                <label for="rental_date">대여 기간:</label>
-                <input type="text" class="form-control" id="rental_date" placeholder="대여기간" name="rental_date" th:value="${rental_date}">
-                <span class="text-danger" th:if="${error_rental_date}" th:utext="${error_rental_date}"></span>
+                <label for="rental_start">대여일:</label>
+                <input type="date" class="form-control" id="rental_start" placeholder="대여일" name="rental_start" th:value="${rental_start}">
+                <span class="text-danger" th:if="${error_rental_start}" th:utext="${error_rental_start}"></span>
+            </div>
+            <div><span class="text-danger"></span></div>
+
+            <div class="my-3">
+                <label for="rental_end">반납일:</label>
+                <input type="date" class="form-control" id="rental_end" placeholder="대여일" name="rental_end" th:value="${rental_end}">
+                <span class="text-danger" th:if="${error_rental_end}" th:utext="${error_rental_end}"></span>
             </div>
             <div><span class="text-danger"></span></div>
 
             <div class="my-3">
                 <label for="rental_spot">대여 지역:</label>
-                <input type="text" class="form-control" id="rental_spot" placeholder="대여지역" name="rental_spot" th:value="${rental_spot}">
+                <input type="text" class="form-control" id="rental_spot" placeholder="대여지역" name="rental_spot" required th:value="${rental_spot}">
+                <button type="button" class="sample6 btn btn-dark" id="sample6_btn" onclick="sample6_execDaumPostcode()">주소찾기</button>
                 <span class="text-danger" th:if="${error_rental_spot}" th:utext="${error_rental_spot}"></span>
             </div>
             <div><span class="text-danger"></span></div>
 
             <div class="my-3">
                 <label for="rental_stat">대여상태:</label>
-                <select class="form-select" name="rental_stat" th:value="${rental_stat}">
+                <select class="form-select" name="rental_stat" id="rental_stat" th:value="${rental_stat}">
                     <option value="대여중" th:selected="${rental_stat == '대여중'}">대여중</option>
                     <option value="대여가능" th:selected="${rental_stat == '대여가능'}">대여가능</option>
                 </select>

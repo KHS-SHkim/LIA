@@ -20,7 +20,7 @@ public class MvcConfiguration {
             // IntelliJ 의 경우 이 경로를 module 이 아닌 project 이하에 생성해야 한다.
             registry
                     .addResourceHandler("/upload/**")
-                    .addResourceLocations("file:upload")
+                    .addResourceLocations("file:upload/")
                     ;
 
         }

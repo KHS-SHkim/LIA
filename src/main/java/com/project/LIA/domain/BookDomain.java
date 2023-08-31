@@ -2,6 +2,8 @@ package com.project.LIA.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,11 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "book")
+@DynamicInsert  // insert 시  null 인 필드 제외
+@DynamicUpdate // update 시 null 인 필드 제외
 public class BookDomain extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -37,8 +43,9 @@ public class BookDomain extends BaseEntity{
     @Column(nullable = false)
     private String rental_stat; // 대여상태
 
-    @Column(nullable = false)
-    private int rental_date; // 대여기간
+    private LocalDate rental_start; // 대여일
+
+    private LocalDate rental_end; // 반납일
 
     @ManyToOne
     @ToString.Exclude

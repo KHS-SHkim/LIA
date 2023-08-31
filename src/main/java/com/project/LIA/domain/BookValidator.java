@@ -3,6 +3,8 @@ package com.project.LIA.domain;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.time.LocalDate;
+
 public class BookValidator implements Validator {
 
     // 이 Validator 가 제공된 Class 의 인스턴스(clazz)를 유효성검사할 수 있는가?
@@ -30,7 +32,8 @@ public class BookValidator implements Validator {
         String price = Integer.toString(book.getPrice());
         String rental_spot = book.getRental_spot();
         String rental_stat = book.getRental_stat();
-        String rental_date = Integer.toString(book.getRental_date());
+        LocalDate rental_start = book.getRental_start();
+        LocalDate rental_end = book.getRental_end();
         String book_detail = book.getBook_detail();
 
 
@@ -40,20 +43,24 @@ public class BookValidator implements Validator {
         if(cate == null || cate.trim().isEmpty()){
             errors.rejectValue("cate", "카테고리 선택은 필수입니다");
         }
-        if(price == null || name.trim().isEmpty()){
+        if(price == null || price.trim().isEmpty()){
             errors.rejectValue("price", "가격은 필수입니다");
         }
-        if(rental_spot == null || name.trim().isEmpty()){
+        if(rental_spot == null || rental_spot.trim().isEmpty()){
             errors.rejectValue("rental_spot", "대여지역은 필수입니다");
         }
-        if(rental_stat == null || name.trim().isEmpty()){
+        if(rental_stat == null || rental_stat.trim().isEmpty()){
             errors.rejectValue("rental_stat", "대여상태는 필수입니다");
         }
-        if(rental_date == null || name.trim().isEmpty()){
-            errors.rejectValue("rental_date", "대여기간은 필수입니다");
-        }
-        if(book_detail == null || name.trim().isEmpty()){
+        if(book_detail == null || book_detail.trim().isEmpty()){
             errors.rejectValue("book_detail", "글 내용은 필수입니다");
+        }
+        if (rental_start != null && rental_end != null && rental_end.isBefore(rental_start)) {
+            errors.rejectValue("rental_end", "반납일은 대여일보다 이후여야 합니다");
+        }
+        //대여중이라면 대여일과 반납일을 쓰도록
+        if ((rental_start == null || rental_end == null) && rental_stat.equals("대여중")) {
+            errors.rejectValue("rental_end", "대여일과 반납일을 입력해주세요");
         }
 
 
