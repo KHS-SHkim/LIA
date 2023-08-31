@@ -128,13 +128,12 @@ public class UserController {
         }
     }
     @GetMapping("/naverLogin")
-    private String naverLogin(Model model, @RequestParam("code")String code , @RequestParam("state") String state){
+    public void naverLogin(Model model,@RequestParam("code")String code,@RequestParam("state")String state){
+        System.out.println(code);
+        System.out.println(state);
 
         model.addAttribute("code",code);
         model.addAttribute("state",state);
-
-
-        return "/user/naverLoginOk";
     }
 
     @GetMapping("/registerOk")

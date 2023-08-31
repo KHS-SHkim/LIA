@@ -8,7 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
-    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script th:src="@{/js/home.js}"></script>
     <script th:src="@{/js/login.js}"></script>
     <title>LIA</title>
@@ -43,14 +44,7 @@
                                 <a href="/user/findPassword" class="btn btn-dark mt-3 d-block">비밀번호 찾기</a>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center ms-5 me-3 pt-3 pb-3" style="border: 1px solid black;">
-                <h2>간편로그인</h2>
-                <div class="row mt-5">
-                    <div class="col mt-5">
-                        <a id="naverBtn" href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0M5Hhr3GeByMD2Fuojgc&state=test&redirect_uri=http://localhost:8095/user/naverLogin" class="mt-5"><img id="naverLogoBtn" th:src="@{/image/naver.png}"></a>
+                                <div class="mt-5" id="naver_id_login"><img style="width:400px; height:30px;" th:src="@{/image/naver.png}"></div>
                     </div>
                 </div>
             </div>
@@ -58,5 +52,8 @@
     </div>
 
 </div>
+
+
 </body>
+
 </html>
