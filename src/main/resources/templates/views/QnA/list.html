@@ -15,9 +15,9 @@
         <img src="" alt="Profile Image">
     </div>
     <ul class="menu">
-        <li><a href="/qna/list" class="active">List</a></li>
-        <li><a href="/qna/update">Update</a></li>
-        <li><a href="/qna/delete">Delete</a></li>
+        <li><a href="/qna/list" class="active">QnA목록</a></li>
+        <li><a href="/qna/update">QnA문의</a></li>
+        <li><a href="/qna/delete">QnA삭제</a></li>
     </ul>
 </div>
     <div class="c">
@@ -32,9 +32,9 @@
             <th>Actions</th>
         </tr>
         </thead>
-        <form action="/qna/search" method="get">
-            <input type="text" name="query" placeholder="Search question..">
-            <button type="submit">검색</button>
+<!--        <form action="/qna/search" method="get">-->
+<!--            <input type="text" name="query" placeholder="Search question..">-->
+<!--            <button type="submit">검색</button>-->
         </form>
         <!-- 컨트롤러에서 'qnaList'라는 이름의 모델 특성을 전달한다고 가정합니다. -->
         <tr th:each="qna : ${qnaList}">

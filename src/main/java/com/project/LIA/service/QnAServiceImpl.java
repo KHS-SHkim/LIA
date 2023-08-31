@@ -52,9 +52,9 @@ public class QnAServiceImpl implements QnAService {
         return qnARepository.findAll();
     }
 
-    @Override   // 통합검색기능추가
-    public List<QnADomain> searchQnA(String query) {
-        return qnARepository.findByQuestionContaining(query);
-    }
+//    @Override   // 통합검색기능추가
+//    public List<QnADomain> searchQnA(String query) {
+//        return qnARepository.findByQC(query);
+//    }
 
 }
