@@ -1,0 +1,44 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/note/detail.css}">
+  <title>쪽지</title>
+</head>
+<body>
+<div th:replace="~{fragment/header}"></div>
+<div class="row">
+  <div th:replace="~{fragment/sidebar}"></div>
+  <div class="col-9 c">
+    <div class="container mt-3">
+      <div class="text-center">
+        <h1 th:text="${receiver.nickname}+'님과의 대화'"></h1>
+      </div>
+      <hr>
+      <div class="row mt-5" th:each="note : ${noteList}">
+        <div class="myreceiver" th:if="${user} == ${note.user}">
+          내가 발송
+          <div th:text="${note.user.nickname}"></div>
+          <div th:text="${note.contents}"></div>
+        </div>
+        <div class="receiver" th:if="${user} == ${note.receiver}">
+          내가 수신
+          <div th:text="${note.user.nickname}"></div>
+          <div th:text="${note.contents}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3 bottom fixed ">
+      <form method="POST" th:action="@{/note/write}+'/'+${user.id}+'/'+${receiver.id}" >
+        <input type="text" class="textarea" id="contents"/>
+        <input type="submit">전송</input>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

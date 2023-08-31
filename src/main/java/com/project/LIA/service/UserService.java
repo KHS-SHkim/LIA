@@ -28,4 +28,6 @@ public interface UserService {
 
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);
+
+    UserDomain findById(Long user_id);
 }
