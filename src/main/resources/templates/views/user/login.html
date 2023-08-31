@@ -6,10 +6,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
     <script th:src="@{/js/home.js}"></script>
     <script th:src="@{/js/login.js}"></script>
     <title>LIA</title>
@@ -55,5 +55,12 @@
 
 
 </body>
-
+<script type="text/javascript">
+  	var naver_id_login = new naver_id_login("0M5Hhr3GeByMD2Fuojgc", "http://localhost:8095/user/naverLogin");
+  	var state = naver_id_login.getUniqState();
+  	naver_id_login.setButton("green", 3,40);
+  	naver_id_login.setDomain("http://localhost:8095/user/login");
+  	naver_id_login.setState(state);
+  	naver_id_login.init_naver_id_login();
+</script>
 </html>

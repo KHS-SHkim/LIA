@@ -1,13 +1,47 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-2.0.2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script th:src="@{/js/naverlogin.js}"></script>
 </head>
 <body>
-    <input id="code" th:value="${code}">
-    <input id="state" th:value="${state}">
+<script type="text/javascript">
+  var naver_id_login = new naver_id_login("0M5Hhr3GeByMD2Fuojgc", "http://localhost:8095/user/naverLogin");
+  // 접근 토큰 값 출력
+  alert(naver_id_login.oauthParams.access_token);
+  // 네이버 사용자 프로필 조회
+  naver_id_login.get_naver_userprofile("naverSignInCallback()");
+  // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+  function naverSignInCallback() {
+    alert(naver_id_login.getProfileData('email'));
+    alert(naver_id_login.getProfileData('name'));
+
+    var email = naver_id_login.getProfileData('email');
+    var name = naver_id_login.getProfileData('name');
+    const data = {"email" : email,
+                  "nickname" : name}
+    location.href="/user/register/"+email+"/"+name;
+
+    $.ajax({
+        url: "/user/naverSave",
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function(response){
+            if(response == 0){
+                alert("실패했습니다");
+                return;
+            } else if(response == 1) {
+                alert("성공했습니다." +
+                      "아이디는 이메일 앞부분입니다. " +
+                      "최초비밀번호는 1234 입니다." +
+                      "최초전화번호는 01012345678 입니다." +
+                      "마이페이지에서 정보를 변경해주시기 바랍니다.")
+                location.href="/user/register";
+            }
+        }
+    })
+  }
+</script>
 </body>
 </html>
-

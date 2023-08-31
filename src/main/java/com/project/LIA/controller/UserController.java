@@ -7,6 +7,7 @@ import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,6 +56,14 @@ public class UserController {
     @GetMapping("/register")
     public void register(Model model){
 
+    }
+
+
+    @GetMapping("/register/{email}/{name}")
+    public String naverregister(Model model, @PathVariable("email")String email , @PathVariable("name")String name){
+        model.addAttribute("email",email);
+        model.addAttribute("name",name);
+        return "/user/register2";
     }
 
     @PostMapping("/register")
@@ -128,13 +137,39 @@ public class UserController {
         }
     }
     @GetMapping("/naverLogin")
-    public void naverLogin(Model model,@RequestParam("code")String code,@RequestParam("state")String state){
-        System.out.println(code);
-        System.out.println(state);
+    public void naverLogin(){}
 
-        model.addAttribute("code",code);
-        model.addAttribute("state",state);
+    @PostMapping("/naverSave")
+    public @ResponseBody int naverSave(Model model,@RequestParam("email")String email, @RequestParam("nickname")String nickname){
+        int atIndex = email.indexOf('@');
+        String username = email.substring(0, atIndex);
+        String password = "1234";
+
+        System.out.println(email);
+        System.out.println(nickname);
+        System.out.println(username);
+
+        UserDomain userDomain = new UserDomain();
+        userDomain.setEmail(email);
+        userDomain.setNickname(nickname);
+        userDomain.setPassword(password);
+        userDomain.setPhone("01012345678");
+        userDomain.setUsername(username);
+
+//        model.addAttribute("password",password);
+////        model.addAttribute("username",username);
+////        model.addAttribute("password",password);
+////        model.addAttribute("phone","01012345678");
+
+        if(userDomain != null){
+            userService.register(userDomain);
+            return 1;
+        } else return 0;
+
     }
+
+    @GetMapping("/https://nid.naver.com/oauth2.0/token")
+    public void naverLogin1(){}
 
     @GetMapping("/registerOk")
     public void registerOk(){}
