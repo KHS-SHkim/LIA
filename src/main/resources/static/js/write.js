@@ -11,9 +11,9 @@ $(function(){
         i++;
     });
 
-    // Summernote 추가
-    $('#content').summernote({
-        height: 300
+
+    $("#sample6_btn").click(function(){
+        $("#error_rental_spot").html("");
     });
 
 });

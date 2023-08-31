@@ -47,13 +47,14 @@ public class BookController {
         // validation 과정에서 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             // redirect 시 기좀에 입력했던 값들은 보이게 하기
-            //redirectAttrs.addFlashAttribute("user", book.getUser());
+            redirectAttrs.addFlashAttribute("user", book.getUser());
             redirectAttrs.addFlashAttribute("name", book.getName());
             redirectAttrs.addFlashAttribute("cate", book.getCate());
             redirectAttrs.addFlashAttribute("price", book.getPrice());
             redirectAttrs.addFlashAttribute("rental_spot", book.getRental_spot());
             redirectAttrs.addFlashAttribute("rental_stat", book.getRental_stat());
-            redirectAttrs.addFlashAttribute("rental_date", book.getRental_date());
+            redirectAttrs.addFlashAttribute("rental_start", book.getRental_start());
+            redirectAttrs.addFlashAttribute("rental_end", book.getRental_end());
 
 
 
@@ -80,15 +81,22 @@ public class BookController {
         return "book/detail";
     }
 
+
+
     //리스트
     @GetMapping("/list")
-    public void list(@RequestParam(required = false) String cate, @RequestParam(required = false) String keyword, Integer page, Model model) {
+    public void list(@RequestParam(required = false) String username,@RequestParam(required = false) String cate, @RequestParam(required = false) String keyword, Integer page, Model model) {
         if (cate != null && keyword==null) {
             model.addAttribute("list", bookService.cateList(cate, page, model));
         } else if(cate == null && keyword!=null) {
             model.addAttribute("list", bookService.searchList(keyword,page, model));
         }
         else{model.addAttribute("list", bookService.list(page, model));}
+        if(username!=null)
+        {
+            model.addAttribute("list", bookService.myList(username, page, model));
+
+        }
     }
 
 
@@ -121,13 +129,15 @@ public class BookController {
         // validation 과정에서 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             // redirect 시 기좀에 입력했던 값들은 보이게 하기
-            //redirectAttrs.addFlashAttribute("user", book.getUser());
+            redirectAttrs.addFlashAttribute("user", book.getUser());
             redirectAttrs.addFlashAttribute("name", book.getName());
             redirectAttrs.addFlashAttribute("cate", book.getCate());
             redirectAttrs.addFlashAttribute("price", book.getPrice());
             redirectAttrs.addFlashAttribute("rental_spot", book.getRental_spot());
             redirectAttrs.addFlashAttribute("rental_stat", book.getRental_stat());
-            redirectAttrs.addFlashAttribute("rental_date", book.getRental_date());
+            redirectAttrs.addFlashAttribute("rental_start", book.getRental_start());
+            redirectAttrs.addFlashAttribute("rental_end", book.getRental_end());
+
 
             List<FieldError> errList = result.getFieldErrors();
             for(FieldError err : errList){

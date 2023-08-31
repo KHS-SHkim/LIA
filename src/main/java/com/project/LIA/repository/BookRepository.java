@@ -16,4 +16,7 @@ public interface BookRepository extends JpaRepository<BookDomain,Long> {
 
     // 검색 리스트
     Page<BookDomain> findByNameContaining(String keyword,Pageable pageable);
+
+    // 내가 쓴 글 리스트
+    Page<BookDomain> findByUserUsername(String username, Pageable pageable);
 }
