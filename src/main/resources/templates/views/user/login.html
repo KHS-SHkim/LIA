@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
     <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/login.js}"></script>
     <title>LIA</title>
 </head>
 
@@ -44,23 +43,14 @@
                                 <a href="/user/findPassword" class="btn btn-dark mt-3 d-block">비밀번호 찾기</a>
                             </div>
                         </form>
-                                <div class="mt-5" id="naver_id_login"><img style="width:400px; height:30px;" th:src="@{/image/naver.png}"></div>
+                        <hr>
+                        <span id="nvmsg"><span id="naver_id_login"></span>네이버계정으로 회원가입 </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
-
+<script th:src="@{/js/login.js}"></script>
 </body>
-<script type="text/javascript">
-  	var naver_id_login = new naver_id_login("0M5Hhr3GeByMD2Fuojgc", "http://localhost:8095/user/naverLogin");
-  	var state = naver_id_login.getUniqState();
-  	naver_id_login.setButton("green", 3,40);
-  	naver_id_login.setDomain("http://localhost:8095/user/login");
-  	naver_id_login.setState(state);
-  	naver_id_login.init_naver_id_login();
-</script>
 </html>

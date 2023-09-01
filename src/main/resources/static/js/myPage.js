@@ -3,7 +3,6 @@ $(function(){
     $("#password").attr("disabled", true);
     $("#re_password").attr("disabled", true);
 
-
     $("#imgBtn").click(function(){
         $("#upfile").css("display","block");
         $("#imgbox").css("display", "none");

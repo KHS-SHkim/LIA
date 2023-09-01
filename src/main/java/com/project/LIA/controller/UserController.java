@@ -139,37 +139,53 @@ public class UserController {
     @GetMapping("/naverLogin")
     public void naverLogin(){}
 
-    @PostMapping("/naverSave")
-    public @ResponseBody int naverSave(Model model,@RequestParam("email")String email, @RequestParam("nickname")String nickname){
-        int atIndex = email.indexOf('@');
-        String username = email.substring(0, atIndex);
-        String password = "1234";
+    @PostMapping("/register2")
+    public String register2(@Valid UserVofR userVofR,
+                            BindingResult result,
+                            Model model,
+                            RedirectAttributes redirectAttributes
+    ){
+        if (!result.hasFieldErrors("username") && userService.isExist(userVofR.getUsername())) {
+            result.rejectValue("username", "이미존재하는 아이디 입니다.");
+        }
 
-        System.out.println(email);
-        System.out.println(nickname);
-        System.out.println(username);
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("username", userVofR.getUsername());
+            redirectAttributes.addFlashAttribute("phone", userVofR.getPhone());
+            redirectAttributes.addFlashAttribute("post_num", userVofR.getPost_num());
+            redirectAttributes.addFlashAttribute("address", userVofR.getAddress());
+            redirectAttributes.addFlashAttribute("address_detail", userVofR.getAddress_detail());
+
+            List<FieldError> errorList = result.getFieldErrors();
+            for(FieldError err : errorList){
+                redirectAttributes.addFlashAttribute("error_"+err.getField(), err.getCode());
+            }
+            return "redirect:/user/register";
+        }
 
         UserDomain userDomain = new UserDomain();
-        userDomain.setEmail(email);
-        userDomain.setNickname(nickname);
-        userDomain.setPassword(password);
-        userDomain.setPhone("01012345678");
-        userDomain.setUsername(username);
+        userDomain.setUsername(userVofR.getUsername());
+        userDomain.setPassword(userVofR.getPassword());
+        userDomain.setNickname(userVofR.getNickname());
+        userDomain.setPhone(userVofR.getPhone());
+        userDomain.setEmail(userVofR.getEmail());
 
-//        model.addAttribute("password",password);
-////        model.addAttribute("username",username);
-////        model.addAttribute("password",password);
-////        model.addAttribute("phone","01012345678");
+        int cnt = userService.register(userDomain);
 
-        if(userDomain != null){
-            userService.register(userDomain);
-            return 1;
-        } else return 0;
+        AddressDomain addressDomain = new AddressDomain();
+        addressDomain.setUser(userDomain);
+        addressDomain.setAddress_detail(userVofR.getAddress_detail());
+        addressDomain.setAddress(userVofR.getAddress());
+        addressDomain.setPost_num(userVofR.getPost_num());
 
+        addressService.register(addressDomain);
+
+        model.addAttribute("result", cnt);
+
+        return "/user/registerOk";
     }
 
-    @GetMapping("/https://nid.naver.com/oauth2.0/token")
-    public void naverLogin1(){}
+
 
     @GetMapping("/registerOk")
     public void registerOk(){}
@@ -229,11 +245,17 @@ public class UserController {
         model.addAttribute("profile_img", userDomain.getProfile_img());
         model.addAttribute("nickname", userDomain.getNickname());
         model.addAttribute("phone", userDomain.getPhone());
+        model.addAttribute("username",userDomain.getUsername());
+        model.addAttribute("email",userDomain.getEmail());
+        if(addressDomain != null){
         model.addAttribute("post_num",addressDomain.getPost_num());
         model.addAttribute("address",addressDomain.getAddress());
         model.addAttribute("address_detail",addressDomain.getAddress_detail());
-        model.addAttribute("username",userDomain.getUsername());
-        model.addAttribute("email",userDomain.getEmail());
+        } else{
+            model.addAttribute("post_num",null);
+            model.addAttribute("address",null);
+            model.addAttribute("address_detail",null);
+        }
     }
 
     @PostMapping("/myPage")

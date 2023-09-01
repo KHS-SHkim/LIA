@@ -12,6 +12,8 @@ SELECT * FROM user;
 
 
 
+
+
 DELETE FROM address;
 ALTER TABLE address  AUTO_INCREMENT = 1;
 DELETE FROM user_authoriy;

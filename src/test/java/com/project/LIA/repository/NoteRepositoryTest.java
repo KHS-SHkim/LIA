@@ -125,7 +125,7 @@ class NoteRepositoryTest {
                 .cate("01")
                 .price(1000)
                 .rental_stat("01")
-                .rental_date(7)
+//                .rental_date(7)
                 .rental_spot("서울시 중랑구")
                 .name("아무책이나 등록해보자")
                 .build();
