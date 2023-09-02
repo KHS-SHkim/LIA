@@ -28,7 +28,7 @@ public class QnAController {
         model.addAttribute("qnADomainList",qnADomainList);
         return "list";
     }
-    @GetMapping("/list/{userId}")    // 해당 id로 특정 QnA 항목 검색
+    @GetMapping("/list/{id}")    // 해당 id로 특정 QnA 항목 검색
     public QnADomain getQnAById(@PathVariable long user_id){
         return qnaService.getQnAById(user_id);
     }
@@ -37,12 +37,12 @@ public class QnAController {
 ////    public QnADomain createQnA(@RequestBody QnADomain question){
 ////        return qnaService.createQnA(qna);
 ////    }
-    @PostMapping("/update/{userId}")   // 해당 id로 특정 QnA 항목 업데이트
+    @PostMapping("/update/{id}")   // 해당 id로 특정 QnA 항목 질문
     public QnADomain updateQnA(@PathVariable long user_id, @RequestBody QnADomain question ){
         return qnaService.updateQnA(user_id, question);
     }
 
-    @PostMapping("/delete/{userId}") // 해당 id로 QnA 항목을 삭제합니다.
+    @PostMapping("/delete/{id}") // 해당 id로 QnA 항목을 삭제합니다.
     public void deleteQnA(@PathVariable long user_id) {
         qnaService.deleteQnA(user_id);
     }
