@@ -28,7 +28,6 @@ function sample6_execDaumPostcode() {
 
             document.getElementById('post_num').value = data.zonecode;
             document.getElementById("address").value = addr;
-            document.getElementById("rental_spot").value = addr;
             document.getElementById("address_detail").focus();
         }
     }).open();

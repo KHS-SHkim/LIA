@@ -1,25 +1,18 @@
 package com.project.LIA.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.LIA.domain.*;
 import com.project.LIA.service.AddressService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,21 +43,8 @@ public class UserController {
         return "user/loginError";
     }
 
-
-
-
     @GetMapping("/register")
-    public void register(Model model){
-
-    }
-
-
-    @GetMapping("/register/{email}/{name}")
-    public String naverregister(Model model, @PathVariable("email")String email , @PathVariable("name")String name){
-        model.addAttribute("email",email);
-        model.addAttribute("name",name);
-        return "/user/register2";
-    }
+    public void register(Model model){}
 
     @PostMapping("/register")
     public String register(
@@ -103,6 +83,7 @@ public class UserController {
         userDomain.setNickname(userVofR.getNickname());
         userDomain.setPhone(userVofR.getPhone());
         userDomain.setEmail(userVofR.getEmail());
+        userDomain.setState("USE");
 
         int cnt = userService.register(userDomain);
 
@@ -169,6 +150,7 @@ public class UserController {
         userDomain.setNickname(userVofR.getNickname());
         userDomain.setPhone(userVofR.getPhone());
         userDomain.setEmail(userVofR.getEmail());
+        userDomain.setState("USE");
 
         int cnt = userService.register(userDomain);
 
@@ -184,8 +166,6 @@ public class UserController {
 
         return "/user/registerOk";
     }
-
-
 
     @GetMapping("/registerOk")
     public void registerOk(){}
@@ -300,10 +280,18 @@ public class UserController {
         addressService.update(addressDomain);
 
         return "/user/updateOk";
+    }
 
+    @PostMapping("/delete")
+    public String delete(UserVofR userVofR,
+                         Model model
+    ){
+        UserDomain userDomain = userService.findByUsername(userVofR.getUsername());
+        int cnt = userService.updateSt(userDomain);
 
+        model.addAttribute("result", cnt);
 
-
+        return "/user/deleteOk";
     }
 
 

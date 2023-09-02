@@ -26,6 +26,9 @@ public interface UserService {
     // 비번변경
     int updatePw(UserDomain userDomain);
 
+    // 상태변경
+    int updateSt(UserDomain userDomain);
+
     // 사용자의 권한들
     List<AuthorityDomain> selectAuthoritiesById(long id);
 

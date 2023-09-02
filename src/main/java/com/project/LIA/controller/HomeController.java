@@ -42,8 +42,6 @@ public class HomeController {
     public String home(Model model){
 
         UserDomain user = U.getLoggedUser();
-        System.out.println("유저의 존재 여부 확인:" + user);
-        System.out.println("log12345");
         if (user != null){
 
             user = userRepository.findById(user.getId()).orElse(null);

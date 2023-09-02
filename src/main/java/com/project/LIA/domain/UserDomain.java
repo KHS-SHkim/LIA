@@ -44,6 +44,8 @@ public class UserDomain extends BaseEntity{
 
     private String profile_img;
 
+    private String state;
+
     @ToString.Exclude
     @Builder.Default
     @JsonIgnore

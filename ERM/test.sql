@@ -10,8 +10,7 @@ SELECT * FROM commen_code;
 SELECT * FROM qna;
 SELECT * FROM user;
 
-
-
+INSERT INTO user_authorities VALUES (2,1);
 
 
 DELETE FROM address;

@@ -138,6 +138,13 @@ public class UserServiceImpl implements UserService{
         return 1;
     }
 
+    @Override
+    public int updateSt(UserDomain userDomain) {
+        userDomain.setState("OUT");
+        userRepository.save(userDomain);
+        return 1;
+    }
+
     private void delFile(String originalImage) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();
 

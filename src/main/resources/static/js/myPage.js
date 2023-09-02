@@ -197,6 +197,13 @@ $(function(){
         $(this).unbind("submit").submit();
     })
 
+    $("#DelBtn").click(function(){
+        const answer = confirm("탈퇴하시겠습니까?");
+        if(answer){
+            $("form[name='frmDelete']").submit();
+        }
+    });
+
     function readImage(input) {
         if(input.files && input.files[0]) {
             const reader = new FileReader()
@@ -215,5 +222,7 @@ $(function(){
     inputImage.addEventListener("change", e=> {
         readImage(e.target)
     })
+
+
 
 })

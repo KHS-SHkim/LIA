@@ -32,9 +32,11 @@ public class PrincipalDetailService implements UserDetailsService {
         // 해당 username 의 user 가 DB 에 있다면
         // UserDetails 생성해서 리턴
         if (user != null) {
-            PrincipalDetails userDetails = new PrincipalDetails(user);
-            userDetails.setUserService(userService);
-            return userDetails;
+            if(user.getState().equals("USE")){
+                PrincipalDetails userDetails = new PrincipalDetails(user);
+                userDetails.setUserService(userService);
+                return userDetails;
+            }
         }
 
         // 해당 username 의 user 가 없다면?

@@ -23,7 +23,7 @@
         </span>
     </form>
     <br>
-    <span sec:authorize="hasRole('ADMIN')">
+    <span id="admin" sec:authorize="hasRole('ADMIN')">
       <a class="userinfo mt-3" th:href="@{/admin/main}">관리자 페이지</a>
     </span>
   </div>
@@ -31,20 +31,18 @@
   <br>
   <div class="text-center">
     <ul class="menu">
-        <form sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
       <li class="mt-3">
-        <a href="/note/list">쪽지함</a>
+        <a href="@">회원 리스트</a>
       </li>
       <li class="mt-3">
-            <a th:href="@{'/book/list?username=' + ${user.username}}">내 글 보기</a>
+        <a href="@">대여글 리스트</a>
       </li>
       <li class="mt-3">
-        <a href="/declaration/list">신고 현황</a>
+        <a href="@">신고 리스트</a>
       </li>
       <li class="mt-3">
-        <a th:href="@{/book/write}">대여글 등록</a>
+        <a thref="@">신고 유형 관리</a>
       </li>
-        </form>
       <li class="mt-3">
         <a href="#">Q&A</a>
       </li>

@@ -32,6 +32,10 @@
         </div>
         <hr>
 
+        <form name="frmDelete" th:action="@{/user/delete}" method="post">
+            <input type="hidden" name="username" th:value="${username}">
+        </form>
+
         <div class="form-box">
             <form id="myForm" method="POST" th:action="@{/user/myPage}" enctype="multipart/form-data">
                 <input type="hidden" id="username" name="username" th:value="${username}">
@@ -118,6 +122,7 @@
                 </div>
 
                 <button id="saveBtn" type="submit" class="w-25 mt-5 btn btn-primary lowb">수정하기</button>
+                <button id="DelBtn" type="button" class="w-25 mt-5 btn btn-danger ">탈퇴하기</button>
                 <a href="javascript:window.history.back();" class="w-25 mt-5 btn btn-warning">이전으로</a>
             </form>
 

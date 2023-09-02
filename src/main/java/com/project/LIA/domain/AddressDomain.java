@@ -24,8 +24,6 @@ public class AddressDomain extends BaseEntity {
     @Column(nullable = false)
     private String post_num;
 
-    private String stat;
-
     @ManyToOne
     @ToString.Exclude
     private UserDomain user;
