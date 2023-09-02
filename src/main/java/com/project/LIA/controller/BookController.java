@@ -91,7 +91,9 @@ public class BookController {
         } else if(cate == null && keyword!=null) {
             model.addAttribute("list", bookService.searchList(keyword,page, model));
         }
-        else{model.addAttribute("list", bookService.list(page, model));}
+        else{
+            model.addAttribute("list", bookService.list(page, model));
+        }
         if(username!=null)
         {
             model.addAttribute("list", bookService.myList(username, page, model));
@@ -150,6 +152,7 @@ public class BookController {
 
 
         model.addAttribute("result", bookService.update(book, files, delfile));
+        model.addAttribute("book", book);
         return "book/updateOk";
     }
 

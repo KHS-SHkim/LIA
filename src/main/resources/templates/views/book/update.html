@@ -86,9 +86,9 @@
 
             <div class="my-3">
                 <label for="rental_stat">대여상태:</label>
-                <select class="form-select" id="rental_stat" name="rental_stat" th:value="${rental_stat} ? ${rental_stat} : ${book.rental_stat}">
-                    <option value="대여중" th:selected="${rental_stat == '대여중'}">대여중</option>
-                    <option value="대여가능" th:selected="${rental_stat == '대여가능'}">대여가능</option>
+                <select class="form-select" id="rental_stat" name="rental_stat">
+                    <option value="대여중" th:selected="${book.rental_stat == '대여중'}">대여중</option>
+                    <option value="대여가능" th:selected="${book.rental_stat == '대여가능'}">대여가능</option>
                 </select>
                 <span class="text-danger" th:if="${error_rental_stat}" th:utext="${error_rental_stat}"></span>
             </div>

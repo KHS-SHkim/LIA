@@ -22,6 +22,7 @@ public class BookValidator implements Validator {
     public void validate(Object target, Errors errors) {
         BookDomain book = (BookDomain)target;
         System.out.println("validate() 호출: " + book);
+        LocalDate currentDate = LocalDate.now();
 
         // 바인딩한 객체에 대한 검증 수행
 
@@ -61,6 +62,10 @@ public class BookValidator implements Validator {
         //대여중이라면 대여일과 반납일을 쓰도록
         if ((rental_start == null || rental_end == null) && rental_stat.equals("대여중")) {
             errors.rejectValue("rental_end", "대여일과 반납일을 입력해주세요");
+        }
+
+        if (rental_end != null && rental_end.isBefore(currentDate)) {
+            errors.rejectValue("rental_end", "반납일은 오늘 이후여야 합니다");
         }
 
 
