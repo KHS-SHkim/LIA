@@ -24,7 +24,7 @@
             <h2>회원 리스트</h2>
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th class="text-center">프로필</th>
                         <th>아이디</th>
                         <th>닉네임</th>
@@ -34,8 +34,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="userList : ${userList}">
-                        <td class="col-4">
+                    <tr th:each="userList : ${userList}" class="text-center">
+                        <td class="col-2">
                             <div th:unless="${userList.profile_img}" class="image thumbnail">
                                 <a th:href="@{'/admin/userDetail/' + ${userList.username}}">
                                     <img th:src="@{/image/default.jpg}" class="img img-responsive full-width img-thumbnail">
