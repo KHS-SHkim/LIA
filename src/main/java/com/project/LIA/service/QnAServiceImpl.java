@@ -1,11 +1,11 @@
 package com.project.LIA.service;
 
-import com.project.LIA.domain.QnADomain;
-import com.project.LIA.repository.QnARepository;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+        import com.project.LIA.domain.QnADomain;
+        import com.project.LIA.repository.QnARepository;
+        import org.springframework.data.domain.Pageable;
+        import org.springframework.stereotype.Service;
 
-import java.util.List;
+        import java.util.List;
 @Service
 public class QnAServiceImpl implements QnAService {
 
@@ -29,7 +29,7 @@ public class QnAServiceImpl implements QnAService {
     public QnADomain getQnAById(Long user_id) {
         return (QnADomain) qnARepository.findById(user_id).orElse(null) ;
     }
-//
+    //
     @Override   // 해당 Id QnA 항목 수정
     public QnADomain updateQnA(Long user_id, QnADomain question) {
         QnADomain existingQnA = (QnADomain) qnARepository.findById(user_id).orElse(null);
