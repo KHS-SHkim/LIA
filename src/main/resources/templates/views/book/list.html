@@ -58,15 +58,29 @@
                     <th>제목</th>
                     <th>대여상태</th>
                     <th>게시일</th>
+                    <th>반납일</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="book : ${list}" class="book-row">
                     <td th:text="${book.id}">1</td>
-                    <td><a class="navbar-brand" th:href="@{'/book/detail/' + ${book.id}}"><img id="logo" th:src="@{/image/LIA_logo.jpg}"></a></td>
+                    <td>
+                        <a class="navbar-brand" th:href="@{'/book/detail/' + ${book.id}}">
+                            <div th:if="${book.firstImage}">
+                                <img th:src="@{'/upload/' + ${book.firstImage}}" class="img-thumbnail" alt="첫 번째 이미지" width="200" height="200">
+                            </div>
+                            <div th:unless="${book.firstImage != null}">
+                                <img th:src="@{/image/LIA_logo.jpg}" class="img-thumbnail" alt="기본 이미지"width="200" height="200">
+                            </div>
+                        </a>
+                    </td>
                     <td th:text="${book.name}">John</td>
                     <td class="rental-stat" th:text="${book.rental_stat}">John</td>
                     <td th:text="${#temporals.format(book.regDate, 'yyyy-MM-dd HH:mm')}">2021-03-21</td>
+                    <td class="rental-end" th:text="${#temporals.format(book.rental_end, 'yyyy-MM-dd')}">2023-09-30</td>
+                    <td>
+                        <span class="return-date" th:if="${book.rental_stat == '대여중'}"><span class="return-date-value"></span></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>

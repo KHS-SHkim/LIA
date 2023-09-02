@@ -64,6 +64,18 @@ public class BookDomain extends BaseEntity{
         Collections.addAll(fileList, files);
     }
 
+    public String getFirstImage() {
+        if (fileList != null && !fileList.isEmpty()) {
+            for (BookImgDomain attachment : fileList) {
+                String img = attachment.getImg_src().toLowerCase();
+                if (img.endsWith(".jpg")||img.endsWith(".png")||img.endsWith(".jpeg")||img.endsWith(".gif")) {
+                    return attachment.getImg_src();
+                }
+            }
+        }
+        return null;
+    }
+
 
 
 
