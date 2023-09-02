@@ -1,5 +1,6 @@
 package com.project.LIA.service;
 
+import com.project.LIA.domain.NoteAjaxData;
 import com.project.LIA.domain.NoteDomain;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.repository.NoteRepository;
@@ -82,5 +83,39 @@ public class NoteServiceImpl implements NoteService {
         sumNoteList = noteRepository.findAllById(tmpList2);
         sumNoteList.sort(Comparator.comparing(NoteDomain::getId).reversed());
         return sumNoteList;
+    }
+
+    @Override
+    public NoteDomain findLastNote(UserDomain user, UserDomain receiver) {
+        List<NoteDomain> i = noteRepository.findByUserIdAndReceiverId(user.getId(), receiver.getId());
+        List<NoteDomain> y = noteRepository.findByUserIdAndReceiverId(receiver.getId(),user.getId());
+        i.addAll(y);
+        i.sort(Comparator.comparing(NoteDomain::getId).reversed());
+        return i.get(0);
+    }
+
+    @Override
+    public NoteAjaxData findNoteAjax(UserDomain user, UserDomain receiver) {
+        NoteAjaxData returnList = new NoteAjaxData();
+
+        List<NoteDomain> list= findNote(user, receiver);
+        for(NoteDomain note : list){
+            note.setUserInfo(note.getUser().getId());
+            note.setUserNickname(note.getUser().getNickname());
+            note.setReceiverInfo(note.getReceiver().getId());
+            note.setReceiverNickname(note.getReceiver().getNickname());
+            note.setBookInfo(note.getBook().getId());
+        }
+
+        returnList.setList(list);
+        returnList.setUser(user);
+        returnList.setReceiver(receiver);
+
+        System.out.println(returnList);
+
+        return returnList;
+
+
+
     }
 }
