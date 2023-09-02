@@ -35,7 +35,7 @@ class NoteRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-            private QnARepository qnARepository;
+    private QnARepository qnARepository;
 
     @Autowired
     private NoteService noteService;
@@ -73,15 +73,15 @@ class NoteRepositoryTest {
 
             noteRepository.save(note);
         }
-//        noteRepository.findAll().forEach(System.out::println);
-//
-//        System.out.println("---- 쪽지 찾기 ( 사용자 , 수신인 ) ----");
-//        noteRepository.findByUserIdAndReceiverId(user1.getId() ,user2.getId()).forEach(System.out::println);
-//        System.out.println("---- 쪽지 찾기 ( 내가 쓴 쪽지 ) ----");
-//        noteRepository.findByUserId(user1.getId()).forEach(System.out::println);
-////        noteRepository.findAllBy().forEach(System.out::println);
-//        System.out.println("---- 쪽지 찾기 ( 내가 받은 쪽지 ) ----");
-//        noteRepository.findByReceiverId(user1.getId()).forEach(System.out::println);
+        noteRepository.findAll().forEach(System.out::println);
+
+        System.out.println("---- 쪽지 찾기 ( 사용자 , 수신인 ) ----");
+        noteRepository.findByUserIdAndReceiverId(user1.getId() ,user2.getId()).forEach(System.out::println);
+        System.out.println("---- 쪽지 찾기 ( 내가 쓴 쪽지 ) ----");
+        noteRepository.findByUserId(user1.getId()).forEach(System.out::println);
+//        noteRepository.findAllBy().forEach(System.out::println);
+        System.out.println("---- 쪽지 찾기 ( 내가 받은 쪽지 ) ----");
+        noteRepository.findByReceiverId(user1.getId()).forEach(System.out::println);
 
 
 

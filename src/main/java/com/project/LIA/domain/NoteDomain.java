@@ -1,5 +1,6 @@
 package com.project.LIA.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,11 +22,13 @@ public class NoteDomain extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
     @ToString.Exclude
     @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JsonIgnore
     private UserDomain user;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
     @ToString.Exclude
     @JoinColumn(name="receiver_id", referencedColumnName = "id")
+    @JsonIgnore
     private UserDomain receiver;
 
 //    @ManyToOne
@@ -33,6 +36,7 @@ public class NoteDomain extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= BookDomain.class )
     @ToString.Exclude
     @JoinColumn(name="book_id", referencedColumnName = "id")
+    @JsonIgnore
     private BookDomain book;
 
     @Column(name = "contents", nullable = false, columnDefinition = "LONGTEXT")
@@ -41,6 +45,20 @@ public class NoteDomain extends BaseEntity {
     @Column(name = "reception_chk")
     private Long receptionChk;
 
+    @Transient
+    Long userInfo;
+
+    @Transient
+    String userNickname;
+
+    @Transient
+    Long receiverInfo;
+
+    @Transient
+    String receiverNickname;
+
+    @Transient
+    Long bookInfo;
 
     public NoteDomain (Long id, UserDomain user, UserDomain receiver, BookDomain book, String contents, Long receptionChk, LocalDateTime regDate) {
         this.id = id;

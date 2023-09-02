@@ -20,25 +20,27 @@
         <h1 th:text="${receiver.nickname}+'님과의 대화'"></h1>
       </div>
       <hr>
-      <div class="row mt-5" th:each="note : ${noteList}">
-        <div class="myreceiver" th:if="${user} == ${note.user}">
-          내가 발송
-          <div th:text="${note.user.nickname}"></div>
-          <div th:text="${note.contents}"></div>
-        </div>
-        <div class="receiver" th:if="${user} == ${note.receiver}">
-          내가 수신
-          <div th:text="${note.user.nickname}"></div>
-          <div th:text="${note.contents}"></div>
+      <div id="showNote">
+        <div class="row mt-5" th:each="note : ${noteList}">
+          <div class="myreceiver" th:if="${user} == ${note.user}">
+            내가 발송
+            <div th:text="${note.user.nickname}"></div>
+            <div th:text="${note.contents}"></div>
+          </div>
+          <div class="receiver" th:if="${user} == ${note.receiver}">
+            내가 수신
+            <div th:text="${note.user.nickname}"></div>
+            <div th:text="${note.contents}"></div>
+          </div>
         </div>
       </div>
     </div>
     <div class="container mt-3 bottom fixed ">
       <input type="text" class="textarea" id="contents"/>
       <input type="submit" id="btn_comment">전송</input>
-      <input type="hidden" id="user" th:value="${user}"/>
-      <input type="hidden" id="receiver" th:value="${receiver}"/>
-      <input type="hidden" id="book" th:value="${lastNote.book}"/>
+      <input type="hidden" id="user" th:value="${user.id}"/>
+      <input type="hidden" id="receiver" th:value="${receiver.id}"/>
+      <input type="hidden" id="book" th:value="${lastNote.book.id}"/>
     </div>
   </div>
 </div>

@@ -5,16 +5,15 @@ $(function(){
         const user = $("#user").val();
         const receiver = $("#receiver").val();
         const book = $("#book").val();
+        const userInfo = $("#userInfo").val();
+
         const data = {
-            "user": user,
-            "receiver": receiver,
+            "user_id": user,
+            "receiver_id": receiver,
             "book_id": book,
             "contents": content
         };
-        alert(user);
-        alert(receiver);
-        alert(book);
-        alert(content);
+
 
         $.ajax({
             url: "/note/write",
@@ -23,10 +22,6 @@ $(function(){
             cache: false,
             success: function(data, status, xhr){
                 if(status == "success"){
-                    if(data.status !== "OK"){
-                        alert(data.status);
-                        return;
-                    }
                     loadNote(user,receiver);   // 댓글 목록 다시 업데이트
                     $("#contents").val('');   // 입력 input 은 비우기
                 }
@@ -35,24 +30,52 @@ $(function(){
     });
 });
 
-function loadNote(user,receiver){
-    alert(user);
-    alert(receiver);
-//    $.ajax({
-//        url: "/note/list/"+user.id+"/"+receiver.id
-//        type: "GET",
-//        cache: false,
-//        success: function(data, status, xhr){
-//            if(status == "success"){
-//                //alert(xhr.responseText);   // response 결과 확인용.
-//
-//                // data 매개변수 : JSON 으로 response 되면 JS object 로 변환되어 받아온다
-//                if(data.status !== "OK"){
-//                    alert(data.status);
-//                    return;
-//                }
-//            }
-//        }
-//
-//    });
+function loadNote( user , receiver ){
+    console.log("/note/detailAjax?userid="+user+"&receiverid="+receiver);
+    let d = {
+        "user_id" : user,
+        "receiver_id" : receiver
+    }
+    $.ajax({
+        url: "/note/detailAjax",
+        type: "GET",
+        cache: false,
+        data : d,
+        success: function(data, status, xhr){
+            buildComment(data);
+        },
+        err : function(){
+            alert("err")
+        }
+    });
+}
+
+function buildComment(result){
+    const out = [];
+
+
+
+    result.noteList.forEach(note => {
+        console.log(note)
+        let noteUser = note.userInfo;
+        let NoteReceiver = note.receiverInfo;
+        let noteContents = note.contents;
+        out.push(`<div class="row mt-5">`)
+
+
+        const hrow = ( result.user.id == noteUser ) ? ` <div class="myreceiver"> 내가 발송` : `<div class="receiver"> 내가 수신` ;
+        const row = `
+            ${hrow}
+                <div>${note.userNickname}</div>
+                <div>${noteContents}</div>
+            </div>
+        </div>
+        `;
+        out.push(row);
+        $("#book").val(note.bookInfo);
+    });
+
+    $("#showNote").html(out.join("\n"));
+
+
 }

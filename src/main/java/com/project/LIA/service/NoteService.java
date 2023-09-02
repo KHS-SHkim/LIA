@@ -1,5 +1,6 @@
 package com.project.LIA.service;
 
+import com.project.LIA.domain.NoteAjaxData;
 import com.project.LIA.domain.NoteDomain;
 import com.project.LIA.domain.UserDomain;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,7 @@ public interface NoteService {
     List<NoteDomain> findMyNoteList(UserDomain userDomain);
 
     NoteDomain findLastNote(UserDomain user, UserDomain receiver);
+
+    NoteAjaxData findNoteAjax(UserDomain user, UserDomain receiver);
 
 }
