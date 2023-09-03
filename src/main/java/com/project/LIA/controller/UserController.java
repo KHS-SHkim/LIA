@@ -194,12 +194,10 @@ public class UserController {
                                        @RequestParam("phone") String phone,
                                        @RequestParam("email") String email
     ){
-        System.out.println(username + "  :   " + phone + "    :   " + email );
         UserDomain userDomain = userService.findByUsername(username);
         String originUsername = userDomain.getUsername();
         String originPhone = userDomain.getPhone();
         String originEmail = userDomain.getEmail();
-        System.out.println(originUsername + ",,,," + originPhone + ":::" + originEmail);
 
         if(originUsername.equals(username) && originPhone.equals(phone) && originEmail.equals(email)){
             return 0;
@@ -262,14 +260,12 @@ public class UserController {
         userDomain.setPhone(userVofR.getPhone());
 
         if(userVofR.getPassword() != null){
-            System.out.println("패스워드 가 들어가있으면 동작해야하는 것!!!!");
             userDomain.setPassword(passwordEncoder.encode(userVofR.getPassword()));
         }
 
         int isDelete = 0;
         if(multipartFile == null) isDelete = 1;
 
-        System.out.println("업데이트 직전의 UserDomain 정보 : " + userDomain);
         model.addAttribute("result", userService.update(isDelete, originalImage, userDomain, multipartFile));
 
         AddressDomain addressDomain = addressService.findByUserId(userDomain.getId());
@@ -287,7 +283,7 @@ public class UserController {
                          Model model
     ){
         UserDomain userDomain = userService.findByUsername(userVofR.getUsername());
-        int cnt = userService.updateSt(userDomain);
+        int cnt = userService.updateStOUT(userDomain);
 
         model.addAttribute("result", cnt);
 

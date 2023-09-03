@@ -1,18 +1,19 @@
 package com.project.LIA.controller;
 
+import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.UserDomain;
+import com.project.LIA.service.AddressService;
 import com.project.LIA.service.AdminService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +24,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AddressService addressService;
 
 
 
@@ -42,13 +46,46 @@ public class AdminController {
     }
 
     @GetMapping("/userList")
-    public void userList(Model model){
-        List<UserDomain> userList = adminService.userList();
+    public void userList(Integer page,Model model){
+        List<UserDomain> userList = adminService.userList(page,model);
         if(userList != null){
             model.addAttribute("userList",userList);
         } else{
             model.addAttribute("userList",null);
         }
+    }
+
+    @PostMapping("/chState")
+    public @ResponseBody int changeState(@RequestParam("state")String state,
+                                         @RequestParam("username")String username
+    ){
+        System.out.println("----------------------------"+ state + "------------");
+        System.out.println("----------------------------"+ username + "------------");
+
+        UserDomain userDomain = userService.findByUsername(username);
+
+        userDomain.setState(state);
+        userService.updateSt(userDomain);
+
+        return 1;
+    }
+
+    @GetMapping("/userDetail/{username}")
+    public String changePassword(@PathVariable String username, Model model){
+
+        UserDomain userDomain = userService.findByUsername(username);
+        model.addAttribute("user",userDomain);
+
+        AddressDomain addressDomain = addressService.findByUserId(userDomain.getId());
+        String address = addressDomain.getAddress();
+        String post_num = addressDomain.getPost_num();
+        String address_detail = addressDomain.getAddress_detail();
+
+        model.addAttribute("post_num",post_num);
+        model.addAttribute("address",address);
+        model.addAttribute("address_detail",address_detail);
+
+        return "/admin/userDetail";
     }
 
 

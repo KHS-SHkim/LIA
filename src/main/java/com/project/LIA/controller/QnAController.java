@@ -26,7 +26,7 @@ public class QnAController {
     public String getAllQnA(Model model, @PageableDefault(size = 10)Pageable pageable){
         List<QnADomain> qnADomainList = qnaService.getAllQnA(pageable);
         model.addAttribute("qnADomainList",qnADomainList);
-        return "list";
+        return "/qna/list";
     }
     @GetMapping("/list/{id}")    // 해당 id로 특정 QnA 항목 검색
     public QnADomain getQnAById(@PathVariable long user_id){

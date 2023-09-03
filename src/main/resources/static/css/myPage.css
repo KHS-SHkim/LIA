@@ -35,6 +35,8 @@ b {
     width:400px;
     font-size:30px;
     font-weight:500px;
+    padding-left:10px;
+    padding-right:3px;
 }
 
 .btn-dark{
