@@ -20,7 +20,8 @@
             <hr>
             <div class="row mt-5" th:each="note : ${myNoteList}">
                 <a th:href="@{'/note/detail/' + ${note.user.id} + '/' + ${note.receiver.id}}">
-                    <div th:text="${note.receiver.nickname}"></div>
+                    <div th:if="${loginUser.id}== ${note.user.id} " th:text="${note.receiver.nickname}"></div>
+                    <div th:if="${loginUser.id}== ${note.receiver.id} " th:text="${note.user.nickname}"></div>
                     <div th:text="${note.contents}"></div>
                     <div th:text="${#temporals.format(note.regDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </a>

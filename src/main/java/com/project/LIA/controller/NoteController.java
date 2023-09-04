@@ -36,6 +36,7 @@ public class NoteController {
         UserDomain user = U.getLoggedUser();
 //        UserDomain user = userService.findByUsername("user2");
         model.addAttribute("myNoteList", noteService.findMyNoteList(user));
+        model.addAttribute("loginUser", user);
         return "/note/list";
     }
 

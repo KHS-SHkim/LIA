@@ -42,4 +42,9 @@ public class DeclarationServiceImpl implements DeclarationService {
     public DeclarationDomain findDeclarationDetail(DeclarationDomain declarationDomain) {
         return declarationRepository.findById(declarationDomain.getId()).orElse(null);
     }
+
+    @Override
+    public void write(DeclarationDomain declarationDomain) {
+        declarationRepository.save(declarationDomain);
+    }
 }

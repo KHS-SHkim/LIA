@@ -21,4 +21,6 @@ public interface DeclarationService {
     
     // 신고 상세 내역 조회
     DeclarationDomain findDeclarationDetail(DeclarationDomain declarationDomain);
+
+    void write(DeclarationDomain declarationDomain);
 }
