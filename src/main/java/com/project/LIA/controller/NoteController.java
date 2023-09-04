@@ -77,7 +77,7 @@ public class NoteController {
         UserDomain user = U.getLoggedUser();
         UserDomain receiver = book.getUser();
         List<NoteDomain> note = noteService.findNote(user, receiver);
-        System.out.println(note);
+//        System.out.println(note);
 
         model.addAttribute("user", user);
         model.addAttribute("receiver", receiver);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <script th:if="${state == 'Fail' }">
-alert("정상적으로 신고가 이루어지지 않았습니다. /n 다시 시도해주세요.");
+alert("정상적으로 신고가 이루어지지 않았습니다. 다시 시도해주세요.");
 history.back();
 </script>
 <script th:if="${state == 'Success' }">

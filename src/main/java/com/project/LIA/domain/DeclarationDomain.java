@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(callSuper=false)
 @Entity(name = "declaration")
 public class DeclarationDomain extends BaseEntity {
     @Id
@@ -42,6 +43,7 @@ public class DeclarationDomain extends BaseEntity {
     private String reportType;
 
 
+    @Column(name = "report_content", columnDefinition = "LONGTEXT")
     private String reportContent;
 
 

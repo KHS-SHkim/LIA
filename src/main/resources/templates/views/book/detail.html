@@ -92,7 +92,7 @@
                 <a class="btn btn-outline-dark" th:href="@{'/book/update/'+${book.id}}" th:if="${logged_user.id == book.user.id}">수정</a>
                 <button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == book.user.id}">삭제</button>
                 <a class="btn btn-outline-dark ms-2" th:href="@{/book/write}" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">작성</a>
-                <button type="button" class="btn btn-outline-dark ms-2" id="btnNote" th:if="${logged_user.id != book.user.id}">쪽지보내기</button>
+                <a class="btn btn-outline-dark ms-2" id="btnNote" th:if="${logged_user.id != book.user.id}">쪽지보내기</a>
                 <button type="button" class="btn btn-outline-danger ms-2" id="btnDeclaration">신고하기</button>
             </th:block>
             <a class="btn btn-outline-dark ms-2" th:href="@{/book/list(page=${session.page})}">목록</a>

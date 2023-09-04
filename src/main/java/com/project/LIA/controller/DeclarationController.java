@@ -12,10 +12,10 @@ import com.project.LIA.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/declaration")
@@ -32,14 +32,14 @@ public class DeclarationController {
 
 
     @GetMapping("/list")
-    public void callList(Model model){
-        model.addAttribute("declarations", declarationService.findDeclarations());
-
+    public String callList(Model model){
+        List<DeclarationDomain> declarations = declarationService.findDeclarations();
+        model.addAttribute("declarations", declarations);
+        return "/declaration/list";
     }
 
-    @ResponseBody
     @GetMapping("/write")
-    public void declarationWrite(Model model, Long book_id){
+    public String declarationWrite(Model model, Long book_id){
         UserDomain user = U.getLoggedUser();
         BookDomain book = bookService.selectById(book_id);
         UserDomain reporter = userService.findById(book.getUser().getId());
@@ -52,23 +52,34 @@ public class DeclarationController {
         model.addAttribute("user", user);
         model.addAttribute("reporter", reporter);
         model.addAttribute("declaration", declaration);
+        model.addAttribute("book", book);
+        return "/declaration/write";
     }
 
     @PostMapping("/write")
-    public String declarationWrite(Model model, Long user_id, Long reporter_id, Long book_id, String reportType, String reportTypeOrder,String reportContent){
+    public String declarationWrite(
+            Model model,
+            @RequestParam("user_id") String user_id,
+            @RequestParam("reporter_id") String reporter_id,
+            @RequestParam("book_id") String book_id,
+            @RequestParam("reportType") String reportType,
+            @RequestParam(value = "reportTypeOrder", required = false) String reportTypeOrder,
+            @RequestParam("reportContent") String reportContent){
         String rt;
+
         if (reportType.equals("기타")){
             rt = reportTypeOrder;
         } else {
             rt = reportType;
         }
         DeclarationDomain declaration = DeclarationDomain.builder()
-                .user(userService.findById(user_id))
-                .reporter(userService.findById(reporter_id))
-                .book(bookService.selectById(book_id))
+                .user(userService.findById(Long.parseLong(user_id)))
+                .reporter(userService.findById(Long.parseLong(reporter_id)))
+                .book(bookService.selectById(Long.parseLong(book_id)))
                 .reportType(rt)
                 .reportContent(reportContent)
                 .build();
+//        System.out.println("declaration :::::: " + declaration);
         declarationService.write(declaration);
 
         if (declaration.getId() == null ){
@@ -77,6 +88,31 @@ public class DeclarationController {
             model.addAttribute("state", "Success");
         }
         return "/declaration/writeOk";
+    }
+
+    @GetMapping("/detail/{declaration_id}")
+    public String declarationDetail (@PathVariable("declaration_id")String declaration_id, Model model){
+        DeclarationDomain declaration = declarationService.findDeclarationDetail(Long.parseLong(declaration_id));
+        UserDomain user = declaration.getUser();
+        UserDomain reporter = declaration.getReporter();
+        BookDomain book = declaration.getBook();
+
+        model.addAttribute("declaration", declaration);
+        model.addAttribute("user", user);
+        model.addAttribute("reporter", reporter);
+        model.addAttribute("book", book);
+
+        return "/declaration/detail";
+    }
+
+    @PostMapping("/answer")
+    public String declarationAnswer (@RequestParam("declaration_id") String declaration_id, @RequestParam("answerContent") String answerContent, Model model){
+        DeclarationDomain declaration = declarationService.findDeclarationDetail(Long.parseLong(declaration_id));
+        declaration.setAnswerContent(answerContent);
+        declaration.setAnswerDate(LocalDateTime.now());
+        declarationService.write(declaration);
+        model.addAttribute("declaration", declaration);
+        return "/declaration/answer";
     }
 
 }

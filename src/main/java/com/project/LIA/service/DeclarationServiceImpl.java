@@ -39,8 +39,8 @@ public class DeclarationServiceImpl implements DeclarationService {
 
     // 신고 상세 내역 조회
     @Override
-    public DeclarationDomain findDeclarationDetail(DeclarationDomain declarationDomain) {
-        return declarationRepository.findById(declarationDomain.getId()).orElse(null);
+    public DeclarationDomain findDeclarationDetail(Long declaration_id) {
+        return declarationRepository.findById(declaration_id).orElse(null);
     }
 
     @Override

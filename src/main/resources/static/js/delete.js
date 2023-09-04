@@ -14,7 +14,6 @@ $(function(){
 
     $('#btnNote').click(function(){
         let book_id = $("input[name='id']").val();
-        window.open("http://localhost:8095/note/write?book_id=" + book_id, "width=700px,height=800px,scrollbars=yes")
-
+        window.open("http://localhost:8095/note/write?book_id=" + book_id, '쪽지보내기', 'width=700px,height=800px,scrollbars=yes')
     });
 });

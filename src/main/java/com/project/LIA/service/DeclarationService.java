@@ -20,7 +20,7 @@ public interface DeclarationService {
     List<DeclarationDomain> findDeclarationReporter(UserDomain reporter);
     
     // 신고 상세 내역 조회
-    DeclarationDomain findDeclarationDetail(DeclarationDomain declarationDomain);
+    DeclarationDomain findDeclarationDetail(Long declaration_id);
 
     void write(DeclarationDomain declarationDomain);
 }

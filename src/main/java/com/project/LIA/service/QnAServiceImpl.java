@@ -2,6 +2,7 @@ package com.project.LIA.service;
 
         import com.project.LIA.domain.QnADomain;
         import com.project.LIA.repository.QnARepository;
+        import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.data.domain.Pageable;
         import org.springframework.stereotype.Service;
 
@@ -9,8 +10,11 @@ package com.project.LIA.service;
 @Service
 public class QnAServiceImpl implements QnAService {
 
+
     private QnARepository qnARepository;
 
+
+    @Autowired
     public QnAServiceImpl(QnARepository qnaRepository){
         this.qnARepository = qnaRepository;
 
@@ -20,10 +24,7 @@ public class QnAServiceImpl implements QnAService {
         return qnARepository.findAll();
     }
 
-//    @Override   // 해당 Id 질문하기
-//    public QnADomain createQnA(QnADomain qnalist) {
-//        return qnaRepository.save(qnalist);
-//    }
+
 
     @Override   // 해당 Id 질문검색
     public QnADomain getQnAById(Long user_id) {
@@ -51,10 +52,4 @@ public class QnAServiceImpl implements QnAService {
 
         return qnARepository.findAll();
     }
-
-//    @Override   // 통합검색기능추가
-//    public List<QnADomain> searchQnA(String query) {
-//        return qnARepository.findByQC(query);
-//    }
-
 }

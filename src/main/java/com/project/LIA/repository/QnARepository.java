@@ -25,6 +25,6 @@ public interface QnARepository extends JpaRepository<QnADomain, Long> {
 
     void deleteById(Long user_id);
 
-//    List<QnADomain> findByQC(String query);
+
 }
 
