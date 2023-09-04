@@ -4,7 +4,6 @@ import com.project.LIA.domain.UserDomain;
 import com.project.LIA.repository.UserRepository;
 import com.project.LIA.util.U;
 import jakarta.servlet.http.HttpSession;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

@@ -1,0 +1,78 @@
+.abc {
+    border-radius: 40px;
+    border: 1px solid black;
+    width: 380px;
+    height: 380px;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aqua{
+    background-color: aqua;
+    color: black;
+}
+
+.aqua.active{
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.aqua:hover:not(.active) {
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.yellow{
+    background-color: rgb(254, 213, 30);
+    color:black;
+}
+
+.yellow.active{
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.yellow:hover:not(.active) {
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.black{
+    background-color: rgb(54, 52, 52);
+    color:white;
+}
+
+.black.active{
+    border: 5px solid red;
+    font-weight: 550;
+}
+
+.black:hover:not(.active) {
+    border: 5px solid red;
+    font-weight: 550;
+}
+
+.red{
+    background-color: rgb(233, 68, 68);
+    color:white;
+}
+
+.red.active{
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.red:hover:not(.active) {
+    border: 5px solid black;
+    font-weight: 550;
+}
+
+.ml{
+    margin-left:15%;
+}
+
+.mr{
+    margin-right:15%;
+}

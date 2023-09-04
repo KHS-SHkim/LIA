@@ -6,14 +6,11 @@ import com.project.LIA.service.AddressService;
 import com.project.LIA.service.AdminService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,6 +50,8 @@ public class AdminController {
         } else{
             model.addAttribute("userList",null);
         }
+        UserDomain userDomain = U.getLoggedUser();
+        model.addAttribute("profile_img",userDomain.getProfile_img());
     }
 
     @PostMapping("/chState")
