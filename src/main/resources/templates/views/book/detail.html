@@ -88,12 +88,14 @@
         <!-- 하단 링크 -->
         <!--수정과 삭제 버튼은 로그인한 유저 아이디와 게시글 작성자 아이디가 동일할 때만 보인다 -->
         <div class="d-flex">
-            <a class="btn btn-outline-dark ms-2" th:href="@{/book/list(page=${session.page})}">목록</a>
             <th:block th:if="${book}" sec:authorize="isAuthenticated()" th:with="logged_user=${#authentication.principal.user}">
-            <a class="btn btn-outline-dark" th:href="@{'/book/update/'+${book.id}}" th:if="${logged_user.id == book.user.id}">수정</a>
-            <button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == book.user.id}">삭제</button>
-            <a class="btn btn-outline-dark ms-2" th:href="@{/book/write}" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">작성</a>
+                <a class="btn btn-outline-dark" th:href="@{'/book/update/'+${book.id}}" th:if="${logged_user.id == book.user.id}">수정</a>
+                <button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == book.user.id}">삭제</button>
+                <a class="btn btn-outline-dark ms-2" th:href="@{/book/write}" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">작성</a>
+                <button type="button" class="btn btn-outline-dark ms-2" id="btnNote" th:if="${logged_user.id != book.user.id}">쪽지보내기</button>
+                <button type="button" class="btn btn-outline-danger ms-2" id="btnDeclaration">신고하기</button>
             </th:block>
+            <a class="btn btn-outline-dark ms-2" th:href="@{/book/list(page=${session.page})}">목록</a>
         </div>
         <!-- 하단 링크 -->
 

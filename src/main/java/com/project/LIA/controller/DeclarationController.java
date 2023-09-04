@@ -62,8 +62,6 @@ public class DeclarationController {
         } else {
             rt = reportType;
         }
-
-
         DeclarationDomain declaration = DeclarationDomain.builder()
                 .user(userService.findById(user_id))
                 .reporter(userService.findById(reporter_id))
@@ -73,7 +71,12 @@ public class DeclarationController {
                 .build();
         declarationService.write(declaration);
 
-        return "writeOk";
+        if (declaration.getId() == null ){
+            model.addAttribute("state", "Fail");
+        } else {
+            model.addAttribute("state", "Success");
+        }
+        return "/declaration/writeOk";
     }
 
 }

@@ -46,7 +46,6 @@ public class NoteController {
         UserDomain receiver;
         UserDomain logInUser = U.getLoggedUser();
         if (user.getId().equals(logInUser.getId())){
-//        if(user == userService.findByUsername("user2")) {
             receiver = userService.findById(receiver_id);
         } else {
             user = userService.findById(receiver_id);
@@ -71,6 +70,23 @@ public class NoteController {
         return "/note/detail";
     }
 
+    @GetMapping("/write")
+    public String getNoteWrite( @RequestParam(value = "book_id") String book_id,
+                            Model model){
+        BookDomain book = bookService.selectById(Long.parseLong(book_id));
+        UserDomain user = U.getLoggedUser();
+        UserDomain receiver = book.getUser();
+        List<NoteDomain> note = noteService.findNote(user, receiver);
+        System.out.println(note);
+
+        model.addAttribute("user", user);
+        model.addAttribute("receiver", receiver);
+        model.addAttribute("book", book);
+        model.addAttribute("noteList", note);
+
+
+        return "/note/write";
+    }
 
 
     @ResponseBody
@@ -94,7 +110,14 @@ public class NoteController {
 
         model.addAttribute("user", user);
         model.addAttribute("receiver", receiver);
+    }
 
+    @GetMapping("/noteStart/{user_id}/{receiver_id}/{book_id}")
+    public String noteStart(Model model, @PathVariable Long user_id, @PathVariable Long receiver_id, @PathVariable Long book_id){
+        model.addAttribute("userInfo",userService.findById(user_id));
+        model.addAttribute("receiverInfo", userService.findById(receiver_id));
+        model.addAttribute("bookInfo", bookService.selectById(book_id));
+        return "/note/noteStart";
     }
 
 }

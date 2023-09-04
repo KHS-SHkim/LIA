@@ -1,6 +1,6 @@
 $(function(){
     $("#btn_comment").click(function(){
-        // 입력한 댓글
+
         const content = $("#contents").val().trim();
         const user = $("#user").val();
         const receiver = $("#receiver").val();
@@ -76,6 +76,4 @@ function buildComment(result){
     });
 
     $("#showNote").html(out.join("\n"));
-
-
 }
