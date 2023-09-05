@@ -1,62 +1,243 @@
 package com.project.LIA.controller;
 
 import com.project.LIA.domain.QnADomain;
+import com.project.LIA.domain.QnAValidator;
+import com.project.LIA.domain.UserDomain;
 import com.project.LIA.service.QnAService;
+import com.project.LIA.service.UserService;
+import com.project.LIA.util.U;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.springframework.data.domain.Pageable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 @RequestMapping("/qna")
 public class QnAController {
-    @Autowired
-    private QnAService qnaService;
 
-    public QnAController() {
+    @Autowired
+    QnAService qnAService;
+
+    @Autowired
+    UserService userService;
+
+    public QnAController(){
         System.out.println(getClass().getName() + "()생성");
     }
 
-    @GetMapping("/list") // 질문 리스트 // 페이지가 표시된 질문 및 답변 목록 검색
-    public String getAllQnA(Model model, @PageableDefault(size = 10)Pageable pageable){
-        List<QnADomain> qnADomainList = qnaService.getAllQnA(pageable);
-        model.addAttribute("qnADomainList",qnADomainList);
-        return "qna/list";
-    }
-    @GetMapping("/list/{user_id}")    // 해당 id로 특정 QnA 항목 검색
-    public String getQnAById(@PathVariable long user_id, Model model){
-        model.addAttribute("post", qnaService.getQnAById(user_id));
-        return "list/user_id";
-    }
+    @GetMapping("/list")
+    public void qnaList(Integer page, Model model){
 
-////    @PostMapping("/update")    // 해당 id로 특정 QnA 항목 질문하기
-////    public QnADomain createQnA(@RequestBody QnADomain question){
-////        return qnaService.createQnA(qna);
-////    }
-    @PostMapping("/update/{user_id}")   // 해당 id로 특정 QnA 항목 질문
-    public String updateQnA(@PathVariable long user_id, @RequestBody QnADomain question ){
-        System.out.println(qnaService.updateQnA(user_id, question));
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
 
-        return "qna/update";
+            if(userDomain != null){
+                model.addAttribute("profile_img",userDomain.getProfile_img());
+            }else{
+                model.addAttribute("profile_img",null);
+            }
+        }
+
+        List<QnADomain> qnaList = qnAService.getAllQnA(page,model);
+        if(qnaList != null){
+            model.addAttribute("qnaList",qnaList);
+        }
     }
 
-    @PostMapping("/delete/{id}") // 해당 id로 QnA 항목을 삭제합니다.
-    public void deleteQnA(@PathVariable long user_id) {
-        qnaService.deleteQnA(user_id);
+    @PostMapping("/searchList")
+    public String searchList(@RequestParam(value="searchValue", required=false)String searchValue,Integer page, Model model){
+        System.out.println(searchValue);
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
+
+            if(userDomain != null){
+                model.addAttribute("profile_img",userDomain.getProfile_img());
+            }else{
+                model.addAttribute("profile_img",null);
+            }
+        }
+
+        List<QnADomain> qnaList = qnAService.listBySearch(searchValue,page,model);
+        model.addAttribute("qnaList",qnaList);
+        model.addAttribute("searchValue",searchValue);
+        return "/qna/searchList";
+    }
+
+    @GetMapping("/write")
+    public void write(Model model){
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
+            model.addAttribute("username",userDomain.getUsername());
+            model.addAttribute("nickname",userDomain.getNickname());
+        }
+    }
+
+    @PostMapping("/write")
+    public String writeOk(@ModelAttribute("qna")
+                          @Valid QnADomain qna,
+                          BindingResult result,
+                          Model model,
+                          RedirectAttributes redirectAttributes
+    ){
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("title",qna.getTitle());
+            redirectAttributes.addFlashAttribute("question",qna.getQuestion());
+
+            List<FieldError> errorList = result.getFieldErrors();
+            for(FieldError err : errorList){
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/qna/write";
+        }
+        UserDomain userDomain = U.getLoggedUser();
+        userDomain = userService.findByUsername(userDomain.getUsername());
+        qna.setUser(userDomain);
+        int cnt = qnAService.write(qna);
+
+        model.addAttribute("result",cnt);
+        return "/qna/writeOk";
+
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
+
+            if(userDomain.getProfile_img() != null){
+                model.addAttribute("profile_img",userDomain.getProfile_img());
+            }else{
+                model.addAttribute("profile_img",null);
+            }
+        }
+
+        model.addAttribute("qna", qnAService.findById(id));
+
+        return "/qna/detail";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam("id") Long id, Model model){
+
+        QnADomain qnADomain = qnAService.findById(id);
+
+        int cnt = qnAService.delete(qnADomain);
+
+        model.addAttribute("result",cnt);
+
+        return "/qna/deleteOk";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model){
+
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
+
+            if(userDomain != null){
+                model.addAttribute("profile_img",userDomain.getProfile_img());
+            }else{
+                model.addAttribute("profile_img",null);
+            }
+        }
+
+
+        QnADomain qnADomain = qnAService.findById(id);
+
+        model.addAttribute("qna",qnADomain);
+
+        return "/qna/update";
+    }
+
+    @PostMapping("/update")
+    public String update(@Valid QnADomain qna,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+    ){
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("title",qna.getTitle());
+            redirectAttributes.addFlashAttribute("question",qna.getQuestion());
+
+            List<FieldError> errorList = result.getFieldErrors();
+            for(FieldError err : errorList){
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/qna/update/" + qna.getId();
+        }
+
+        int cnt = qnAService.update(qna);
+
+        model.addAttribute("result",cnt);
+        model.addAttribute("qna",qna);
+
+        return "/qna/updateOk";
+    }
+
+    @PostMapping("/answer")
+    public String answer(QnADomain qnADomain,
+                         Model model
+    ){
+        String answer = qnADomain.getAnswer();
+        Long id = qnADomain.getId();
+
+        qnADomain = qnAService.findById(id);
+
+        if(qnADomain != null){
+            qnADomain.setAnswer(answer);
+            qnADomain.setAnswerDate(LocalDateTime.now());
+
+            int cnt = qnAService.update(qnADomain);
+            model.addAttribute("result",cnt);
+            model.addAttribute("id",qnADomain.getId());
+            return "/qna/answerOk";
+        } else{
+            model.addAttribute("result", 0);
+            return "/qna/answerOk";
+        }
+
+    }
+
+    @GetMapping("/list2")
+    public void qnaList2(Integer page, Model model){
+
+        UserDomain userDomain = U.getLoggedUser();
+        if(userDomain != null){
+            userDomain = userService.findByUsername(userDomain.getUsername());
+
+            if(userDomain != null){
+                model.addAttribute("profile_img",userDomain.getProfile_img());
+            }else{
+                model.addAttribute("profile_img",null);
+            }
+        }
+
+        List<QnADomain> qnaList = qnAService.getAllQnA(page,model);
+        if(qnaList != null){
+            model.addAttribute("qnaList",qnaList);
+        }
     }
 
 
-//    @GetMapping("/search")  // QnA 검색기능
-//    public String searchQnA(@RequestParam String query, Model model) {
-//        List<QnADomain> searchResults =  qnaService.searchQnA(query);
-//        model.addAttribute("qnADomainList",searchResults);
-//        return "list";
-//    }
 
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(new QnAValidator());
+    }
 
 }

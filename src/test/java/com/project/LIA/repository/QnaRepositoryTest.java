@@ -1,23 +1,19 @@
 package com.project.LIA.repository;
 
-import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.AuthorityDomain;
 import com.project.LIA.domain.QnADomain;
 import com.project.LIA.domain.UserDomain;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class QnARepositoryTest {
+class QnaRepositoryTest {
     @Autowired
-    private QnARepository qnARepository;
+    private QnaRepository qnARepository;
 
     @Autowired
     private UserRepository userRepository;
