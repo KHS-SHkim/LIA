@@ -44,37 +44,27 @@
         <tr class="text-center">
           <th class="text-center">작성자</th>
           <th>제목</th>
-          <th>내용</th>
           <th>작성일</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="qnaList : ${qnaList}" class="text-center">
-          <td class="col-3 text-muted td">
+          <td class="col-4 text-muted td">
             <a th:href="@{'/qna/detail/' + ${qnaList.id}}" class="text-decoration-none">
               <div>[[${qnaList.user.username}]]([[${qnaList.user.nickname}]])</div>
             </a>
           </td>
-          <td class="col-3 text-muted td">
+          <td class="col-4 text-muted td">
             <a th:href="@{'/qna/detail/' + ${qnaList.id}}" class="text-decoration-none">
               <div th:text="${qnaList.title}"></div>
             </a>
           </td>
-          <td class="col-3 text-muted td">
-            <a th:href="@{'/qna/detail/' + ${qnaList.id}}" class="text-decoration-none">
-              <div th:text="${qnaList.question}"></div>
-            </a>
-          </td>
-          <td class="col-3 text-muted td">[[${#temporals.format(qnaList.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+          <td class="col-4 text-muted td">[[${#temporals.format(qnaList.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
         </tr>
         </tbody>
       </table>
     </div>
-    <div class="row">
-      <div class="col">
-        <a class="btn btn-dark ms-5" th:href="@{/qna/write}">작성</a>
-      </div>
-    </div>
+
     <th:block th:insert="~{book/pagination::pagination}"></th:block>
   </div>
 </div>

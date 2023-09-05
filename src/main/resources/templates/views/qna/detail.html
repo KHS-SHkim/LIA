@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<script th:unless="${book}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<script th:unless="${qna}">
   alert("해당 정보가 삭제되거나 없습니다");
   history.back();
 </script>
@@ -11,9 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script th:src="@{/js/qna/write.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/qna/detail.css}">
     <script th:src="@{/js/qna/delete.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <title>LIA</title>
 </head>
 
@@ -23,69 +22,64 @@
 
 <div class="row">
     <div th:replace="~{fragment/sidebar}"></div>
+
     <div class="col-9 c">
-    <section>
-        <form name="frmDelete" th:action="@{/qna/delete}" method="post">
-            <input type="hidden" name="id" th:value="${book.id}">
-        </form>
-        <div class="mb-3">
-            <label>작성자:</label>
-            <div class="border bg-light rounded p-2" th:text="${qna.user_id.nickname}"></div>
-        </div>
+        <th:block th:if="${qna}">
 
-        <div class="mb-3 mt-3">
-            <label>제목:</label>
-            <div class="border bg-light rounded p-2" th:text="${qna.question}"></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label>내용:</label>
-            <div class="border bg-light rounded p-2" th:utext="${qna.question_detail}"></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label>답변:</label>
-            <div class="border bg-light rounded p-2" th:utext="${qna.answer}"></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label>답변시간:</label>
-            <div class="border bg-light rounded p-2" th:utext="${qna.answerDate}"></div>
-        </div>
+            <div>
+                <div class="text-center">
+                    <h1>[[${qna.user.username}]]님의 질문글</h1>
+                </div>
+            </div>
+            <hr>
 
-        <!-- 첨부파일목록 -->
-        <div class="container mt-3 mb-3 border rounded">
-            <div class="mb-3 mt-3">
-                <label>첨부파일:</label>
-                <!-- 첨부파일 이름, 다운로드 링크 -->
-                <ul class="list-group mb-1">
-                    <li class="list-group-item" th:each="attachment : ${book.fileList}">
-                        <a th:href="@{/book/download(id=${attachment.id})}">[[${attachment.img_src}]]</a>
-                    </li>
-                </ul>
-                <!--/* 이미지인 경우 보여주기 */-->
-                <div th:each="attachment : ${book.fileList}" th:if="${attachment.image}">
-                    <img th:src="@{'/upload/' + ${attachment.img_src}}" class="img-thumbnail" alt="Cinque Terre">
+            <div class="form-box">
+
+                <div class="form-group mt-3 ms-5">
+                    <label >작성자</label>
+                    <div>[[${qna.user.username}]]([[${qna.user.nickname}]])</div>
+                </div>
+
+                <div class="form-group mt-3 ms-5">
+                    <label>제목</label>
+                    <div th:text="${qna.title}"></div>
+                </div>
+
+                <div class="form-group mt-3 ms-5">
+                    <label>내용</label>
+                    <div th:text="${qna.question}"></div>
+                </div>
+
+                <a th:href="@{/qna/list}" class="mt-3 ms-5 btn btn-warning">목록</a>
+                <th:block sec:authorize="isAuthenticated()"  th:with="logged_user=${#authentication.principal.user}">
+                    <a th:href="@{'/qna/update/' + ${qna.id}}" class="mt-3 btn btn-primary" th:if="${logged_user.id == qna.user.id}">수정하기</a>
+                    <button id="delBtn" type="button" class="mt-3 btn btn-danger" th:if="${logged_user.id == qna.user.id}">삭제하기</button>
+                    <form id="delForm" method="POST" th:action="@{/qna/delete}">
+                        <input type="hidden" name="id" th:value="${qna.id}">
+                    </form>
+                </th:block>
+            </div>
+        </th:block>
+        <hr>
+        <div class="row">
+            <div class="col mt-5" sec:authorize="hasRole('ADMIN')" th:unless="${qna.answer}">
+                <form method="POST" th:action="@{/qna/answer}">
+                    <label class="mt-3 ms-5">답변</label>
+                    <textarea class="form-control ms-5" name="answer" id="answer" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-dark ms-5">답변등록</button>
+                    <input type="hidden" name="id" th:value="${qna.id}">
+                </form>
+            </div>
+            <div class="col" th:if="${qna.answer}">
+                <label class="ms-5 mt-3">관리자 답변</label>
+                <div class="ms-5 mt-3" id="answerDiv">
+                    <div th:text="${qna.answer}" class="ps-3 pe-3 ms-5 mt-3"></div>
+                    <p class="ms-5 mt-3 ps-3 pe-3" th:text="${#temporals.format(qna.answerDate,'yyyy-MM-dd HH:mm:ss')}"></p>
                 </div>
             </div>
         </div>
-        <!-- 첨부파일목록 -->
-
-
-        <!-- 하단 링크 -->
-        <!--수정과 삭제 버튼은 로그인한 유저 아이디와 게시글 작성자 아이디가 동일할 때만 보인다 -->
-        <div class="d-flex">
-            <a class="btn btn-outline-dark ms-2" th:href="@{/book/list(page=${session.page})}">목록</a>
-            <th:block th:if="${book}" sec:authorize="isAuthenticated()" th:with="logged_user=${#authentication.principal.user}">
-            <a class="btn btn-outline-dark" th:href="@{'/book/update/'+${book.id}}" th:if="${logged_user.id == book.user.id}">수정</a>
-            <button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == book.user.id}">삭제</button>
-            <a class="btn btn-outline-dark ms-2" th:href="@{/book/write}" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">작성</a>
-            </th:block>
-        </div>
-        <!-- 하단 링크 -->
-
-
-
-    </section>
     </div>
-</div>
 
+</div>
 </body>
 </html>

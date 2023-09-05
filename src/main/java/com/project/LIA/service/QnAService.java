@@ -2,24 +2,30 @@ package com.project.LIA.service;
 
 
 import com.project.LIA.domain.QnADomain;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
+
 import java.util.List;
 
 
 public interface QnAService {
 
-    List<QnADomain> getAllQnA();
+    // 질문글 전부 select
+    List<QnADomain> getAllQnA(Integer page, Model model);
 
-//    QnADomain createQnA(QnADomain qnalist);
+    // 질문글 검색 select
+    List<QnADomain> listBySearch(String searchValue, Integer page, Model model);
 
-    QnADomain getQnAById(Long user_id);
+    // 질문글 등록
+    int write(QnADomain qnADomain);
 
-    QnADomain updateQnA(Long user_id, QnADomain question);
+    // 질문글 수정
+    int update(QnADomain qnADomain);
 
-    void deleteQnA(Long user_id);
+    // 질문글 삭제
+    int delete(QnADomain qnADomain);
 
-    List<QnADomain> getAllQnA(Pageable pageable);   // 페이징해더
+    // 질문글 디테일
+    QnADomain findById(long id);
 
-//    List<QnADomain> searchQnA(String query); // 검색기능
+
 }

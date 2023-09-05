@@ -12,6 +12,6 @@ $(function(){
     })
 
     $(".red").click(function(){
-        location.href = "#";
+        location.href = "/qna/list2";
     })
 })
