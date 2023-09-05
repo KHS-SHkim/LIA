@@ -26,20 +26,23 @@ public class QnAController {
     public String getAllQnA(Model model, @PageableDefault(size = 10)Pageable pageable){
         List<QnADomain> qnADomainList = qnaService.getAllQnA(pageable);
         model.addAttribute("qnADomainList",qnADomainList);
-        return "/qna/list";
+        return "qna/list";
     }
-    @GetMapping("/list/{id}")    // 해당 id로 특정 QnA 항목 검색
-    public QnADomain getQnAById(@PathVariable long user_id){
-        return qnaService.getQnAById(user_id);
+    @GetMapping("/list/{user_id}")    // 해당 id로 특정 QnA 항목 검색
+    public String getQnAById(@PathVariable long user_id, Model model){
+        model.addAttribute("post", qnaService.getQnAById(user_id));
+        return "list/user_id";
     }
 
 ////    @PostMapping("/update")    // 해당 id로 특정 QnA 항목 질문하기
 ////    public QnADomain createQnA(@RequestBody QnADomain question){
 ////        return qnaService.createQnA(qna);
 ////    }
-    @PostMapping("/update/{id}")   // 해당 id로 특정 QnA 항목 질문
-    public QnADomain updateQnA(@PathVariable long user_id, @RequestBody QnADomain question ){
-        return qnaService.updateQnA(user_id, question);
+    @PostMapping("/update/{user_id}")   // 해당 id로 특정 QnA 항목 질문
+    public String updateQnA(@PathVariable long user_id, @RequestBody QnADomain question ){
+        System.out.println(qnaService.updateQnA(user_id, question));
+
+        return "qna/update";
     }
 
     @PostMapping("/delete/{id}") // 해당 id로 QnA 항목을 삭제합니다.

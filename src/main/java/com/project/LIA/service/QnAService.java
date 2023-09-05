@@ -13,11 +13,11 @@ public interface QnAService {
 
 //    QnADomain createQnA(QnADomain qnalist);
 
-    QnADomain getQnAById(Long userId);
+    QnADomain getQnAById(Long user_id);
 
-    QnADomain updateQnA(Long userId, QnADomain question);
+    QnADomain updateQnA(Long user_id, QnADomain question);
 
-    void deleteQnA(Long userId);
+    void deleteQnA(Long user_id);
 
     List<QnADomain> getAllQnA(Pageable pageable);   // 페이징해더
 
