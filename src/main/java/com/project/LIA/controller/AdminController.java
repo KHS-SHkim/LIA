@@ -5,6 +5,7 @@ import com.project.LIA.domain.UserDomain;
 import com.project.LIA.service.AddressService;
 import com.project.LIA.service.AdminService;
 import com.project.LIA.service.DeclarationService;
+import com.project.LIA.service.BookService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class AdminController {
 
     @Autowired
     DeclarationService declarationService;
+
+
+    @Autowired
+    BookService bookService;
 
 
 
@@ -97,6 +102,19 @@ public class AdminController {
         model.addAttribute("list",declarationService.findAnswerNoAnswer(""));
         return "/admin/declarationList";
     }
+    @GetMapping("/adminList")
+    public void list(Integer page, Model model) {
+        model.addAttribute("list", bookService.list(page, model));
+    }
+
+
+    @PostMapping("/delete")
+    public String deleteOk(long id, Model model){
+        model.addAttribute("result", bookService.deleteById(id)); //삭제 성공시 1 리턴
+        return "admin/deleteOk";
+    }
+
+
 
 
 }
