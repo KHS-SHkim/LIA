@@ -40,7 +40,7 @@
                 <tbody id="declarationInfo">
                     <tr th:each="declaration : ${list}" class="text-center">
                         <td class="col-2">
-                            <a th:href="@{'/declaration/detail/'+${declaration.id}}" th:text="${declaration.book.name}"></a>
+                            <a th:href="@{'/book/detail/'+${declaration.book.id}}" th:text="${declaration.book.name}"></a>
                         </td>
                         <td class="col-2 text-muted td" th:text="${declaration.user.nickname}"></td>
                         <td class="col-2 text-muted td" th:text="${declaration.reporter.nickname}"></td>

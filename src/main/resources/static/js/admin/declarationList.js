@@ -24,7 +24,7 @@ function loadList(data){
     let row = `
         <tr class="text-center">
             <td class="col-2">
-                <a href="/declaration/detail/"+declaration.id text=declaration.bookName></a>
+                <a href="/book/detail/"+bookInfo text=declaration.bookName></a>
             </td>
             <td class="col-2 text-muted td" text=declaration.userNickname></td>
             <td class="col-2 text-muted td" text=declaration.reporterNickname></td>
