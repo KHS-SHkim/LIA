@@ -1,54 +1,54 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="col-3 side text-center">
-  <div class="col image" id="profile_img">
-    <!--등록된 이미지 있을시-->
-    <div th:if="${profile_img}" class="image">
-      <img th:src="@{'/upload/' + ${profile_img}}">
+    <div class="col image" id="profile_img">
+        <!--등록된 이미지 있을시-->
+        <div th:if="${profile_img}" class="image">
+            <img th:src="@{'/upload/' + ${profile_img}}">
+        </div>
+        <!--등록된 이미지 없을시-->
+        <div th:unless="${profile_img}" class="image">
+            <img th:src="@{/image/default.jpg}">
+        </div>
     </div>
-    <!--등록된 이미지 없을시-->
-    <div th:unless="${profile_img}" class="image">
-      <img th:src="@{/image/default.jpg}">
-    </div>
-  </div>
-  <div class="info text-center">
+    <div class="info text-center">
     <span sec:authorize="isAnonymous()">
         <a class="userinfo" th:href="@{/user/register}">회원가입</a>/
         <a class="userinfo" th:href="@{/user/login}">로그인</a>
     </span>
-    <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST">
+        <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST">
         <span>
             <a class="userinfo" th:href="@{/user/myPage}">마이페이지</a>/
             <a class="userinfo" th:href="@{/user/logout}" onclick="return confirmLogout();">로그아웃</a>
         </span>
-    </form>
-    <br>
-    <span sec:authorize="hasRole('ADMIN')">
+        </form>
+        <br>
+        <span sec:authorize="hasRole('ADMIN')">
       <a class="userinfo mt-3" th:href="@{/admin/main}">관리자 페이지</a>
     </span>
-  </div>
-  <br>
-  <br>
-  <div class="text-center">
-    <ul class="menu">
-        <form sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
-      <li>
-        <a th:href="@{/note/list}">쪽지함</a>
-      </li>
-      <li>
-            <a th:href="@{'/book/list?username=' + ${user.username}}">내 글 보기</a>
-      </li>
-      <li>
-        <a th:href="@{/declaration/list}">신고 현황</a>
-      </li>
-      <li class="mt-3">
-        <a th:href="@{/book/write}">대여글 등록</a>
-      </li>
-        </form>
-      <li class="mt-3">
-        <a href="#">Q&A</a>
-      </li>
-    </ul>
-  </div>
+    </div>
+    <br>
+    <br>
+    <div class="text-center">
+        <ul class="menu">
+            <form sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
+                <li class="mt-3">
+                    <a th:href="@{/note/list}">쪽지함</a>
+                </li>
+                <li class="mt-3">
+                    <a th:href="@{'/book/list?username=' + ${user.username}}">내 글 보기</a>
+                </li>
+                <li class="mt-3">
+                    <a th:href="@{/declaration/list}">신고 현황</a>
+                </li>
+                <li class="mt-3">
+                    <a th:href="@{/book/write}">대여글 등록</a>
+                </li>
+            </form>
+            <li class="mt-3">
+                <a th:href="@{/qna/list}">Q&A</a>
+            </li>
+        </ul>
+    </div>
 
 </div>

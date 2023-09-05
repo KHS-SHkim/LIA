@@ -51,7 +51,7 @@ class NoteRepositoryTest {
 
     @Test
     void noteTest(){
-//        insUser();
+        insUser();
         UserDomain user1 = new UserDomain();
         UserDomain user2 = new UserDomain();
         BookDomain book = new BookDomain();
@@ -140,6 +140,7 @@ class NoteRepositoryTest {
                 .nickname("김홍석 조원")
                 .password(passwordEncoder.encode("1234"))
                 .username("user1")
+                .state("USE")
                 .build();
 
         UserDomain user2 = UserDomain.builder()
@@ -148,6 +149,7 @@ class NoteRepositoryTest {
                 .nickname("박승기 팀장")
                 .password(passwordEncoder.encode("1234"))
                 .username("user2")
+                .state("USE")
                 .build();
         UserDomain user3 = UserDomain.builder()
                 .email("user3@naver.com")
@@ -155,6 +157,7 @@ class NoteRepositoryTest {
                 .nickname("고태현 팀원")
                 .password(passwordEncoder.encode("1234"))
                 .username("user3")
+                .state("USE")
                 .build();
         UserDomain user4 = UserDomain.builder()
                 .email("user4@naver.com")
@@ -162,6 +165,7 @@ class NoteRepositoryTest {
                 .nickname("이가연 팀원")
                 .password(passwordEncoder.encode("1234"))
                 .username("user4")
+                .state("USE")
                 .build();
 
         userRepository.saveAll(List.of(user1, user2, user3, user4));

@@ -1,76 +1,102 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
-
-    <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script th:src="@{/js/list.js}"></script>
-
-    <title>QnA List</title>
+    <script th:src="@{/js/qna/list.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <title>LIA</title>
 </head>
 
-<body style="martin-bottom: 200px">
+<body>
 
-<th:block th:insert="~{fragment/header::header}"></th:block>
+<div th:replace="~{fragment/header}"></div>
 
-<div class="side">
-    <div class="image">
-        <img src="" alt="Profile Image">
-    </div>
-    <ul class="menu">
-        <li><a href="/qna/list" class="active">QnA목록</a></li>
-        <li><a href="/qna/update">QnA문의</a></li>
-        <li><a href="/qna/delete">QnA삭제</a></li>
-    </ul>
-</div>
-    <div class="container mt-3">
-    <h1>QnA List</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>Actions</th>
-            </tr>
-        </thead>s
-<!--        <form action="/qna/search" method="get">-->
-<!--            <input type="text" name="query" placeholder="Search question..">-->
-<!--            <button type="submit">검색</button>-->
-<!--        </form>-->
-        <!-- 컨트롤러에서 'qnaList'라는 이름의 모델 특성을 전달한다고 가정합니다. -->
-        <tbody>
-            <tr>
-                <td>Question here...</td>
-                <td>Answer here...</td>
-                <td>
-                    <a href="/qna/detail/{id}">View</a>
-                    <a href="/qna/update/{id}">Edit</a>
-                    <a href="/qna/delete/{id}">Delete</a>
-                </td>
-            </tr>
+<div class="row">
+    <div th:replace="~{fragment/sidebar}"></div>
+    <div class="col-9 c">
+        <div class="container mt-3">
+            <h2>목록</h2>
+            <hr>
 
-        </tbody>
-    </table>
-        <span class="float-start me-2">총 [[${cnt}]]개</span>
-        <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
-        <span class="float-end">
+            <!-- 페이징 헤더 -->
+            <div class="mb-3 mt-3 clearfix">
+                <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+                <span class="float-end">
+
+            <!--대여가능 체크박스-->
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="availableOnly" onclick="filterList()">
+                <label class="form-check-label" for="availableOnly">
+                    대여 가능만 보기
+                </label>
+
+
         <form name="frmPageRows">
-            <input name="page" th:value="${page}" type="hidden">
+            <input type="hidden" name="page" th:value="${page}">
             <select class="form-select" name="pageRows">
-                <option th:selected="${pageRows==10}" value="10">10</option>
-                <option th:selected="${pageRows==15}" value="15">15</option>
-                <option th:selected="${pageRows==20}" value="20">20</option>
-                <option th:selected="${pageRows==50}" value="50">50</option>
+                <option value="10" th:selected="${pageRows==10}">10</option>
+                <option value="15" th:selected="${pageRows==15}">15</option>
+                <option value="20" th:selected="${pageRows==20}">20</option>
+                <option value="50" th:selected="${pageRows==50}">50</option>
             </select>
         </form>
-    </span>http://chatopenai.co.kr/ad/tab_open.php?app=205&domain=coupang.com&type=1&aid=8475&browser=msedge&guid=20230630UAPlw1
+            </div>
+    </span>
+            </div>
+            <!-- 페이징 헤더 -->
 
+            <!-- 목록 -->
+            <table class="table table-hover">
+                <thead class="table-success">
+                <tr>
+                    <th>#</th>
+                    <th>유저</th>
+                    <th>질문</th>
+                    <th>답변</th>
+                    <th>답변시간</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${list}" class="book-row">
+                    <td th:text="${user.id}">1</td>
+                    <td>
+                        <a class="navbar-brand" th:href="@{'/qna/detail/' + ${user_id}}">
+                            <div th:if="${qna.firstImage}">
+                                <img th:src="@{'/upload/' + ${qna.firstImage}}" class="img-thumbnail" alt="첫 번째 이미지" width="200" height="200">
+                            </div>
+                            <div th:unless="${qna.firstImage != null}">
+                                <img th:src="@{/image/LIA_logo.jpg}" class="img-thumbnail" alt="기본 이미지"width="200" height="200">
+                            </div>
+                        </a>
+                    </td>
+                    <td th:text="${user_id}">John</td>
+                    <td class="rental-stat" th:text="${book.rental_stat}">John</td>
+                    <td th:text="${#temporals.format(book.regDate, 'yyyy-MM-dd HH:mm')}">2021-03-21</td>
+                    <td class="rental-end" th:text="${#temporals.format(book.rental_end, 'yyyy-MM-dd')}">2023-09-30</td>
+                    <td>
+                        <span class="return-date" th:if="${book.rental_stat == '답변중'}"><span class="return-date-value"></span></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- 목록 -->
+
+            <div class="row">
+                <div class="col-12">
+                    <a class="btn btn-outline-dark" th:href="@{/list/write}" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">작성</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <th:block th:insert="~{qna/pagination::pagination}"></th:block>
+        <!-- pagination -->
     </div>
+</div>
+
 </body>
 </html>
