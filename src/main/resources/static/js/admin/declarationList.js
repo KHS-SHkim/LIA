@@ -29,7 +29,7 @@ function loadList(data){
             <td class="col-2 text-muted td" text=declaration.userNickname></td>
             <td class="col-2 text-muted td" text=declaration.reporterNickname></td>
             <td class="col-2 text-muted td" text=declaration.reportType></td>
-            <td class="col-2 text-muted td" text="${#temporals.format("+declaration.regDate+", 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="col-2 text-muted td" text=declaration.regDate></td>
             <td class="col-2 text-muted td">`;
 
             if (declaration.answerContent == null || declaration.answerContent == ""){
