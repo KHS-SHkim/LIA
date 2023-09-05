@@ -88,22 +88,22 @@ class NoteRepositoryTest {
         // QnA 생성
         QnADomain Q1 = QnADomain.builder()
                 .question( "질문이에요.01" )
-                .user_id(user1)
+                .user(user1)
                 .build();
         QnADomain Q2 = QnADomain.builder()
                 .question("질문 글")
                 .answer( "답변글입니다.01" )
-                .user_id(user1)
+                .user(user1)
                 .build();
 
         QnADomain Q3 = QnADomain.builder()
                 .question( "질문이에요.02" )
-                .user_id(user2)
+                .user(user2)
                 .build();
         QnADomain Q4 = QnADomain.builder()
                 .question("질문 글")
                 .answer( "답변글입니다.02" )
-                .user_id(user1)
+                .user(user1)
                 .build();
 
         qnARepository.saveAll(List.of(Q1,Q2,Q3,Q4));
