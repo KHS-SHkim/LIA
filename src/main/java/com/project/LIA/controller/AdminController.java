@@ -4,6 +4,7 @@ import com.project.LIA.domain.AddressDomain;
 import com.project.LIA.domain.UserDomain;
 import com.project.LIA.service.AddressService;
 import com.project.LIA.service.AdminService;
+import com.project.LIA.service.DeclarationService;
 import com.project.LIA.service.UserService;
 import com.project.LIA.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class AdminController {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    DeclarationService declarationService;
+
 
 
 
@@ -87,6 +92,11 @@ public class AdminController {
         return "/admin/userDetail";
     }
 
+    @GetMapping("/declarationList")
+    public String declarationList(Model model){
+        model.addAttribute("list",declarationService.findAnswerNoAnswer(""));
+        return "/admin/declarationList";
+    }
 
 
 }

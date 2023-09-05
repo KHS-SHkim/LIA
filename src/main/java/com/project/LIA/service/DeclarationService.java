@@ -23,4 +23,7 @@ public interface DeclarationService {
     DeclarationDomain findDeclarationDetail(Long declaration_id);
 
     void write(DeclarationDomain declarationDomain);
+
+    // 답변 미답변리스트
+    List<DeclarationDomain> findAnswerNoAnswer(String state);
 }

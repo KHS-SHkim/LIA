@@ -1,6 +1,7 @@
 package com.project.LIA.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -27,16 +28,19 @@ public class DeclarationDomain extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
     @ToString.Exclude
     @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JsonIgnore
     private UserDomain user;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= UserDomain.class )
     @ToString.Exclude
     @JoinColumn(name="reporter_id", referencedColumnName = "id")
+    @JsonIgnore
     private UserDomain reporter;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity= BookDomain.class )
     @ToString.Exclude
     @JoinColumn(name="book_id", referencedColumnName = "id")
+    @JsonIgnore
     private BookDomain book;
 
 
@@ -57,5 +61,17 @@ public class DeclarationDomain extends BaseEntity {
     @JsonProperty("answerdate")
     private LocalDateTime answerDate;
 
+
+    @Transient
+    String userNickname;
+
+    @Transient
+    String receiverNickname;
+
+    @Transient
+    Long bookInfo;
+
+    @Transient
+    String bookName;
 
 }

@@ -8,7 +8,7 @@ $(function(){
     })
 
     $(".black").click(function(){
-        location.href = "#";
+        location.href = "/admin/declarationList";
     })
 
     $(".red").click(function(){

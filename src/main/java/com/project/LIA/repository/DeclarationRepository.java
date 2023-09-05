@@ -16,4 +16,6 @@ public interface DeclarationRepository extends JpaRepository<DeclarationDomain, 
     // 내가 신고 당한 리스트
     List<DeclarationDomain> findByReporterId(Long reporter_id);
 
+
+
 }

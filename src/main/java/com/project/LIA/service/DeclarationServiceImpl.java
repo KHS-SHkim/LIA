@@ -6,6 +6,7 @@ import com.project.LIA.repository.DeclarationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,5 +47,21 @@ public class DeclarationServiceImpl implements DeclarationService {
     @Override
     public void write(DeclarationDomain declarationDomain) {
         declarationRepository.save(declarationDomain);
+    }
+
+    @Override
+    public List<DeclarationDomain> findAnswerNoAnswer(String state) {
+        List<DeclarationDomain> list = declarationRepository.findAll();
+        List<DeclarationDomain> tmp = new ArrayList<>();
+        if (state.equals("미답변리스트")){
+            for(DeclarationDomain declaration : list){
+                if (declaration.getAnswerContent()== "" || declaration.getAnswerContent() == null){
+                    tmp.add(declaration);
+                }
+            }
+            list = tmp;
+        }
+
+        return list;
     }
 }
