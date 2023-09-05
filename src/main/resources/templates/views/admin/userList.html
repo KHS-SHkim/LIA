@@ -55,13 +55,9 @@
                         <td class="col-2 text-muted td">
                             <form method="POST" th:action="@{/admin/chState}">
                                 <input type="hidden" name="username" id="username" th:value="${userList.username}">
-                                <select th:if="userList.state!='OUT'" class="form-select form-select-sm" name="state">
-                                    <option th:value="USE" selected>USE</option>
-                                    <option th:value="OUT">OUT</option>
-                                </select>
-                                <select th:unless="userList.state!='OUT'" class="form-select form-select-sm" name="state">
-                                    <option th:value="USE">USE</option>
-                                    <option th:value="OUT" selected>OUT</option>
+                                <select  class="form-select form-select-sm" name="state">
+                                    <option th:value="USE" th:selected="${userList.state == 'USE'}">USE</option>
+                                    <option th:value="OUT" th:selected="${userList.state == 'OUT'}">OUT</option>
                                 </select>
                             </form>
                         </td>
