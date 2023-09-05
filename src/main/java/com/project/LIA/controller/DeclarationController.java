@@ -35,6 +35,7 @@ public class DeclarationController {
     public String callList(Model model){
         List<DeclarationDomain> declarations = declarationService.findDeclarations();
         model.addAttribute("declarations", declarations);
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/declaration/list";
     }
 
@@ -53,6 +54,7 @@ public class DeclarationController {
         model.addAttribute("reporter", reporter);
         model.addAttribute("declaration", declaration);
         model.addAttribute("book", book);
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/declaration/write";
     }
 
@@ -87,6 +89,7 @@ public class DeclarationController {
         } else {
             model.addAttribute("state", "Success");
         }
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/declaration/writeOk";
     }
 
@@ -101,7 +104,7 @@ public class DeclarationController {
         model.addAttribute("user", user);
         model.addAttribute("reporter", reporter);
         model.addAttribute("book", book);
-
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/declaration/detail";
     }
 
@@ -112,6 +115,7 @@ public class DeclarationController {
         declaration.setAnswerDate(LocalDateTime.now());
         declarationService.write(declaration);
         model.addAttribute("declaration", declaration);
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/declaration/answer";
     }
 

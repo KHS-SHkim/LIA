@@ -81,9 +81,6 @@ function loadNote( user , receiver ){
 
 function buildComment(result){
     const out = [];
-
-
-
     result.noteList.forEach(note => {
 //        console.log(note)
         let noteUser = note.userInfo;

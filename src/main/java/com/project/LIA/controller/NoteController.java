@@ -37,6 +37,7 @@ public class NoteController {
 //        UserDomain user = userService.findByUsername("user2");
         model.addAttribute("myNoteList", noteService.findMyNoteList(user));
         model.addAttribute("loginUser", user);
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/note/list";
     }
 
@@ -67,6 +68,7 @@ public class NoteController {
         } else {
             model.addAttribute("noteList", null);
         }
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/note/detail";
     }
 
@@ -83,7 +85,7 @@ public class NoteController {
         model.addAttribute("receiver", receiver);
         model.addAttribute("book", book);
         model.addAttribute("noteList", note);
-
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
 
         return "/note/write";
     }
@@ -110,6 +112,7 @@ public class NoteController {
 
         model.addAttribute("user", user);
         model.addAttribute("receiver", receiver);
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
     }
 
     @GetMapping("/noteStart/{user_id}/{receiver_id}/{book_id}")
@@ -117,6 +120,7 @@ public class NoteController {
         model.addAttribute("userInfo",userService.findById(user_id));
         model.addAttribute("receiverInfo", userService.findById(receiver_id));
         model.addAttribute("bookInfo", bookService.selectById(book_id));
+        model.addAttribute("profile_img", U.getLoggedUser().getProfile_img());
         return "/note/noteStart";
     }
 
