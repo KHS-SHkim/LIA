@@ -18,20 +18,27 @@ $(function(){
     })
 });
 function loadList(data){
-alert(data)
-//    let row = `
-//    <tr th:each="declaration : ${list}" class="text-center">
-//        <td class="col-2">
-//            <a th:href="@{'/declaration/detail/'+${declaration.id}}" th:text="${declaration.book.name}"></a>
-//        </td>
-//        <td class="col-2 text-muted td" th:text="${declaration.user.nickname}"></td>
-//        <td class="col-2 text-muted td" th:text="${declaration.reporter.nickname}"></td>
-//        <td class="col-2 text-muted td" th:text="${declaration.reportType}"></td>
-//        <td class="col-2 text-muted td" th:text="${#temporals.format(declaration.regDate, 'yyyy-MM-dd HH:mm')}"></td>
-//        <td class="col-2 text-muted td">
-//            <a th:unless="${declaration.answerContent}" th:text="답변하러가기" th:href="@{'/declaration/detail/'+${declaration.id}}"></a>
-//            <input th:if="${declaration.answerContent}" th:value="${declaration.answerContent}" disabled />
-//        </td>
-//    </tr>
-//    `;
+
+    const out = [];
+    data.forEach(declaration => {
+    let row = `
+        <tr class="text-center">
+            <td class="col-2">
+                <a href="/declaration/detail/"+declaration.id text=declaration.bookName></a>
+            </td>
+            <td class="col-2 text-muted td" text=declaration.userNickname></td>
+            <td class="col-2 text-muted td" text=declaration.reporterNickname></td>
+            <td class="col-2 text-muted td" text=declaration.reportType></td>
+            <td class="col-2 text-muted td" text="${#temporals.format("+declaration.regDate+", 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="col-2 text-muted td">`;
+
+            if (declaration.answerContent == null || declaration.answerContent == ""){
+                row+=`<a text="답변하러가기" href="/declaration/detail/"+declaration.id></a>`
+            } else {
+                row+=`<input value=declaration.answerContent disabled />`
+            }
+            row+=`</td></tr>`;
+            out.push(row);
+    }
+    $("#declarationInfo").html(out.join("\n"));
 }
