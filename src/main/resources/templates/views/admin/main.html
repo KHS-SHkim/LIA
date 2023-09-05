@@ -8,7 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/main.css}">
+    <script th:src="@{/js/admin/main.js}"></script>
     <title>LIA</title>
 </head>
 
@@ -20,9 +21,25 @@
     <div th:replace="~{adminfragment/sidebar}"></div>
 
     <div class="col-9 c">
-        <div class="row my-5">
-            <div class="d-flex justify-content-center my-5">
-                <h1 class="my-5">원하는 서비스를 선택하여 사이트를 관리하세요.</h1>
+        <div class="row my-3">
+            <div class="d-flex justify-content-center my-3">
+                <h1 class="my-3">원하는 서비스를 선택하여 사이트를 관리하세요.</h1>
+            </div>
+        </div>
+        <div class="row mt-5 justify-content-between">
+            <div class="col-4 abc aqua ml">
+                회원 리스트
+            </div>
+            <div class="col-4 abc yellow mr">
+                대여글 리스트
+            </div>
+        </div>
+        <div class="row mt-5 justify-content-between">
+            <div class="col-4 abc black ml">
+                신고 리스트
+            </div>
+            <div class="col-4 abc red mr">
+                QnA
             </div>
         </div>
     </div>

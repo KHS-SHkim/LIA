@@ -94,6 +94,10 @@
         margin-bottom: 10px;
     }
 
-        .rental-end {
-            display: none;
-        }
+    .rental-end {
+        display: none;
+    }
+
+    td{
+        vertical-align: middle;
+    }

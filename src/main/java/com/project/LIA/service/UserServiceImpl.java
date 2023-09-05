@@ -139,8 +139,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int updateSt(UserDomain userDomain) {
+    public int updateStOUT(UserDomain userDomain) {
         userDomain.setState("OUT");
+        userRepository.save(userDomain);
+        return 1;
+    }
+
+    @Override
+    public int updateSt(UserDomain userDomain) {
         userRepository.save(userDomain);
         return 1;
     }
