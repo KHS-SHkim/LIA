@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script th:src="@{/js/list.js}"></script>
+    <script th:src="@{/js/delete.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <title>LIA</title>
 </head>
@@ -60,10 +61,14 @@
                     <th>대여상태</th>
                     <th>게시일</th>
                     <th>반납일</th>
+                    <th>삭제</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${list}" class="book-row">
+                <tr th:each="book, rowStat : ${list}" class="book-row">
+                    <form th:id="'frmDelete' + ${rowStat.index}" th:action="@{/admin/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${book.id}">
+                    </form>
                     <td th:text="${book.id}">1</td>
                     <td>
                         <a class="navbar-brand" th:href="@{'/book/detail/' + ${book.id}}">
@@ -80,8 +85,9 @@
                     <td th:text="${#temporals.format(book.regDate, 'yyyy-MM-dd HH:mm')}">2021-03-21</td>
                     <td class="rental-end" th:text="${#temporals.format(book.rental_end, 'yyyy-MM-dd')}">2023-09-30</td>
                     <td>
-                        <span class="return-date" th:if="${book.rental_stat == '대여중'}" style="color: red;"><span class="return-date-value"></span></span>
+                        <span class="return-date" th:if="${book.rental_stat == '대여중'}"><span class="return-date-value"></span></span>
                     </td>
+                    <td><button type="button" class="btn btn-outline-danger ms-2 btnDel2" th:attr="data-form-id='frmDelete' + ${rowStat.index}">삭제</button></td>
                 </tr>
                 </tbody>
             </table>

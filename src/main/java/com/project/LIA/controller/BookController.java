@@ -78,6 +78,7 @@ public class BookController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable long id, Model model){
         model.addAttribute("book", bookService.selectById(id));
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
         return "book/detail";
     }
 
@@ -99,6 +100,7 @@ public class BookController {
             model.addAttribute("list", bookService.myList(username, page, model));
 
         }
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
     }
 
 
@@ -115,6 +117,7 @@ public class BookController {
     @GetMapping("/update/{id}")
     public String update(@PathVariable long id, Model model){
         model.addAttribute("book", bookService.selectById(id));
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
         return "book/update";
     }
 
