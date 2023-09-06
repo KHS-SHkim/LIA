@@ -90,6 +90,7 @@ public class AdminController {
         String post_num = addressDomain.getPost_num();
         String address_detail = addressDomain.getAddress_detail();
 
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
         model.addAttribute("post_num",post_num);
         model.addAttribute("address",address);
         model.addAttribute("address_detail",address_detail);
@@ -99,11 +100,13 @@ public class AdminController {
 
     @GetMapping("/declarationList")
     public String declarationList(Model model){
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
         model.addAttribute("list",declarationService.findAnswerNoAnswer(""));
         return "/admin/declarationList";
     }
     @GetMapping("/adminList")
     public void list(Integer page, Model model) {
+        model.addAttribute("profile_img",U.getLoggedUser().getProfile_img());
         model.addAttribute("list", bookService.list(page, model));
     }
 
