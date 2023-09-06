@@ -4,7 +4,7 @@ $(function(){
     })
 
     $(".yellow").click(function(){
-        location.href = "#";
+        location.href = "/admin/adminList";
     })
 
     $(".black").click(function(){
